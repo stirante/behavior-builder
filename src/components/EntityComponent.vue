@@ -15,7 +15,7 @@
     <v-expand-transition v-show="!readOnly.valueOf() /*&& comp.hasProperties()*/">
       <div v-show="show">
         <v-card-text>
-          <pre>{{ JSON.stringify(comp.schema, null, 2) }}</pre>
+<!--          <pre>{{ JSON.stringify(comp.schema, null, 2) }}</pre>-->
           <DataEditor ref="editor" name="" :schema="comp.schema"></DataEditor>
         </v-card-text>
       </div>

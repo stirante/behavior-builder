@@ -77,9 +77,8 @@
             color="blue-grey"
             class="white--text"
         >
-          <span>Piotr "stirante" Brzozowski</span>
           <v-spacer></v-spacer>
-          <span>&copy; {{ new Date().getFullYear() }}</span>
+          <span>&copy; Piotr "stirante" Brzozowski {{ new Date().getFullYear() }}</span>
         </v-footer>
       </v-app>
     </v-app>
