@@ -32,7 +32,7 @@ export default {
       let condition = this.schema.if.properties;
       for (const prop in condition) {
         let fieldEditor = fields.filter(value => value.name === prop)[0];
-        if (!fieldEditor && !fieldEditor.getData()) return false;
+        if (!fieldEditor || !fieldEditor.getData()) return false;
         let conditionValue = condition[prop];
         if (conditionValue['$ref']) {
           let acceptable = resolvePath(fullScheme, conditionValue['$ref']).anyOf.map(value => value.const);
