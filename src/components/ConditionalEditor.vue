@@ -1,3 +1,4 @@
+<!--suppress JSUnfilteredForInLoop -->
 <template>
   <div v-if="isTrue">
     <slot/>

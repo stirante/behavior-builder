@@ -4,7 +4,9 @@
     <v-card-title>
       <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
         <v-icon>mdi-close</v-icon>
-      </v-btn>{{ name }}</v-card-title>
+      </v-btn>
+      {{ name }}
+    </v-card-title>
     <v-card-text>
       <div v-for="prop in allProps" :key="prop.name">
         <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" ref="editor"></DataEditor>
@@ -18,9 +20,12 @@
     <v-card-title>
       <v-btn v-if="index !== undefined" icon>
         <v-icon>mdi-close</v-icon>
-      </v-btn>{{ name }}</v-card-title>
+      </v-btn>
+      {{ name }}
+    </v-card-title>
     <v-card-text>
-      <DataEditor v-for="n in items" :schema="inlinedItemSchema" :key="n" :index="n" ref="editor" v-on:remove-item="removeItem(n)"></DataEditor>
+      <DataEditor v-for="n in items" :schema="inlinedItemSchema" :key="n" :index="n" ref="editor"
+                  v-on:remove-item="removeItem(n)"></DataEditor>
       <v-btn @click="items.push(itemIdCounter++)">Add</v-btn>
     </v-card-text>
   </v-card>
@@ -61,7 +66,7 @@
     <v-btn v-if="index !== undefined" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
-    <span>Unknown type {{ inlinedSchema.type }}!</span>
+    <v-text-field v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-text-field>
   </div>
 </template>
 
@@ -137,6 +142,11 @@ export default {
     inlinedSchema() {
       if (this.schema["$ref"]) {
         return Object.assign({}, this.schema, resolvePath(fullScheme, this.schema["$ref"]));
+      }
+      //TODO: support "anyOf" schema
+      //For now, dirty fix
+      if (this.schema.anyOf && !this.schema.properties) {
+        return Object.assign({}, this.schema, this.schema.anyOf[0]);
       }
       return this.schema;
     },

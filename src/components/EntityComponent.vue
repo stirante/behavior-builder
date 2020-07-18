@@ -5,14 +5,14 @@
         <v-icon color="white">mdi-close</v-icon>
       </v-btn>
       <span class="component-name">{{ comp.id }}</span>
-      <v-btn icon @click="show = !show" v-show="!readOnly.valueOf() /*&& comp.hasProperties()*/" right>
+      <v-btn icon @click="show = !show" v-show="!readOnly.valueOf() && comp.hasProperties()" right>
         <v-icon color="white">{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-subtitle class="component-item-subtitle handle" v-show="readOnly.valueOf()">
       {{ comp.description }}
     </v-card-subtitle>
-    <v-expand-transition v-show="!readOnly.valueOf() /*&& comp.hasProperties()*/">
+    <v-expand-transition v-show="!readOnly.valueOf() && comp.hasProperties()">
       <div v-show="show">
         <v-card-text>
 <!--          <pre>{{ JSON.stringify(comp.schema, null, 2) }}</pre>-->
