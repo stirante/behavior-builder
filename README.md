@@ -1,5 +1,9 @@
 # behavior-builder
 
+This project aims to speed up creating entity behaviors for Minecraft Bedrock.
+
+Project temporarily lives here: https://stirante.com/behavior/index.html
+
 ## Project setup
 ```
 yarn install
@@ -19,6 +23,3 @@ yarn build
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
