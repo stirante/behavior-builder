@@ -24,7 +24,7 @@ export class MinecraftComponent {
     }
 
     hasProperties() {
-        return this.schema.properties && this.schema.properties.length !== 0;
+        return (this.schema.properties && this.schema.properties.length !== 0) || this.schema.anyOf;
     }
 
     clone() {
