@@ -129,7 +129,6 @@ export default {
       return schema.then.properties;
     },
     removeItem(n) {
-      console.log(n);
       this.items.splice(this.items.indexOf(n), 1);
     }
   },

@@ -1,21 +1,20 @@
 <template>
   <v-card class="component-item">
     <v-card-title class="component-item handle">
-      <v-btn icon @click="$emit('remove-component')" v-show="!readOnly.valueOf()">
+      <v-btn icon @click="$emit('remove-component')" v-if="!readOnly.valueOf()">
         <v-icon color="white">mdi-close</v-icon>
       </v-btn>
       <span class="component-name">{{ comp.id }}</span>
-      <v-btn icon @click="show = !show" v-show="!readOnly.valueOf() && comp.hasProperties()" right>
+      <v-btn icon @click="show = !show" v-if="!readOnly.valueOf() && comp.hasProperties()" right>
         <v-icon color="white">{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
       </v-btn>
     </v-card-title>
-    <v-card-subtitle class="component-item-subtitle handle" v-show="readOnly.valueOf()">
+    <v-card-subtitle class="component-item-subtitle handle" v-if="readOnly.valueOf()">
       {{ comp.description }}
     </v-card-subtitle>
-    <v-expand-transition v-show="!readOnly.valueOf() && comp.hasProperties()">
+    <v-expand-transition v-if="!readOnly.valueOf() && comp.hasProperties()">
       <div v-show="show">
         <v-card-text>
-<!--          <pre>{{ JSON.stringify(comp.schema, null, 2) }}</pre>-->
           <DataEditor ref="editor" name="" :schema="comp.schema"></DataEditor>
         </v-card-text>
       </div>

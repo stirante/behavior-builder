@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "clipboard": "^2.0.6",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-json-viewer": "^2.2.13",
     "vuedraggable": "^2.24.0",
     "vuetify": "^2.2.11",
     "webpack": "^4.43.0",

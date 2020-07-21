@@ -37,12 +37,10 @@ export default {
         let conditionValue = condition[prop];
         if (conditionValue['$ref']) {
           let acceptable = resolvePath(fullScheme, conditionValue['$ref']).anyOf.map(value => value.const);
-          console.log("Check if " + fieldEditor.getData() + " is in " + JSON.stringify(acceptable) + ": " + acceptable.indexOf(fieldEditor.getData()));
           return acceptable.indexOf(fieldEditor.getData()) !== -1;
         }
         if (conditionValue.anyOf) {
           let acceptable = conditionValue.anyOf.map(value => value.const);
-          console.log("Check if " + fieldEditor.getData() + " is in " + JSON.stringify(acceptable) + ": " + acceptable.indexOf(fieldEditor.getData()));
           return acceptable.indexOf(fieldEditor.getData()) !== -1;
         }
       }

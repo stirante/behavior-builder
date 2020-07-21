@@ -22,7 +22,10 @@
               <v-card-title>
                 <span class="headline">Behavior JSON</span>
               </v-card-title>
-              <v-card-text><pre>{{ entityJson }}</pre></v-card-text>
+              <v-card-text>
+                <v-btn class="copyBtn" icon><v-icon>mdi-content-copy</v-icon></v-btn>
+                <json-viewer :value="entityJson" copyable></json-viewer>
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" text @click="dialog = false">OK</v-btn>
@@ -109,6 +112,8 @@
 import draggable from "vuedraggable";
 import EntityComponent from "@/components/EntityComponent";
 import {componentLibrary, componentList} from "./MinecraftComponent"
+import JsonViewer from 'vue-json-viewer'
+import Clipboard from 'clipboard'
 
 export default {
   props: {
@@ -116,7 +121,16 @@ export default {
   },
   components: {
     EntityComponent,
-    draggable
+    draggable,
+    JsonViewer
+  },
+  mounted() {
+    let component = this;
+    new Clipboard('.copyBtn', {
+      text: function () {
+        return JSON.stringify(component.entityJson, null, 2);
+      }
+    });
   },
   computed: {
     dragOptions() {
@@ -128,10 +142,8 @@ export default {
     },
     filteredComponentLibrary() {
       if (!this.filter || this.filter === "") {
-        console.log("No filter")
         return componentList;
       }
-      console.log("Filter")
       return componentList.filter(value => value.id.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
     }
   },
@@ -153,8 +165,7 @@ export default {
         let vue = this.$refs.entityComponents.$children[child];
         data[vue.comp.id] = vue.getData();
       }
-      console.log(data);
-      this.entityJson = JSON.stringify(data, null, 2);
+      this.entityJson = data;
     }
   },
   data: () => ({
