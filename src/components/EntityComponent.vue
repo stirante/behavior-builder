@@ -1,5 +1,5 @@
 <template>
-  <v-card class="component-item">
+  <v-card class="component-item" ref="card">
     <v-card-title class="component-item handle">
       <v-btn icon @click="$emit('remove-component')" v-if="!readOnly.valueOf()">
         <v-icon color="white">mdi-close</v-icon>
@@ -50,9 +50,17 @@ import DataEditor from "@/components/DataEditor";
 export default {
   name: 'EntityComponent',
   components: {DataEditor},
-  methods:{
+  mounted() {
+    this.$refs.card.$el.onmouseup = this.onCardClick;
+  },
+  methods: {
     getData() {
       return this.$refs.editor.getData();
+    },
+    onCardClick(e) {
+      if (!this.readOnly.valueOf() && e && (e.which === 2 || e.button === 4)) {
+        this.$emit('remove-component');
+      }
     }
   },
   data: () => ({
