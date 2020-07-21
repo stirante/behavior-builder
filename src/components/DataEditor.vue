@@ -18,7 +18,7 @@
   </v-card>
   <v-card ref="arr" v-else-if="isArray" style="margin: 1em;">
     <v-card-title>
-      <v-btn v-if="index !== undefined" icon>
+      <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
         <v-icon>mdi-close</v-icon>
       </v-btn>
       {{ name }}
@@ -29,41 +29,41 @@
       <v-btn @click="items.push(itemIdCounter++)">Add</v-btn>
     </v-card-text>
   </v-card>
-  <div v-else-if="isBoolean">
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else-if="isBoolean">
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-checkbox v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
   </div>
-  <div v-else-if="isEnum">
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else-if="isEnum">
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-combobox :items="enums" v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint
                 dense></v-combobox>
   </div>
-  <div v-else-if="isString">
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else-if="isString">
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-text-field v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint dense></v-text-field>
   </div>
-  <div v-else-if="isNumber">
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else-if="isNumber">
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-text-field v-model="data" :label="name" type="number" :hint="inlinedSchema.description"
                   persistent-hint></v-text-field>
   </div>
-  <div v-else-if="isNumber">
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else-if="isNumber">
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-text-field v-model="data" :label="name" type="number" :hint="inlinedSchema.description"
                   persistent-hint></v-text-field>
   </div>
-  <div v-else>
-    <v-btn v-if="index !== undefined" icon>
+  <div style="display: flex;" v-else>
+    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-text-field v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-text-field>
@@ -129,6 +129,7 @@ export default {
       return schema.then.properties;
     },
     removeItem(n) {
+      console.log(n);
       this.items.splice(this.items.indexOf(n), 1);
     }
   },
@@ -152,14 +153,17 @@ export default {
     },
     inlinedItemSchema() {
       if (!this.isArray) return {};
-      if (!this.schema.items.type && !this.schema.items['$ref'] && this.schema.items.default) {
-        if (typeof (this.schema.items.default[0]) === "number") return {"type": "number"};
-        if (typeof (this.schema.items.default[0]) === "string") return {"type": "string"};
+      let result;
+      if (this.schema.items instanceof Array) result = this.schema.items[0];
+      else result = this.schema.items;
+      if (!result.type && !result['$ref'] && result.default) {
+        if (typeof (result.default[0]) === "number") return {"type": "number"};
+        if (typeof (result.default[0]) === "string") return {"type": "string"};
       }
-      if (this.schema.items['$ref']) {
-        return Object.assign({}, this.schema.items, resolvePath(fullScheme, this.schema.items['$ref']));
+      if (result['$ref']) {
+        return Object.assign({}, result, resolvePath(fullScheme, result['$ref']));
       }
-      return this.schema;
+      return result;
     },
     allProps() {
       let result = [];
@@ -184,7 +188,7 @@ export default {
       return result;
     },
     isObject() {
-      return this.inlinedSchema.type === "object";
+      return this.inlinedSchema.type === "object" || this.inlinedSchema.properties;
     },
     isArray() {
       return this.inlinedSchema.type === "array" || this.inlinedSchema.type === "list";
