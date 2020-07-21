@@ -12,7 +12,7 @@
     <v-card-subtitle class="component-item-subtitle handle" v-if="readOnly.valueOf()">
       {{ comp.description }}
     </v-card-subtitle>
-    <v-expand-transition v-if="!readOnly.valueOf() && comp.hasProperties()">
+    <v-expand-transition v-if="!readOnly.valueOf()" v-show="comp.hasProperties()">
       <div v-show="show">
         <v-card-text>
           <DataEditor ref="editor" name="" :schema="comp.schema"></DataEditor>

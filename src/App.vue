@@ -10,7 +10,7 @@
         >
           <v-toolbar-title>behavior-builder</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" width="600px">
+          <v-dialog v-model="dialog" ref="dialog" width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn @click="updateEntityJson()" icon
                      v-bind="attrs"
@@ -23,8 +23,13 @@
                 <span class="headline">Behavior JSON</span>
               </v-card-title>
               <v-card-text>
-                <v-btn class="copyBtn" icon><v-icon>mdi-content-copy</v-icon></v-btn>
-                <json-viewer :value="entityJson" copyable></json-viewer>
+                <div style="display: flex">
+                  <v-textarea :value="entityJson" ref="textarea" dense rows="1"/>
+                  <v-btn @click="copyJson()" icon>
+                    <v-icon>mdi-content-copy</v-icon>
+                  </v-btn>
+                </div>
+                <json-viewer :value="data" :expand-depth=5></json-viewer>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -113,7 +118,6 @@ import draggable from "vuedraggable";
 import EntityComponent from "@/components/EntityComponent";
 import {componentLibrary, componentList} from "./MinecraftComponent"
 import JsonViewer from 'vue-json-viewer'
-import Clipboard from 'clipboard'
 
 export default {
   props: {
@@ -123,14 +127,6 @@ export default {
     EntityComponent,
     draggable,
     JsonViewer
-  },
-  mounted() {
-    let component = this;
-    new Clipboard('.copyBtn', {
-      text: function () {
-        return JSON.stringify(component.entityJson, null, 2);
-      }
-    });
   },
   computed: {
     dragOptions() {
@@ -165,7 +161,14 @@ export default {
         let vue = this.$refs.entityComponents.$children[child];
         data[vue.comp.id] = vue.getData();
       }
-      this.entityJson = data;
+      this.data = data;
+      this.entityJson = JSON.stringify(data, null, 2);
+    },
+    copyJson() {
+      let element = this.$refs.textarea.$el.querySelector('textarea');
+      element.select();
+      element.setSelectionRange(0, 99999);
+      document.execCommand("copy");
     }
   },
   data: () => ({
@@ -175,7 +178,8 @@ export default {
     console: console,
     filter: "",
     dialog: false,
-    entityJson: ""
+    entityJson: "",
+    data: {}
   })
 }
 </script>
