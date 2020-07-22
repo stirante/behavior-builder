@@ -40,6 +40,25 @@
         </v-app-bar>
 
         <v-main>
+          <v-snackbar
+              v-model="snackbar"
+              multi-line
+              top
+              color="red"
+              timeout="-1"
+          >
+            {{ errorMessage }}
+            <template v-slot:action="{ attrs }">
+              <v-btn
+                  dark
+                  text
+                  v-bind="attrs"
+                  @click="snackbar = false;errorMessage = null"
+              >
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
           <v-container class="fill-height" fluid>
             <v-row class="fill-height">
               <v-col class="col-3 scrollable">
@@ -118,6 +137,7 @@ import draggable from "vuedraggable";
 import EntityComponent from "@/components/EntityComponent";
 import {componentLibrary, componentList} from "./MinecraftComponent"
 import JsonViewer from 'vue-json-viewer'
+import stripJsonComments from "strip-json-comments";
 
 export default {
   props: {
@@ -127,6 +147,16 @@ export default {
     EntityComponent,
     draggable,
     JsonViewer
+  },
+  beforeMount() {
+    let dropZone = document.getElementsByTagName('body')[0];
+    let ctx = this;
+    dropZone.addEventListener('dragover', function (evt) {
+      ctx.handleDragOver(evt);
+    }, false);
+    dropZone.addEventListener('drop', function (evt) {
+      ctx.handleJSONDrop(evt);
+    }, false);
   },
   computed: {
     dragOptions() {
@@ -169,6 +199,54 @@ export default {
       element.select();
       element.setSelectionRange(0, 99999);
       document.execCommand("copy");
+    },
+    loadBehavior(behaviors) {
+      this.snackbar = false;
+      this.data = behaviors;
+      this.entity = [];
+      this.errorMessage = "";
+      for (const key in behaviors) {
+        if (!componentLibrary[key]) {
+          this.errorMessage += "\nUndefined component \"" + key + "\"!";
+          continue;
+        }
+        let items = componentLibrary[key].clone();
+        items.data = behaviors[key];
+        this.entity.push(items);
+        if (this.errorMessage && this.errorMessage !== "") {
+          this.snackbar = true;
+        }
+      }
+    },
+    handleDragOver(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = 'copy';
+    },
+    handleJSONDrop(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      let files = evt.dataTransfer.files;
+      for (let i = 0; files.length; i++) {
+        let f = files[i];
+        if (!f) {
+          return;
+        }
+        if (!f.type.match('application/json')) {
+          continue;
+        }
+
+        let reader = new FileReader();
+        let ctx = this;
+        reader.onload = (function () {
+          return function (e) {
+            let p = JSON.parse(stripJsonComments(e.target.result));
+            ctx.loadBehavior(p["minecraft:entity"].components);
+          };
+        })(f);
+
+        reader.readAsText(f);
+      }
     }
   },
   data: () => ({
@@ -179,7 +257,10 @@ export default {
     filter: "",
     dialog: false,
     entityJson: "",
-    data: {}
+    data: {},
+    errorMessage: null,
+    snackbar: false
   })
 }
+
 </script>

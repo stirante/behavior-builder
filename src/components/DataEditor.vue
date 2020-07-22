@@ -9,9 +9,11 @@
     </v-card-title>
     <v-card-text>
       <div v-for="prop in allProps" :key="prop.name">
-        <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" ref="editor"></DataEditor>
+        <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" :loaded="prop.data"
+                    ref="editor"></DataEditor>
         <ConditionalEditor v-if="prop.condition" :schema="prop.condition" ref="conditional">
-          <DataEditor v-for="(schema, name) in prop.value" :schema="schema" :name="name" :key="name" ref="editor"/>
+          <DataEditor v-for="(schema, name) in prop.value" :schema="schema" :name="name" :key="name" :loaded="prop.data"
+                      ref="editor"/>
         </ConditionalEditor>
       </div>
     </v-card-text>
@@ -24,9 +26,10 @@
       {{ name }}
     </v-card-title>
     <v-card-text>
-      <DataEditor v-for="n in items" :schema="inlinedItemSchema" :key="n" :index="n" ref="editor"
-                  v-on:remove-item="removeItem(n)"></DataEditor>
-      <v-btn @click="items.push(itemIdCounter++)">Add</v-btn>
+      <DataEditor v-for="item in items" :schema="inlinedItemSchema" :key="item.id" :index="item.id" :loaded="item.data"
+                  ref="editor"
+                  v-on:remove-item="removeItem(item.id)"></DataEditor>
+      <v-btn @click="items.push({id: itemIdCounter++, data:{}})">Add</v-btn>
     </v-card-text>
   </v-card>
   <div style="display: flex;" v-else-if="isBoolean">
@@ -81,6 +84,22 @@ import ConditionalEditor from "@/components/ConditionalEditor";
 export default {
   name: 'DataEditor',
   components: {ConditionalEditor},
+  beforeMount() {
+    if (this.loaded)
+      this.data = this.loaded;
+
+    if (this.isArray) {
+      let nItems = [];
+      if (this.data instanceof Array) {
+        for (let i = 0; i < this.data.length; i++) {
+          nItems.push({id: this.itemIdCounter++, data: this.data[i]});
+        }
+      } else if (this.data) {
+        nItems.push({id: this.itemIdCounter++, data: this.data});
+      }
+      this.items = nItems;
+    }
+  },
   methods: {
     getData() {
       if (this.isObject) {
@@ -110,6 +129,13 @@ export default {
           let d = this.$refs.editor[i].getData();
           if (d !== undefined) {
             this.data.push(d);
+            let index = this.$refs.editor[i].index;
+            for (let j = 0; j < this.items.length; j++) {
+              if (this.items[j].id === index) {
+                this.items[j].data = d;
+                break;
+              }
+            }
           }
         }
         if (this.data.length === 0) {
@@ -119,6 +145,7 @@ export default {
       return this.data;
     },
     conditionProps(schema) {
+      //TODO: This might have multiple different properties, we need to handle that
       if (schema.then.allOf) {
         let result = {};
         for (const i in schema.then.allOf) {
@@ -129,7 +156,13 @@ export default {
       return schema.then.properties;
     },
     removeItem(n) {
-      this.items.splice(this.items.indexOf(n), 1);
+      let i;
+      for (i = 0; i < this.items.length; i++) {
+        if (this.items[i].id === n) {
+          break;
+        }
+      }
+      this.items.splice(i, 1);
     }
   },
   data: () => ({
@@ -155,6 +188,10 @@ export default {
       let result;
       if (this.schema.items instanceof Array) result = this.schema.items[0];
       else result = this.schema.items;
+      if (!result && this.schema.default) {
+        if (typeof (this.schema.default[0]) === "number") return {"type": "number"};
+        if (typeof (this.schema.default[0]) === "string") return {"type": "string"};
+      }
       if (!result.type && !result['$ref'] && result.default) {
         if (typeof (result.default[0]) === "number") return {"type": "number"};
         if (typeof (result.default[0]) === "string") return {"type": "string"};
@@ -167,7 +204,11 @@ export default {
     allProps() {
       let result = [];
       for (const name in this.inlinedSchema.properties) {
-        result.push({"name": name, "value": this.inlinedSchema.properties[name]});
+        result.push({
+          "name": name,
+          "value": this.inlinedSchema.properties[name],
+          "data": this.data ? this.data[name] : null
+        });
       }
       for (const name in this.inlinedSchema.allOf) {
         let index = result.length;
@@ -177,10 +218,13 @@ export default {
             break;
           }
         }
+        //TODO: This might have multiple properties, we need to handle that
+        let prop = this.conditionProps(this.inlinedSchema.allOf[name]);
         result.splice(index + 1, 0, {
           "name": name,
           "condition": this.inlinedSchema.allOf[name],
-          "value": this.conditionProps(this.inlinedSchema.allOf[name])
+          "value": prop,
+          "data": this.data ? this.data[Object.keys(prop)[0]] : null
         });
       }
 
@@ -220,7 +264,8 @@ export default {
   props: {
     schema: Object,
     name: String,
-    index: Number
+    index: Number,
+    loaded: null
   }
 }
 </script>

@@ -5,6 +5,7 @@ export class MinecraftComponent {
         this._uniqueId = 0;
         this._id = id;
         this._schema = fullScheme.definitions.library.components.properties[id];
+        this._data = {};
     }
 
     get id() {
@@ -21,6 +22,14 @@ export class MinecraftComponent {
 
     get description() {
         return this.schema.description;
+    }
+
+    get data() {
+        return this._data;
+    }
+
+    set data(d) {
+        this._data = d;
     }
 
     hasProperties() {
@@ -228,6 +237,10 @@ export const fullScheme = {
                     "then": {"properties": {"value": {"type": "boolean"}}}
                 },
                 {
+                    "if": {"properties": {"test": {"$ref": "#/definitions/library/filters/tests/string"}}},
+                    "then": {"properties": {"value": {"type": "string"}}}
+                },
+                {
                     "if": {"properties": {"test": {"anyOf": [{"const": "has_component"}]}}},
                     "then": {
                         "properties": {
@@ -237,6 +250,10 @@ export const fullScheme = {
                             }
                         }
                     }
+                },
+                {
+                    "if": {"properties": {"test": {"anyOf": [{"const": "is_difficulty"}]}}},
+                    "then": {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/difficulties"}}}
                 },
                 {
                     "if": {"properties": {"test": {"anyOf": [{"const": "has_equipment"}]}}},
@@ -394,6 +411,11 @@ export const fullScheme = {
                             {"const": "is_altitude"},
                             {"const": "rider_count"}
                         ]
+                    },
+                    "string": {
+                        "anyOf": [
+                            {"const": "is_family"}
+                        ]
                     }
                 },
                 "subjects": {
@@ -429,6 +451,8 @@ export const fullScheme = {
                     },
                     "components": {
                         "enum": [
+                            "minecraft:annotation.break_door",
+                            "minecraft:annotation.open_door",
                             "minecraft:behavior.hide",
                             "minecraft:behavior.move_to_poi",
                             "minecraft:behavior.scared",
@@ -557,6 +581,7 @@ export const fullScheme = {
                             "minecraft:behavior.swim_with_entity",
                             "minecraft:behavior.swoop_attack",
                             "minecraft:behavior.take_flower",
+                            "minecraft:behavior.target_when_pushed",
                             "minecraft:behavior.tempt",
                             "minecraft:behavior.trade_interest",
                             "minecraft:behavior.trade_with_player",
@@ -2119,8 +2144,36 @@ export const fullScheme = {
                     "village_hero"
                 ]
             },
+            "difficulties": {
+                "enum": [
+                    "peaceful",
+                    "easy",
+                    "normal",
+                    "hard"
+                ]
+            },
             "components": {
                 "properties": {
+                    "minecraft:annotation.break_door": {
+                        "type": "object",
+                        "properties": {
+                            "break_time": {
+                                "type": "decimal",
+                                "default": 12.0,
+                                "description": "The time in seconds required to break through doors."
+                            },
+                            "min_difficulty": {
+                                "type": "string",
+                                "default": "hard",
+                                "$ref": "#/definitions/library/difficulties",
+                                "description": "The minimum difficulty that the world must be on for this entity to break doors."
+                            }
+                        },
+                        "description": "Allows the actor to break doors assuming that that flags set up for the component to use in navigation."
+                    },
+                    "minecraft:annotation.open_door": {
+                        "type": "object"
+                    },
                     "minecraft:behavior.hide": {
                         "type": "object",
                         "properties": {
@@ -2793,6 +2846,9 @@ export const fullScheme = {
                             },
                             "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                         }
+                    },
+                    "minecraft:behavior.guardian_attack": {
+                        "type": "object"
                     },
                     "minecraft:behavior.harvest_farm_block": {
                         "type": "object",
@@ -3517,6 +3573,9 @@ export const fullScheme = {
                     "minecraft:behavior.swoop_attack": {
                         "type": "object"
                     },
+                    "minecraft:behavior.target_when_pushed": {
+                        "type": "object"
+                    },
                     "minecraft:behavior.take_flower": {
                         "type": "object"
                     },
@@ -3573,6 +3632,7 @@ export const fullScheme = {
                             },
                             "effect_duration": {
                                 "type": "number",
+                                "default": 0.0,
                                 "description": "Duration of the applied potion effect."
                             }
                         }
@@ -3601,6 +3661,7 @@ export const fullScheme = {
                         "properties": {
                             "should_darken_sky": {
                                 "type": "boolean",
+                                "default": false,
                                 "description": "Whether the sky should darken in the presence of the boss."
                             },
                             "name": {
@@ -3609,6 +3670,7 @@ export const fullScheme = {
                             },
                             "hud_range": {
                                 "type": "number",
+                                "default": 55,
                                 "description": "The max distance from the boss at which the boss's health bar is present on the players screen."
                             }
                         }
@@ -3646,10 +3708,12 @@ export const fullScheme = {
                         "properties": {
                             "width": {
                                 "type": "number",
+                                "default": 1.0,
                                 "description": "Width and Depth of the collision box in blocks. A negative value will be assumed to be 0."
                             },
                             "height": {
                                 "type": "number",
+                                "default": 1.0,
                                 "description": "Height of the collision box in blocks. A negative value will be assumed to be 0."
                             }
                         }
@@ -3725,8 +3789,7 @@ export const fullScheme = {
                                 "$ref": "#/definitions/filters"
                             },
                             "remove_child_entities": {
-                                "type": "boolean",
-                                "description": "If true, all entities linked to this entity in a child relationship (eg. leashed) will also be despawned."
+                                "$ref": "#/definitions/library/components/values/remove_child_entities"
                             },
                             "despawn_from_distance": {
                                 "type": "object",
@@ -3743,22 +3806,27 @@ export const fullScheme = {
                             },
                             "despawn_from_chance": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "Determines if \"min_range_random_chance\" is used in the standard despawn rules"
                             },
                             "despawn_from_inactivity": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "Determines if the \"min_range_inactivity_timer\" is used in the standard despawn rules."
                             },
                             "despawn_from_simulation_edge": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "Determines if the mob is instantly despawned at the edge of simulation distance in the standard despawn rules."
                             },
                             "min_range_inactivity_timer": {
                                 "type": "number",
+                                "default": 30,
                                 "description": "The amount of time in seconds that the mob must be inactive."
                             },
                             "min_range_random_chance": {
                                 "type": "number",
+                                "default": 800,
                                 "description": "A random chance between 1 and the given value."
                             }
                         }
@@ -3785,22 +3853,27 @@ export const fullScheme = {
                         "properties": {
                             "sensor_range": {
                                 "type": "number",
+                                "default": 10,
                                 "description": "The maximum distance another entity can be from this and have the filters checked against it."
                             },
                             "relative_range": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "If true the sensor range is additive on top of the entity's size."
                             },
                             "require_all": {
                                 "type": "boolean",
+                                "default": false,
                                 "description": "If true requires all nearby entities to pass the filter conditions for the event to send."
                             },
                             "minimum_count": {
                                 "type": "number",
+                                "default": 1,
                                 "description": "The minimum number of entities that must pass the filter conditions for the event to send."
                             },
                             "maximum_count": {
                                 "type": "number",
+                                "default": -1,
                                 "description": "The maximum number of entities that must pass the filter conditions for the event to send."
                             },
                             "event_filters": {
@@ -3880,6 +3953,7 @@ export const fullScheme = {
                             "filters": {"$ref": "#/definitions/filters"},
                             "force_use": {
                                 "type": "boolean",
+                                "default": false,
                                 "description": "Determines if item can be used regardless of entity being at full health."
                             },
                             "items": {
@@ -3901,17 +3975,7 @@ export const fullScheme = {
                         }
                     },
                     "minecraft:health": {
-                        "type": "object",
-                        "properties": {
-                            "value": {
-                                "type": "integer",
-                                "description": "The  amount of health an entity has"
-                            },
-                            "max": {
-                                "type": "integer",
-                                "description": "The maximum amount of health an entity can have"
-                            }
-                        }
+                        "$ref": "#/definitions/library/components/values/current_and_max"
                     },
                     "minecraft:hide": {
                         "type": "object"
@@ -3977,7 +4041,7 @@ export const fullScheme = {
                                         "$ref": "#/definitions/library/entities",
                                         "description": "List of entities to spawn when the interaction occurs."
                                     },
-                                    "spawn_item": {
+                                    "spawn_items": {
                                         "type": "object",
                                         "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
                                         "description": "Loot table with items to drop on the ground upon successful interaction."
@@ -4049,7 +4113,7 @@ export const fullScheme = {
                                                         "$ref": "#/definitions/library/entities",
                                                         "description": "List of entities to spawn when the interaction occurs."
                                                     },
-                                                    "spawn_item": {
+                                                    "spawn_items": {
                                                         "type": "object",
                                                         "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
                                                         "description": "Loot table with items to drop on the ground upon successful interaction."
@@ -4133,15 +4197,7 @@ export const fullScheme = {
                         "type": "object"
                     },
                     "minecraft:knockback_resistance": {
-                        "type": "object",
-                        "properties": {
-                            "value": {
-                                "type": "number"
-                            },
-                            "max": {
-                                "type": "number"
-                            }
-                        }
+                        "$ref": "#/definitions/library/components/values/current_and_max"
                     },
                     "minecraft:lava_movement": {
                         "type": "object"
@@ -4227,6 +4283,9 @@ export const fullScheme = {
                     "minecraft:navigation.walk": {
                         "type": "object"
                     },
+                    "minecraft:npc": {
+                        "type": "object"
+                    },
                     "minecraft:on_death": {
                         "type": "object"
                     },
@@ -4284,10 +4343,12 @@ export const fullScheme = {
                         "properties": {
                             "is_pushable": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "Whether the entity can be pushed by other entities."
                             },
                             "is_pushable_by_piston": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "Whether the entity can be pushed by pistons safely."
                             }
                         }
@@ -4296,36 +4357,36 @@ export const fullScheme = {
                         "type": "object",
                         "properties": {
                             "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
-                        },
-                        "minecraft:preferred_path": {
-                            "type": "object"
-                        },
-                        "minecraft:projectile": {
-                            "type": "object"
-                        },
-                        "minecraft:raid_trigger": {
-                            "type": "object"
-                        },
-                        "minecraft:rail_movement": {
-                            "type": "object"
-                        },
-                        "minecraft:rail_sensor": {
-                            "type": "object"
-                        },
-                        "minecraft:ravager_blocked": {
-                            "type": "object"
-                        },
-                        "minecraft:rideable": {
-                            "type": "object"
-                        },
-                        "minecraft:scaffolding_climber": {
-                            "type": "object"
-                        },
-                        "minecraft:scale": {
-                            "type": "object",
-                            "properties": {
-                                "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
-                            }
+                        }
+                    },
+                    "minecraft:preferred_path": {
+                        "type": "object"
+                    },
+                    "minecraft:projectile": {
+                        "type": "object"
+                    },
+                    "minecraft:raid_trigger": {
+                        "type": "object"
+                    },
+                    "minecraft:rail_movement": {
+                        "type": "object"
+                    },
+                    "minecraft:rail_sensor": {
+                        "type": "object"
+                    },
+                    "minecraft:ravager_blocked": {
+                        "type": "object"
+                    },
+                    "minecraft:rideable": {
+                        "type": "object"
+                    },
+                    "minecraft:scaffolding_climber": {
+                        "type": "object"
+                    },
+                    "minecraft:scale": {
+                        "type": "object",
+                        "properties": {
+                            "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
                         }
                     },
                     "minecraft:scale_by_age": {
@@ -4381,10 +4442,12 @@ export const fullScheme = {
                         "properties": {
                             "looping": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "If true, the timer will restart every time after it fires."
                             },
                             "time": {
                                 "type": "array",
+                                "default": [0.0, 0.0],
                                 "description": "Amount of time in seconds for the timer. Can be specified as a number or a pair of numbers (min and max). Incompatible with random_time_choices.",
                                 "items": {
                                     "type": "number"
@@ -4392,10 +4455,12 @@ export const fullScheme = {
                             },
                             "randomInterval": {
                                 "type": "boolean",
+                                "default": true,
                                 "description": "If true, the amount of time on the timer will be random between the min and max values specified in time."
                             },
                             "random_time_choices": {
                                 "type": "array",
+                                "default": [],
                                 "description": "This is a list of objects, representing one value in seconds that can be picked before firing the event and an optional weight. Incompatible with time.",
                                 "items": {
                                     "type": "object",
@@ -4696,6 +4761,11 @@ export const fullScheme = {
                     "scan_interval": {"type": "integer", "default": 10.0},
                     "persist_time": {"type": "number", "default": 3.0},
                     "attack_interval": {"type": "integer", "default": 0},
+                    "remove_child_entities": {
+                        "type": "boolean",
+                        "description": "If true, all entities linked to this entity in a child relationship (eg. leashed) will also be despawned.",
+                        "default": false
+                    },
                     "trigger": {
                         "type": "object",
                         "properties": {
@@ -4704,6 +4774,17 @@ export const fullScheme = {
                             "target": {
                                 "type": "string",
                                 "examples": ["other", "player", "self", "target", "baby", "block"]
+                            }
+                        }
+                    },
+                    "current_and_max": {
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "type": "number"
+                            },
+                            "max": {
+                                "type": "number"
                             }
                         }
                     },
