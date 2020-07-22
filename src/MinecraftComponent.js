@@ -33,7 +33,7 @@ export class MinecraftComponent {
     }
 
     hasProperties() {
-        return (this.schema.properties && this.schema.properties.length !== 0) || this.schema.anyOf;
+        return (this.schema.properties && this.schema.properties.length !== 0) || this.schema.anyOf || this.schema.$ref;
     }
 
     clone() {
