@@ -257,7 +257,7 @@ export default {
       return this.inlinedSchema.type === "integer" || this.inlinedSchema.type === "number" || this.inlinedSchema.type === "decimal";
     },
     isConst() {
-      return this.inlinedSchema.const || (this.inlinedSchema.enum || this.inlinedSchema.enum.length === 1);
+      return this.inlinedSchema.const || (this.inlinedSchema.enum && this.inlinedSchema.enum.length === 1);
     },
     enums() {
       if (!this.isEnum) {
