@@ -38,6 +38,8 @@
     </v-btn>
     <v-checkbox v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
   </div>
+  <div style="display: flex;" v-else-if="isConst">
+  </div>
   <div style="display: flex;" v-else-if="isEnum">
     <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
@@ -102,6 +104,12 @@ export default {
   },
   methods: {
     getData() {
+      if (this.isConst) {
+        if (this.inlinedSchema.const === void 0) {
+          return this.inlinedSchema.enum[0];
+        }
+        return this.inlinedSchema.const;
+      }
       if (this.isObject) {
         this.data = {};
         for (const i in this.$refs.editor) {
@@ -247,6 +255,9 @@ export default {
     },
     isNumber() {
       return this.inlinedSchema.type === "integer" || this.inlinedSchema.type === "number" || this.inlinedSchema.type === "decimal";
+    },
+    isConst() {
+      return this.inlinedSchema.const || (this.inlinedSchema.enum || this.inlinedSchema.enum.length === 1);
     },
     enums() {
       if (!this.isEnum) {
