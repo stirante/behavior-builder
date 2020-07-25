@@ -79,8 +79,7 @@
 </style>
 
 <script>
-import {resolvePath} from "@/SchemaUtils";
-import {fullScheme} from "@/MinecraftComponent";
+import {resolvePath} from "@/Schema";
 import ConditionalEditor from "@/components/ConditionalEditor";
 
 export default {
@@ -182,7 +181,7 @@ export default {
   computed: {
     inlinedSchema() {
       if (this.schema["$ref"]) {
-        return Object.assign({}, this.schema, resolvePath(fullScheme, this.schema["$ref"]));
+        return Object.assign({}, this.schema, resolvePath(this.schema["$ref"]));
       }
       //TODO: support "anyOf" schema
       //For now, dirty fix
@@ -205,7 +204,7 @@ export default {
         if (typeof (result.default[0]) === "string") return {"type": "string"};
       }
       if (result['$ref']) {
-        return Object.assign({}, result, resolvePath(fullScheme, result['$ref']));
+        return Object.assign({}, result, resolvePath(result['$ref']));
       }
       return result;
     },

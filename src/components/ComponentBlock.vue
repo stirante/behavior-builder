@@ -44,11 +44,11 @@
 </style>
 
 <script>
-import {MinecraftComponent} from "@/MinecraftComponent";
+import {EntityComponent} from "@/EntityComponent";
 import DataEditor from "@/components/DataEditor";
 
 export default {
-  name: 'EntityComponent',
+  name: 'ComponentBlock',
   components: {DataEditor},
   mounted() {
     this.$refs.card.$el.onmouseup = this.onCardClick;
@@ -67,7 +67,7 @@ export default {
     show: false
   }),
   props: {
-    comp: MinecraftComponent,
+    comp: EntityComponent,
     readOnly: Boolean
   }
 }

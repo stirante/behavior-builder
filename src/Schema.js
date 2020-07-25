@@ -1,51 +1,6 @@
-let idCounter = 0;
+import {EntityComponent} from "@/EntityComponent";
 
-export class MinecraftComponent {
-    constructor(id) {
-        this._uniqueId = 0;
-        this._id = id;
-        this._schema = fullScheme.definitions.library.components.properties[id];
-        this._data = {};
-    }
-
-    get id() {
-        return this._id;
-    }
-
-    get schema() {
-        return this._schema;
-    }
-
-    get uniqueId() {
-        return this._uniqueId;
-    }
-
-    get description() {
-        return this.schema.description;
-    }
-
-    get data() {
-        return this._data;
-    }
-
-    set data(d) {
-        this._data = d;
-    }
-
-    hasProperties() {
-        return (this.schema.properties && this.schema.properties.length !== 0) || this.schema.anyOf || this.schema.$ref;
-    }
-
-    clone() {
-        let clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-        clone.data = {};
-        clone._uniqueId = idCounter++;
-        return clone;
-    }
-
-}
-
-export const fullScheme = {
+export const fullSchema = {
     "$id": "https://aexer0e.github.io/bedrock-schema/",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/Entity",
@@ -4826,11 +4781,88 @@ export const fullScheme = {
     }
 };
 
+/**
+ * Loads all component data
+ * @param jsonFile loaded file
+ * @param entity an array of EntityComponent instances to fill
+ * @param postErrorMessage a function, which allows to show error messages
+ * @returns {*} root data
+ */
+export function loadComponentData(jsonFile, entity, postErrorMessage) {
+    let behaviors = jsonFile["minecraft:entity"].components;
+    for (const key in behaviors) {
+        if (!componentLibrary[key]) {
+            postErrorMessage("\nUndefined component \"" + key + "\"!");
+            continue;
+        }
+        let items = componentLibrary[key].clone();
+        items.data = behaviors[key];
+        entity.push(items);
+    }
+    return behaviors;
+}
+
+/**
+ * This function initializes all draggable components in left panel
+ * @param componentLibrary a map of all components, where key is the ID of component and value is EntityComponent instance
+ * @param componentList a list of all EntityComponent instances
+ */
+function fillComponentData(componentLibrary, componentList) {
+    for (const id in fullSchema.definitions.library.components.properties) {
+        componentLibrary[id] = new EntityComponent(id, fullSchema.definitions.library.components.properties[id]);
+        componentList.push(componentLibrary[id]);
+    }
+}
+
+/**
+ * Function, which prepares the data for export. For example, this is where we can place the data from builder into bigger json
+ * @param data a map, where key is the ID of the component and value is exported data from this component
+ * @returns {*} processed data
+ */
+export function processData(data) {
+    return data;
+}
+
+/**
+ * Resolves the path and return the schema at this path
+ * @param path a path in format #/path/to/the/schema
+ * @returns {*} schema
+ */
+export function resolvePath(path) {
+    let split = path.substring(2).split("/");
+    let current = fullSchema;
+    for (const s of split) {
+        current = current[s];
+    }
+    return current;
+}
+
+/**
+ * Returns empty value for given schema or default value, if specified.
+ * @param schema schema
+ * @returns {*} empty value
+ */
+export function getEmptyOfType(schema) {
+    let def = schema.default;
+    switch (schema.type) {
+        case "string":
+            return def ? def : "";
+        case "object":
+            return {};
+        case "array":
+        case "list":
+            return def ? def : [];
+        case "boolean":
+            return def ? def === "true" : false;
+        case "number":
+        case "integer":
+        case "decimal":
+            return def ? def : 0;
+    }
+    return null;
+}
 
 export const componentLibrary = {};
 export const componentList = [];
 
-for (const id in fullScheme.definitions.library.components.properties) {
-    componentLibrary[id] = new MinecraftComponent(id);
-    componentList.push(componentLibrary[id]);
-}
+fillComponentData(componentLibrary, componentList);

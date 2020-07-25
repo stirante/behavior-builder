@@ -73,8 +73,8 @@
                     @start="drag = true"
                     @end="drag = false">
                   <transition-group class="fill-height" type="transition" :name="!drag ? 'flip-list' : null" tag="div">
-                    <EntityComponent v-for="comp in filteredComponentLibrary" :key="comp.id" :comp="comp" read-only>
-                    </EntityComponent>
+                    <ComponentBlock v-for="comp in filteredComponentLibrary" :key="comp.id" :comp="comp" read-only>
+                    </ComponentBlock>
                   </transition-group>
                 </draggable>
               </v-col>
@@ -89,9 +89,9 @@
                     @end="drag = false">
                   <transition-group ref="entityComponents" class="fill-height" type="transition"
                                     :name="!drag ? 'flip-list' : null" tag="div">
-                    <EntityComponent v-for="comp in entity" :key="comp.uniqueId" :comp="comp"
+                    <ComponentBlock v-for="comp in entity" :key="comp.uniqueId" :comp="comp"
                                      v-on:remove-component="removeComponent(comp)">
-                    </EntityComponent>
+                    </ComponentBlock>
                   </transition-group>
                 </draggable>
               </v-col>
@@ -134,8 +134,8 @@
 
 <script>
 import draggable from "vuedraggable";
-import EntityComponent from "@/components/EntityComponent";
-import {componentLibrary, componentList} from "./MinecraftComponent"
+import ComponentBlock from "@/components/ComponentBlock";
+import {componentLibrary, componentList, loadComponentData, processData} from "./Schema"
 import JsonViewer from 'vue-json-viewer'
 import stripJsonComments from "strip-json-comments";
 
@@ -144,7 +144,7 @@ export default {
     source: String,
   },
   components: {
-    EntityComponent,
+    ComponentBlock,
     draggable,
     JsonViewer
   },
@@ -191,8 +191,8 @@ export default {
         let vue = this.$refs.entityComponents.$children[child];
         data[vue.comp.id] = vue.getData();
       }
-      this.data = data;
-      this.entityJson = JSON.stringify(data, null, 2);
+      this.data = processData(data);
+      this.entityJson = JSON.stringify(this.data, null, 2);
     },
     copyJson() {
       let element = this.$refs.textarea.$el.querySelector('textarea');
@@ -200,22 +200,16 @@ export default {
       element.setSelectionRange(0, 99999);
       document.execCommand("copy");
     },
-    loadBehavior(behaviors) {
+    load(jsonFile) {
       this.snackbar = false;
-      this.data = behaviors;
       this.entity = [];
       this.errorMessage = "";
-      for (const key in behaviors) {
-        if (!componentLibrary[key]) {
-          this.errorMessage += "\nUndefined component \"" + key + "\"!";
-          continue;
-        }
-        let items = componentLibrary[key].clone();
-        items.data = behaviors[key];
-        this.entity.push(items);
-        if (this.errorMessage && this.errorMessage !== "") {
-          this.snackbar = true;
-        }
+      let ctx = this;
+      this.data = loadComponentData(jsonFile, this.entity, function (msg){
+        ctx.errorMessage += msg;
+      });
+      if (this.errorMessage && this.errorMessage !== "") {
+        this.snackbar = true;
       }
     },
     handleDragOver(evt) {
@@ -240,8 +234,7 @@ export default {
         let ctx = this;
         reader.onload = (function () {
           return function (e) {
-            let p = JSON.parse(stripJsonComments(e.target.result));
-            ctx.loadBehavior(p["minecraft:entity"].components);
+            ctx.load(JSON.parse(stripJsonComments(e.target.result)));
           };
         })(f);
 

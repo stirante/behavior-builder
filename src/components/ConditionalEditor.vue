@@ -10,8 +10,7 @@
 
 <script>
 
-import {resolvePath} from "@/SchemaUtils";
-import {fullScheme} from "@/MinecraftComponent";
+import {resolvePath} from "@/Schema";
 
 export default {
   name: 'ConditionalEditor',
@@ -36,7 +35,7 @@ export default {
         if (!fieldEditor || !fieldEditor.getData()) return false;
         let conditionValue = condition[prop];
         if (conditionValue['$ref']) {
-          let acceptable = resolvePath(fullScheme, conditionValue['$ref']).anyOf.map(value => value.const);
+          let acceptable = resolvePath(conditionValue['$ref']).anyOf.map(value => value.const);
           return acceptable.indexOf(fieldEditor.getData()) !== -1;
         }
         if (conditionValue.anyOf) {
