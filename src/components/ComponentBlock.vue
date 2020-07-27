@@ -15,7 +15,7 @@
     <v-expand-transition v-if="!readOnly.valueOf()" v-show="comp.hasProperties()">
       <div v-show="show">
         <v-card-text>
-          <DataEditor ref="editor" name="" :schema="comp.schema" :loaded="comp.data"></DataEditor>
+          <DataEditor ref="editor" name="" :schema="comp.schema" :loaded="comp.data" root></DataEditor>
         </v-card-text>
       </div>
     </v-expand-transition>

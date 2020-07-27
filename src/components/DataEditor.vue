@@ -1,6 +1,6 @@
 <!--suppress JSUnfilteredForInLoop -->
 <template>
-  <v-card v-if="isObject" style="margin: 1em;">
+  <v-card v-if="isObject && !root" style="margin: 1em;">
     <v-card-title>
       <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
         <v-icon>mdi-close</v-icon>
@@ -8,6 +8,9 @@
       {{ name }}
     </v-card-title>
     <v-card-text>
+      <v-radio-group v-model="versionIndex" row v-if="schemaVersions.length > 0">
+        <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index" :key="index"></v-radio>
+      </v-radio-group>
       <div v-for="prop in allProps" :key="prop.name">
         <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" :loaded="prop.data"
                     ref="editor"></DataEditor>
@@ -18,6 +21,19 @@
       </div>
     </v-card-text>
   </v-card>
+  <div v-else-if="isObject && root">
+    <v-radio-group v-model="versionIndex" row v-if="schemaVersions.length > 0">
+      <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index" :key="index"></v-radio>
+    </v-radio-group>
+    <div v-for="prop in allProps" :key="prop.name">
+      <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" :loaded="prop.data"
+                  ref="editor"></DataEditor>
+      <ConditionalEditor v-if="prop.condition" :schema="prop.condition" ref="conditional">
+        <DataEditor v-for="(schema, name) in prop.value" :schema="schema" :name="name" :key="name" :loaded="prop.data"
+                    ref="editor"/>
+      </ConditionalEditor>
+    </div>
+  </div>
   <v-card ref="arr" v-else-if="isArray" style="margin: 1em;">
     <v-card-title>
       <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
@@ -176,17 +192,16 @@ export default {
     show: false,
     data: undefined,
     items: [],
-    itemIdCounter: 0
+    itemIdCounter: 0,
+    versionIndex: 0
   }),
   computed: {
     inlinedSchema() {
       if (this.schema["$ref"]) {
         return Object.assign({}, this.schema, resolvePath(this.schema["$ref"]));
       }
-      //TODO: support "anyOf" schema
-      //For now, dirty fix
       if (this.schema.anyOf && !this.schema.properties) {
-        return Object.assign({}, this.schema, this.schema.anyOf[0]);
+        return Object.assign({}, this.schema, this.schema.anyOf[this.versionIndex]);
       }
       return this.schema;
     },
@@ -258,6 +273,9 @@ export default {
     isConst() {
       return this.inlinedSchema.const || (this.inlinedSchema.enum && this.inlinedSchema.enum.length === 1);
     },
+    schemaVersions() {
+      return this.inlinedSchema.anyOf ? this.inlinedSchema.anyOf : [];
+    },
     enums() {
       if (!this.isEnum) {
         return [];
@@ -275,7 +293,8 @@ export default {
     schema: Object,
     name: String,
     index: Number,
-    loaded: null
+    loaded: null,
+    root: Boolean
   }
 }
 </script>
