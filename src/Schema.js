@@ -4868,23 +4868,22 @@ export const fullSchema = {
 
 /**
  * Loads all component data
- * @param jsonFile loaded file
- * @param entity an array of EntityComponent instances to fill
+ * @param jsonData components data
  * @param postErrorMessage a function, which allows to show error messages
- * @returns {*} root data
+ * @returns {*} an array of EntityComponent instances to fill
  */
-export function loadComponentData(jsonFile, entity, postErrorMessage) {
-    let behaviors = jsonFile["minecraft:entity"].components;
-    for (const key in behaviors) {
+export function loadComponentData(jsonData, postErrorMessage) {
+    let entity = [];
+    for (const key in jsonData) {
         if (!componentLibrary[key]) {
             postErrorMessage("\nUndefined component \"" + key + "\"!");
             continue;
         }
         let items = componentLibrary[key].clone();
-        items.data = behaviors[key];
+        items.data = jsonData[key];
         entity.push(items);
     }
-    return behaviors;
+    return entity;
 }
 
 /**
@@ -4900,7 +4899,7 @@ function fillComponentData(componentLibrary, componentList) {
 }
 
 /**
- * Function, which prepares the data for export. For example, this is where we can place the data from builder into bigger json
+ * Function, which prepares the component group for export.
  * @param data a map, where key is the ID of the component and value is exported data from this component
  * @returns {*} processed data
  */

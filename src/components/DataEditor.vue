@@ -9,7 +9,8 @@
     </v-card-title>
     <v-card-text>
       <v-radio-group v-model="versionIndex" row v-if="schemaVersions.length > 0">
-        <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index" :key="index"></v-radio>
+        <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index"
+                 :key="index"></v-radio>
       </v-radio-group>
       <div v-for="prop in allProps" :key="prop.name">
         <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" :loaded="prop.data"
@@ -23,7 +24,8 @@
   </v-card>
   <div v-else-if="isObject && root">
     <v-radio-group v-model="versionIndex" row v-if="schemaVersions.length > 0">
-      <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index" :key="index"></v-radio>
+      <v-radio v-for="(version, index) in schemaVersions" :label="'Version ' + index" :value="index"
+               :key="index"></v-radio>
     </v-radio-group>
     <div v-for="prop in allProps" :key="prop.name">
       <DataEditor v-if="!prop.condition" :schema="prop.value" :name="prop.name" :loaded="prop.data"
@@ -40,12 +42,15 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
       {{ name }}
+      <v-spacer></v-spacer>
+      <v-btn icon @click="items.push({id: itemIdCounter++, data:null})">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <DataEditor v-for="item in items" :schema="inlinedItemSchema" :key="item.id" :index="item.id" :loaded="item.data"
                   ref="editor"
                   v-on:remove-item="removeItem(item.id)"></DataEditor>
-      <v-btn @click="items.push({id: itemIdCounter++, data:{}})">Add</v-btn>
     </v-card-text>
   </v-card>
   <div style="display: flex;" v-else-if="isBoolean">

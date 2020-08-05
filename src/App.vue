@@ -1,130 +1,66 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <v-app id="inspire">
-        <v-app-bar
-            app
-            clipped-right
-            color="blue-grey"
-            dark
-        >
-          <v-toolbar-title>behavior-builder</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" ref="dialog" width="600px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn @click="updateEntityJson()" icon
-                     v-bind="attrs"
-                     v-on="on">
-                <v-icon>mdi-code-json</v-icon>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">Behavior JSON</span>
-              </v-card-title>
-              <v-card-text>
-                <div style="display: flex">
-                  <v-textarea :value="entityJson" ref="textarea" dense rows="1"/>
-                  <v-btn @click="copyJson()" icon>
-                    <v-icon>mdi-content-copy</v-icon>
-                  </v-btn>
-                </div>
-                <json-viewer :value="data" :expand-depth=5></json-viewer>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="dialog = false">OK</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-app-bar>
+      <v-app-bar app clipped-right color="blue-grey" dark>
+        <v-btn v-if="currentComponentGroup !== null" @click="goBack()" icon>
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <v-toolbar-title>behavior-builder</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="clearAll()">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-dialog v-model="dialog" ref="dialog" width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-code-json</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline">Behavior JSON</span>
+            </v-card-title>
+            <v-card-text>
+              <div style="display: flex">
+                <v-textarea :value="entityJson" ref="textarea" dense rows="1"/>
+                <v-btn @click="copyJson()" icon>
+                  <v-icon>mdi-content-copy</v-icon>
+                </v-btn>
+              </div>
+              <json-viewer :value="entity" :expand-depth=5></json-viewer>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" text @click="dialog = false">OK</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-app-bar>
 
-        <v-main>
-          <v-snackbar
-              v-model="snackbar"
-              multi-line
-              top
-              color="red"
-              timeout="-1"
-          >
-            {{ errorMessage }}
-            <template v-slot:action="{ attrs }">
-              <v-btn
-                  dark
-                  text
-                  v-bind="attrs"
-                  @click="snackbar = false;errorMessage = null"
-              >
-                Close
-              </v-btn>
-            </template>
-          </v-snackbar>
-          <v-container class="fill-height" fluid>
-            <v-row class="fill-height">
-              <v-col class="col-3 scrollable">
-                <v-text-field label="Filter" prepend-inner-icon="mdi-filter" v-model="filter" clearable
-                              v-on:click:clear="filter = ''"></v-text-field>
-                <draggable
-                    handle=".handle"
-                    :list="filteredComponentLibrary"
-                    v-bind="dragOptions"
-                    :clone="cloneComponent"
-                    :group="{ name: 'library', pull: 'clone', put: false }"
-                    @start="drag = true"
-                    @end="drag = false">
-                  <transition-group class="fill-height" type="transition" :name="!drag ? 'flip-list' : null" tag="div">
-                    <ComponentBlock v-for="comp in filteredComponentLibrary" :key="comp.id" :comp="comp" read-only>
-                    </ComponentBlock>
-                  </transition-group>
-                </draggable>
-              </v-col>
-              <v-col class="col-9 scrollable">
-                <draggable
-                    handle=".handle"
-                    class="fill-height"
-                    :list="entity"
-                    v-bind="dragOptions"
-                    group="library"
-                    @start="drag = true"
-                    @end="drag = false">
-                  <transition-group ref="entityComponents" class="fill-height" type="transition"
-                                    :name="!drag ? 'flip-list' : null" tag="div">
-                    <ComponentBlock v-for="comp in entity" :key="comp.uniqueId" :comp="comp"
-                                     v-on:remove-component="removeComponent(comp)">
-                    </ComponentBlock>
-                  </transition-group>
-                </draggable>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-main>
+      <v-main>
+        <v-snackbar v-model="snackbar" multi-line top color="red" timeout="-1">
+          {{ errorMessage }}
+          <template v-slot:action="{ attrs }">
+            <v-btn dark text v-bind="attrs" @click="snackbar = false;errorMessage = null">
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
+        <BehaviorOverview v-if="!currentComponentGroup" :loaded="entity" v-on:change="entity = $event"
+                          v-on:open="showComponentGroup($event)" v-on:error="showErrorMessage($event)"/>
+        <EditBehavior ref="editBehavior" v-if="currentComponentGroup" :group-name="currentComponentGroupName"
+                      :loaded="currentComponentGroup" v-on:error="showErrorMessage($event)"/>
+      </v-main>
 
-        <v-footer
-            app
-            color="blue-grey"
-            class="white--text"
-        >
-          <v-spacer></v-spacer>
-          <span>&copy; Piotr "stirante" Brzozowski {{ new Date().getFullYear() }}</span>
-        </v-footer>
-      </v-app>
+      <v-footer app color="blue-grey" class="white--text">
+        <v-spacer></v-spacer>
+        <span>&copy; Piotr "stirante" Brzozowski {{ new Date().getFullYear() }}</span>
+      </v-footer>
     </v-app>
   </div>
 </template>
 
 <style>
-
-.component-column {
-  min-width: 20em;
-}
-
-.flip-list-move {
-  transition: transform 0.5s;
-}
-
-.ghost {
-  opacity: 0.5;
-}
 
 .scrollable {
   overflow-y: auto;
@@ -133,19 +69,18 @@
 </style>
 
 <script>
-import draggable from "vuedraggable";
-import ComponentBlock from "@/components/ComponentBlock";
-import {componentLibrary, componentList, loadComponentData, processData} from "./Schema"
 import JsonViewer from 'vue-json-viewer'
 import stripJsonComments from "strip-json-comments";
+import EditBehavior from "@/pages/EditBehavior";
+import BehaviorOverview from "@/pages/BehaviorOverview";
 
 export default {
   props: {
     source: String,
   },
   components: {
-    ComponentBlock,
-    draggable,
+    BehaviorOverview,
+    EditBehavior,
     JsonViewer
   },
   beforeMount() {
@@ -158,59 +93,56 @@ export default {
       ctx.handleJSONDrop(evt);
     }, false);
   },
-  computed: {
-    dragOptions() {
-      return {
-        animation: 200,
-        disabled: false,
-        ghostClass: "ghost"
-      };
-    },
-    filteredComponentLibrary() {
-      if (!this.filter || this.filter === "") {
-        return componentList;
-      }
-      return componentList.filter(value => value.id.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
-    }
-  },
   methods: {
-    removeComponent(comp) {
-      for (let i = 0; i < this.entity.length; i++) {
-        if (this.entity[i].uniqueId === comp.uniqueId) {
-          this.entity.splice(i, 1);
+    clearAll() {
+      this.entity = {
+        "format_version": "1.16.0",
+        "minecraft:entity": {
+          "description": {},
+          "component_groups": {},
+          "components": {},
+          "events": {}
         }
-      }
+      };
+      this.dialog = false;
+      this.snackbar = false;
+      this.errorMessage = "";
+      this.currentComponentGroup = null;
+      this.currentComponentGroupName = null;
     },
-    cloneComponent({id}) {
-      return componentLibrary[id].clone();
-    },
-    updateEntityJson() {
-      if (!this.$refs.entityComponents) return "";
-      let data = {};
-      for (const child in this.$refs.entityComponents.$children) {
-        let vue = this.$refs.entityComponents.$children[child];
-        data[vue.comp.id] = vue.getData();
+    goBack() {
+      let componentGroup = this.$refs.editBehavior.getData();
+      let groupName = this.currentComponentGroupName;
+      if (groupName) {
+        this.entity["minecraft:entity"].component_groups[groupName] = componentGroup;
+      } else {
+        this.entity["minecraft:entity"].components = componentGroup;
       }
-      this.data = processData(data);
-      this.entityJson = JSON.stringify(this.data, null, 2);
+      this.currentComponentGroup = null;
+      this.currentComponentGroupName = null;
     },
     copyJson() {
       let element = this.$refs.textarea.$el.querySelector('textarea');
       element.select();
-      element.setSelectionRange(0, 99999);
+      element.setSelectionRange(0, this.entityJson.length);
       document.execCommand("copy");
+    },
+    showComponentGroup(groupName) {
+      this.currentComponentGroupName = groupName;
+      if (groupName) {
+        this.currentComponentGroup = this.entity["minecraft:entity"].component_groups[groupName];
+      } else {
+        this.currentComponentGroup = this.entity["minecraft:entity"].components;
+      }
+    },
+    showErrorMessage(msg) {
+      this.snackbar = true;
+      this.errorMessage = msg;
     },
     load(jsonFile) {
       this.snackbar = false;
-      this.entity = [];
+      this.entity = jsonFile;
       this.errorMessage = "";
-      let ctx = this;
-      this.data = loadComponentData(jsonFile, this.entity, function (msg){
-        ctx.errorMessage += msg;
-      });
-      if (this.errorMessage && this.errorMessage !== "") {
-        this.snackbar = true;
-      }
     },
     handleDragOver(evt) {
       evt.stopPropagation();
@@ -232,27 +164,34 @@ export default {
 
         let reader = new FileReader();
         let ctx = this;
-        reader.onload = (function () {
-          return function (e) {
-            ctx.load(JSON.parse(stripJsonComments(e.target.result)));
-          };
-        })(f);
+        reader.onload = function (e) {
+          ctx.load(JSON.parse(stripJsonComments(e.target.result)));
+        };
 
         reader.readAsText(f);
       }
     }
   },
+  computed: {
+    entityJson() {
+      return JSON.stringify(this.entity, null, 2);
+    }
+  },
   data: () => ({
-    componentLibrary: componentList,
-    entity: [],
-    drag: false,
-    console: console,
-    filter: "",
     dialog: false,
-    entityJson: "",
-    data: {},
+    entity: {
+      "format_version": "1.16.0",
+      "minecraft:entity": {
+        "description": {},
+        "component_groups": {},
+        "components": {},
+        "events": {}
+      }
+    },
     errorMessage: null,
-    snackbar: false
+    snackbar: false,
+    currentComponentGroup: null,
+    currentComponentGroupName: null
   })
 }
 
