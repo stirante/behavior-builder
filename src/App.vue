@@ -12,7 +12,7 @@
         </v-btn>
         <v-dialog v-model="dialog" ref="dialog" width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on">
+            <v-btn icon v-bind="attrs" v-on="on" @click="updateEntity()">
               <v-icon>mdi-code-json</v-icon>
             </v-btn>
           </template>
@@ -111,15 +111,20 @@ export default {
       this.currentComponentGroupName = null;
     },
     goBack() {
-      let componentGroup = this.$refs.editBehavior.getData();
-      let groupName = this.currentComponentGroupName;
-      if (groupName) {
-        this.entity["minecraft:entity"].component_groups[groupName] = componentGroup;
-      } else {
-        this.entity["minecraft:entity"].components = componentGroup;
-      }
+      this.updateEntity();
       this.currentComponentGroup = null;
       this.currentComponentGroupName = null;
+    },
+    updateEntity() {
+      if (this.currentComponentGroup) {
+        let componentGroup = this.$refs.editBehavior.getData();
+        let groupName = this.currentComponentGroupName;
+        if (groupName) {
+          this.entity["minecraft:entity"].component_groups[groupName] = componentGroup;
+        } else {
+          this.entity["minecraft:entity"].components = componentGroup;
+        }
+      }
     },
     copyJson() {
       let element = this.$refs.textarea.$el.querySelector('textarea');
@@ -143,6 +148,8 @@ export default {
       this.snackbar = false;
       this.entity = jsonFile;
       this.errorMessage = "";
+      this.currentComponentGroupName = null;
+      this.currentComponentGroup = null;
     },
     handleDragOver(evt) {
       evt.stopPropagation();

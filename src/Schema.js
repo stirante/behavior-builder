@@ -3782,12 +3782,11 @@ export const fullSchema = {
                             "description": "Adds a timer after which this entity will spawn another entity or item (similar to vanilla's chicken's egg-laying behavior).`",
                             "properties": {
                                 "entities": {
+                                    "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/library/components/values/value"
-                                    },
-                                    "description": "The initial value of the strength"
-                                },
-                                "max": { "type": "integer", "description": "The maximum strength of this entity", "default": 5 }
+                                        "$ref": "#/definitions/library/components/values/spawn_entity"
+                                    }
+                                }
                             }
                         },
                         "minecraft:spell_effects": {
