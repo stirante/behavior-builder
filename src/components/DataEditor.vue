@@ -57,7 +57,7 @@
     <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
-    <v-checkbox v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
+    <v-checkbox :false-value="false" :true-value="true" indeterminate v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
   </div>
   <div style="display: flex;" v-else-if="isConst">
   </div>
@@ -78,14 +78,7 @@
     <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
-    <v-text-field v-model="data" :label="name" type="number" :hint="inlinedSchema.description"
-                  persistent-hint></v-text-field>
-  </div>
-  <div style="display: flex;" v-else-if="isNumber">
-    <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
-      <v-icon>mdi-close</v-icon>
-    </v-btn>
-    <v-text-field v-model="data" :label="name" type="number" :hint="inlinedSchema.description"
+    <v-text-field v-model.number="data" :label="name" type="number" :hint="inlinedSchema.description"
                   persistent-hint></v-text-field>
   </div>
   <div style="display: flex;" v-else>
