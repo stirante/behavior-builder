@@ -3544,9 +3544,7 @@ export const fullSchema = {
                         },
                         "minecraft:knockback_resistance": {
                             "type": "object",
-                            "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal" }
-                            }
+                            "$ref": "#/definitions/library/components/values/value_with_max"
                         },
                         "minecraft:lava_movement": {
                             "type": "object"
