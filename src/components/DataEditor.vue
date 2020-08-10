@@ -251,22 +251,24 @@ export default {
       return result;
     },
     isObject() {
-      return this.inlinedSchema.type === "object" || this.inlinedSchema.properties;
+      return this.inlinedSchema.type === "object" || this.inlinedSchema.type[0] === "object" || this.inlinedSchema.properties;
     },
     isArray() {
-      return this.inlinedSchema.type === "array" || this.inlinedSchema.type === "list";
+      return this.inlinedSchema.type === "array" || this.inlinedSchema.type === "list" ||
+          this.inlinedSchema.type[0] === "array" || this.inlinedSchema.type[0] === "list";
     },
     isString() {
-      return this.inlinedSchema.type === "string";
+      return this.inlinedSchema.type === "string" || this.inlinedSchema.type[0] === "object";
     },
     isEnum() {
       return this.inlinedSchema.enum;
     },
     isBoolean() {
-      return this.inlinedSchema.type === "boolean";
+      return this.inlinedSchema.type === "boolean" || this.inlinedSchema.type[0] === "boolean";
     },
     isNumber() {
-      return this.inlinedSchema.type === "integer" || this.inlinedSchema.type === "number" || this.inlinedSchema.type === "decimal";
+      return this.inlinedSchema.type === "integer" || this.inlinedSchema.type === "number" || this.inlinedSchema.type === "decimal" ||
+          this.inlinedSchema.type[0] === "integer" || this.inlinedSchema.type[0] === "number" || this.inlinedSchema.type[0] === "decimal";
     },
     isConst() {
       return this.inlinedSchema.const || (this.inlinedSchema.enum && this.inlinedSchema.enum.length === 1);
