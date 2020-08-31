@@ -2824,7 +2824,7 @@ export const fullSchema = {
                                     "description": "Allows the attacking entity to update the nearest target, otherwise a target is only reselected after each \"scan_interval\" or \"attack_interval\"."
                                 },
                                 "scan_interval": {
-                                    "$ref": "#/definitions/library/components/values/reselect_targets",
+                                    "$ref": "#/definitions/library/components/values/scan_interval",
                                     "description": "If \"attack_interval\" is 0 or isn't declared, then between attacks: scanning for a new target occurs every amount of ticks equal to \"scan_interval\", minimum value is 10.."
                                 },
                                 "set_persistent": { "$ref": "#/definitions/library/components/values/set_persistent" },
@@ -2931,7 +2931,6 @@ export const fullSchema = {
                         },
                         "minecraft:behavior.ranged_attack": {
                             "type": "object",
-                            "description": "Allows an entity to attack by using ranged shots. \"charge_shoot_trigger\" must be greater than 0 to enable charged up burst-shot attacks.",
                             "properties": {
                                 "attack_interval": {
                                     "type": "number",
@@ -3679,7 +3678,19 @@ export const fullSchema = {
                             "type": "object"
                         },
                         "minecraft:physics": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "has_collision": {
+                                    "type": "boolean",
+                                    "description": "Whether or not the object collides with things.",
+                                    "default": true
+                                },
+                                "has_gravity": {
+                                    "type": "boolean",
+                                    "description": "Whether or not the entity is affected by gravity.",
+                                    "default": true
+                                }
+                            }
                         },
                         "minecraft:player.saturation": {
                             "properties": {
@@ -3808,7 +3819,18 @@ export const fullSchema = {
                             "type": "object"
                         },
                         "minecraft:teleport": {
-                            "type": "object"
+                            "type": "object",
+                            "description": "Defines an entity's teleporting behavior.",
+                            "properties": {
+                                "dark_teleport_chance": {"type": "number", "default": 0.01, "description": "Modifies the chance that the entity will teleport if the entity is in darkness"},
+                                "light_teleport_chance": {"type": "number", "default": 0.01, "description": "Modifies the chance that the entity will teleport if the entity is in daylight"},
+                                "max_random_teleport_time": {"type": "number", "default": 20, "description": "Maximum amount of time in seconds between random teleports"},
+                                "min_random_teleport_time": {"type": "number", "default": 0, "description": "Minimum amount of time in seconds between random teleports"},
+                                "random_teleport_cube": {"type": "array", "default": [32, 16, 32], "description": "Entity will teleport to a random position within the area defined by this cube"},
+                                "random_teleports": {"type": "boolean", "default": true, "description": "If true, the entity will teleport randomly"},
+                                "target_distance": {"type": "number", "default": 16, "description": "Maximum distance the entity will teleport when chasing a target"},
+                                "target_teleport_chance": {"type": "number", "default": 1, "description": "The chance that the entity will teleport between 0.0 and 1.0. 1.0 means 100%"}
+                            }
                         },
                         "minecraft:tick_world": {
                             "type": "object"
