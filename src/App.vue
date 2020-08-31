@@ -54,7 +54,7 @@
 
       <v-footer app color="blue-grey" class="white--text">
         <v-spacer></v-spacer>
-        <span>&copy; Piotr "stirante" Brzozowski {{ new Date().getFullYear() }}</span>
+        <a style="color: white" href="https://stirante.com/" target="_blank"><span> &copy; Piotr "stirante" Brzozowski {{ new Date().getFullYear() }}</span></a>
       </v-footer>
     </v-app>
   </div>
@@ -172,7 +172,11 @@ export default {
         let reader = new FileReader();
         let ctx = this;
         reader.onload = function (e) {
-          ctx.load(JSON.parse(stripJsonComments(e.target.result)));
+          try {
+            ctx.load(JSON.parse(stripJsonComments(e.target.result)));
+          } catch (e) {
+            ctx.showErrorMessage(e);
+          }
         };
 
         reader.readAsText(f);
