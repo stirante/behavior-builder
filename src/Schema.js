@@ -8,76 +8,80 @@ export const fullSchema = {
             "Entity": {
                 "type": "object",
                 "properties": {
-                    "format_version": { "type": ["string", "number"], "format": "number", "examples": [ "1.10", "1.11", "1.12", "1.13", "1.14", "1.15", "1.16", 1, 2 ] },
-                    "minecraft:entity": { "$ref": "#/definitions/entity" },
-                    "animation_controllers": { "$ref": "#/definitions/animation_controllers" },
-                    "animations": { "$ref": "#/definitions/animations" },
-                    "tiers": { "$ref": "#/definitions/tiers" }
+                    "format_version": {
+                        "type": ["string", "number"],
+                        "format": "number",
+                        "examples": ["1.10", "1.11", "1.12", "1.13", "1.14", "1.15", "1.16", 1, 2]
+                    },
+                    "minecraft:entity": {"$ref": "#/definitions/entity"},
+                    "animation_controllers": {"$ref": "#/definitions/animation_controllers"},
+                    "animations": {"$ref": "#/definitions/animations"},
+                    "tiers": {"$ref": "#/definitions/tiers"}
                 }
             },
             "entity": {
                 "title": "Entity",
                 "type": "object",
                 "properties": {
-                    "description": { "$ref": "#/definitions/description"  },
-                    "component_groups": { "$ref": "#/definitions/component_groups" },
-                    "components": { "$ref": "#/definitions/components" },
-                    "events": { "$ref": "#/definitions/events" }
+                    "description": {"$ref": "#/definitions/description"},
+                    "component_groups": {"$ref": "#/definitions/component_groups"},
+                    "components": {"$ref": "#/definitions/components"},
+                    "events": {"$ref": "#/definitions/events"}
                 }
             },
             "animation_controllers": {
                 "title": "Animation Controllers",
                 "type": "object",
-                "patternProperties": { "^.*$": { "$ref": "#/definitions/animation_controller" } }
+                "patternProperties": {"^.*$": {"$ref": "#/definitions/animation_controller"}}
             },
             "animation_controller": {
                 "title": "Animation Controller",
                 "type": "object",
-                "properties": { "initial_state": { "type": "string" }, "states": { "$ref": "#/definitions/states" } }
+                "properties": {"initial_state": {"type": "string"}, "states": {"$ref": "#/definitions/states"}}
             },
             "states": {
                 "title": "States",
                 "type": "object",
-                "patternProperties": { "^.*$": { "$ref": "#/definitions/state" } },
-                "properties": { "default": { "$ref": "#/definitions/state" } }
+                "patternProperties": {"^.*$": {"$ref": "#/definitions/state"}},
+                "properties": {"default": {"$ref": "#/definitions/state"}}
             },
             "state": {
                 "title": "State",
                 "type": "object",
                 "properties": {
-                    "on_entry": { "title": "On Entry", "type": "array" },
-                    "on_exit": { "title": "On Exit", "type": "array" },
-                    "animations": { "title": "Animations", "type": "array" },
-                    "transitions": { "title": "Transitions", "type": "array", "items": { "type": "object" } }
+                    "on_entry": {"title": "On Entry", "type": "array"},
+                    "on_exit": {"title": "On Exit", "type": "array"},
+                    "animations": {"title": "Animations", "type": "array"},
+                    "transitions": {"title": "Transitions", "type": "array", "items": {"type": "object"}}
                 }
             },
             "animations": {
                 "title": "Animations",
                 "type": "object",
-                "patternProperties": { "^.*$": { "$ref": "#/definitions/animation" } }
+                "patternProperties": {"^.*$": {"$ref": "#/definitions/animation"}}
             },
             "animation": {
                 "title": "Animation",
                 "type": "object",
-                "properties": { "timeline": { "$ref": "#/definitions/timeline" }, "animation_length": { "type": "number" } }
+                "properties": {"timeline": {"$ref": "#/definitions/timeline"}, "animation_length": {"type": "number"}}
             },
             "timeline": {
                 "title": "Timeline",
                 "type": "object",
-                "patternProperties": { "^[+-]?([0-9]*[.])?[0-9]*$": { "type": [ "array", "string"], "format": "string" } },
+                "patternProperties": {"^[+-]?([0-9]*[.])?[0-9]*$": {"type": ["array", "string"], "format": "string"}},
                 "additionalProperties": false
             },
             "tiers": {
                 "title": "Tiers",
                 "type": "array",
-                "items": { "$ref": "#/definitions/tier" }
+                "items": {"$ref": "#/definitions/tier"}
             },
             "tier": {
                 "title": "Tier",
                 "type": "object",
                 "properties": {
-                    "total_exp_required": { "type": "integer" },
-                    "trades": { "$ref": "#/definitions/trade" }
+                    "total_exp_required": {"type": "integer"},
+                    "trades": {"$ref": "#/definitions/trade"}
                 }
             },
             "trade": {
@@ -91,9 +95,9 @@ export const fullSchema = {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "item": { "type": "string", "$ref": "#/definitions/library/items" },
-                                    "quantity": { "type": "integer" },
-                                    "price_multiplier": { "type": "number" }
+                                    "item": {"type": "string", "$ref": "#/definitions/library/items"},
+                                    "quantity": {"type": "integer"},
+                                    "price_multiplier": {"type": "number"}
                                 }
                             }
                         },
@@ -102,40 +106,47 @@ export const fullSchema = {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "item": { "type": "string", "$ref": "#/definitions/library/items" },
-                                    "quantity": { "type": "integer" },
-                                    "funtions": { "$ref": "#/definitions/item_funtions" }
+                                    "item": {"type": "string", "$ref": "#/definitions/library/items"},
+                                    "quantity": {"type": "integer"},
+                                    "funtions": {"$ref": "#/definitions/item_funtions"}
                                 }
                             }
                         },
-                        "trader_exp": { "type": "integer" },
-                        "max_uses": { "type": "integer" },
-                        "reward_exp": { "type": "boolean" }
+                        "trader_exp": {"type": "integer"},
+                        "max_uses": {"type": "integer"},
+                        "reward_exp": {"type": "boolean"}
                     }
                 }
             },
             "item_funtions": {
                 "type": "object",
                 "properties": {
-                    "function": { "$ref": "#/definitions/library/trade_table_functions/functions" }
+                    "function": {"$ref": "#/definitions/library/trade_table_functions/functions"}
                 }
             },
             "description": {
                 "title": "Description",
                 "type": "object",
                 "properties": {
-                    "identifier": { "type": "string" },
-                    "is_spawnable": { "type": "boolean" },
-                    "is_summonable": { "type": "boolean" },
-                    "is_experimental": { "type": "boolean" },
-                    "runtime_identifier": { "type": "string", "$ref": "#/definitions/library/entities" },
-                    "scripts": { "type": "object", "properties": { "animate": { "type": "array", "items": { "examples": [ "execute_commands" ] } } } },
-                    "animations": { "type": "object", "patternProperties": { "^.*$": { "type": "string" } }, "properties": { "execute_commands": { "type": "string" } } }
+                    "identifier": {"type": "string"},
+                    "is_spawnable": {"type": "boolean"},
+                    "is_summonable": {"type": "boolean"},
+                    "is_experimental": {"type": "boolean"},
+                    "runtime_identifier": {"type": "string", "$ref": "#/definitions/library/entities"},
+                    "scripts": {
+                        "type": "object",
+                        "properties": {"animate": {"type": "array", "items": {"examples": ["execute_commands"]}}}
+                    },
+                    "animations": {
+                        "type": "object",
+                        "patternProperties": {"^.*$": {"type": "string"}},
+                        "properties": {"execute_commands": {"type": "string"}}
+                    }
                 }
             },
             "component_groups": {
                 "type": "object",
-                "patternProperties": { "^.*$": { "$ref": "#/definitions/library/components" } },
+                "patternProperties": {"^.*$": {"$ref": "#/definitions/library/components"}},
                 "title": "Component Groups"
             },
             "components": {
@@ -147,32 +158,32 @@ export const fullSchema = {
                 "title": "Events",
                 "type": "object",
                 "properties": {
-                    "minecraft:entity_spawned": { "$ref": "#/definitions/event" },
-                    "minecraft:born": { "$ref": "#/definitions/event" },
-                    "minecraft:transformed": { "$ref": "#/definitions/event" },
-                    "minecraf:minecraft:on_prime": { "$ref": "#/definitions/event" }
+                    "minecraft:entity_spawned": {"$ref": "#/definitions/event"},
+                    "minecraft:born": {"$ref": "#/definitions/event"},
+                    "minecraft:transformed": {"$ref": "#/definitions/event"},
+                    "minecraf:minecraft:on_prime": {"$ref": "#/definitions/event"}
                 },
-                "patternProperties": { "^.*$": { "$ref": "#/definitions/event" } }
+                "patternProperties": {"^.*$": {"$ref": "#/definitions/event"}}
             },
             "event": {
                 "title": "event",
                 "type": "object",
                 "properties": {
-                    "add": { "$ref": "#/definitions/event_add" },
-                    "remove": { "$ref": "#/definitions/event_remove" },
-                    "sequence": { "$ref": "#/definitions/event_sequence" },
-                    "randomize": { "$ref": "#/definitions/event_randomize" }
+                    "add": {"$ref": "#/definitions/event_add"},
+                    "remove": {"$ref": "#/definitions/event_remove"},
+                    "sequence": {"$ref": "#/definitions/event_sequence"},
+                    "randomize": {"$ref": "#/definitions/event_randomize"}
                 }
             },
             "event_add": {
                 "title": "Add",
                 "type": "object",
-                "properties": { "component_groups": { "type": "array", "format": "string" } }
+                "properties": {"component_groups": {"type": "array", "format": "string"}}
             },
             "event_remove": {
                 "title": "Remove",
                 "type": "object",
-                "properties": { "component_groups": { "type": "array", "format": "string" } }
+                "properties": {"component_groups": {"type": "array", "format": "string"}}
             },
             "event_sequence": {
                 "title": "Sequence",
@@ -180,11 +191,11 @@ export const fullSchema = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "add": { "$ref": "#/definitions/event_add" },
-                        "remove": { "$ref": "#/definitions/event_remove" },
-                        "filters": { "$ref": "#/definitions/filters" },
-                        "sequence": { "$ref": "#/definitions/event_sequence" },
-                        "randomize": { "$ref": "#/definitions/event_randomize" }
+                        "add": {"$ref": "#/definitions/event_add"},
+                        "remove": {"$ref": "#/definitions/event_remove"},
+                        "filters": {"$ref": "#/definitions/filters"},
+                        "sequence": {"$ref": "#/definitions/event_sequence"},
+                        "randomize": {"$ref": "#/definitions/event_randomize"}
                     }
                 }
             },
@@ -194,11 +205,11 @@ export const fullSchema = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "weight": { "type": "integer" },
-                        "add": { "$ref": "#/definitions/event_add" },
-                        "remove": { "$ref": "#/definitions/event_remove" },
-                        "sequence": { "$ref": "#/definitions/event_sequence" },
-                        "randomize": { "$ref": "#/definitions/event_randomize" }
+                        "weight": {"type": "integer"},
+                        "add": {"$ref": "#/definitions/event_add"},
+                        "remove": {"$ref": "#/definitions/event_remove"},
+                        "sequence": {"$ref": "#/definitions/event_sequence"},
+                        "randomize": {"$ref": "#/definitions/event_randomize"}
                     }
                 }
             },
@@ -206,73 +217,140 @@ export const fullSchema = {
                 "title": "Filters",
                 "type": "object",
                 "properties": {
-                    "subject": { "type": "string", "examples": [ "self", "other", "player", "target", "parent", "blocks" ] },
-                    "test": { "type": "string", "$ref": "#/definitions/library/filters/tests" },
-                    "operator": { "type": "string", "$ref": "#/definitions/library/filters/operators" },
-                    "all_of": { "items": { "$ref": "#/definitions/filters" }, "type": "array" },
-                    "any_of": { "items": { "$ref": "#/definitions/filters" }, "type": "array" },
-                    "none_of": { "items": { "$ref": "#/definitions/filters" }, "type": "array" }
+                    "subject": {"type": "string", "examples": ["self", "other", "player", "target", "parent", "blocks"]},
+                    "test": {"type": "string", "$ref": "#/definitions/library/filters/tests"},
+                    "operator": {"type": "string", "$ref": "#/definitions/library/filters/operators"},
+                    "all_of": {"items": {"$ref": "#/definitions/filters"}, "type": "array"},
+                    "any_of": {"items": {"$ref": "#/definitions/filters"}, "type": "array"},
+                    "none_of": {"items": {"$ref": "#/definitions/filters"}, "type": "array"}
                 },
                 "allOf": [
                     {
-                        "if": { "properties": { "test": { "$ref": "#/definitions/library/filters/tests/integer" } } },
-                        "then": { "properties": { "value": { "type": "integer", "patternwas": "^[0-9]*$", "default": 0 } } }
+                        "if": {"properties": {"test": {"$ref": "#/definitions/library/filters/tests/integer"}}},
+                        "then": {"properties": {"value": {"type": "integer", "patternwas": "^[0-9]*$", "default": 0}}}
                     },
                     {
-                        "if": { "properties": { "test": { "$ref": "#/definitions/library/filters/tests/decimal" } } },
-                        "then": { "properties": { "value": { "type": "number", "patternwas": "^[+-]?([0-9]*[.])?[0-9]*$", "default": 0.0 } } }
+                        "if": {"properties": {"test": {"$ref": "#/definitions/library/filters/tests/decimal"}}},
+                        "then": {
+                            "properties": {
+                                "value": {
+                                    "type": "number",
+                                    "patternwas": "^[+-]?([0-9]*[.])?[0-9]*$",
+                                    "default": 0.0
+                                }
+                            }
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "$ref": "#/definitions/library/filters/tests/boolean" } } },
-                        "then": { "properties": { "value": { "type": "boolean" } } }
+                        "if": {"properties": {"test": {"$ref": "#/definitions/library/filters/tests/boolean"}}},
+                        "then": {"properties": {"value": {"type": "boolean"}}}
                     },
                     {
-                        "if": { "properties": { "test": { "$ref": "#/definitions/library/filters/tests/string" } } },
-                        "then": { "properties": { "value": { "type": "string" } } }
+                        "if": {"properties": {"test": {"$ref": "#/definitions/library/filters/tests/string"}}},
+                        "then": {"properties": {"value": {"type": "string"}}}
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "has_component" } ] } } },
-                        "then": { "properties": { "value": { "type": "string", "$ref": "#/definitions/library/filters/values/components" } } }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "has_component"}]}}},
+                        "then": {
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "$ref": "#/definitions/library/filters/values/components"
+                                }
+                            }
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "is_difficulty" } ] } } },
-                        "then": { "properties": { "value": { "type": "string", "$ref": "#/definitions/library/difficulties" } } }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "is_difficulty"}]}}},
+                        "then": {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/difficulties"}}}
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "has_equipment" } ] } } },
-                        "then": { "allOf": [
-                                {"properties": { "domain": { "type": "string", "$ref": "#/definitions/library/filters/domains/has_equipment" } } },
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/blocks" } } },
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/items" } } }
-                            ] }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "has_equipment"}]}}},
+                        "then": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "domain": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/has_equipment"
+                                        }
+                                    }
+                                },
+                                {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/blocks"}}},
+                                {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/items"}}}
+                            ]
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "has_damage" } ] } } },
-                        "then": { "allOf": [
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/filters/domains/has_damage" } } }
-                            ] }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "has_damage"}]}}},
+                        "then": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/has_damage"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "is_game_rule" } ] } } },
-                        "then": { "properties": { "domain": { "type": "string", "$ref": "#/definitions/library/filters/domains/is_game_rule" } } }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "is_game_rule"}]}}},
+                        "then": {
+                            "properties": {
+                                "domain": {
+                                    "type": "string",
+                                    "$ref": "#/definitions/library/filters/domains/is_game_rule"
+                                }
+                            }
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "is_biome" } ] } } },
-                        "then": { "allOf": [
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/filters/domains/is_biome" } } }
-                            ] }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "is_biome"}]}}},
+                        "then": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/is_biome"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "is_color" } ] } } },
-                        "then": { "allOf": [
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/filters/domains/is_color" } } }
-                            ] }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "is_color"}]}}},
+                        "then": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/is_color"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     },
                     {
-                        "if": { "properties": { "test": { "anyOf": [ { "const": "is_temperature_type" } ] } } },
-                        "then": { "allOf": [
-                                {"properties": { "value": { "type": "string", "$ref": "#/definitions/library/filters/domains/is_temperature_type" } } }
-                            ] }
+                        "if": {"properties": {"test": {"anyOf": [{"const": "is_temperature_type"}]}}},
+                        "then": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/is_temperature_type"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             },
@@ -338,67 +416,67 @@ export const fullSchema = {
                         ],
                         "boolean": {
                             "anyOf": [
-                                { "const": "is_game_rule" },
-                                { "const": "is_underwater" },
-                                { "const": "in_water" },
-                                { "const": "in_water_or_rain" },
-                                { "const": "is_humid" },
-                                { "const": "in_lava" },
-                                { "const": "in_clouds" },
-                                { "const": "in_caravan" },
-                                { "const": "is_underground" },
-                                { "const": "is_in_village" },
-                                { "const": "on_ground" },
-                                { "const": "on_ladder" },
-                                { "const": "is_climbing" },
-                                { "const": "is_sneaking" },
-                                { "const": "is_moving" },
-                                { "const": "is_riding" },
-                                { "const": "is_owner" },
-                                { "const": "is_target" },
-                                { "const": "is_leashed_to" },
-                                { "const": "is_leashed" },
-                                { "const": "is_immobile" },
-                                { "const": "is_avoiding_mobs" },
-                                { "const": "is_visible" },
-                                { "const": "is_snow_covered" },
-                                { "const": "has_trade_supply" },
-                                { "const": "trusts" },
-                                { "const": "has_container_open" },
-                                { "const": "has_target" },
-                                { "const": "is_daytime" },
-                                { "const": "is_sleeping" }
+                                {"const": "is_game_rule"},
+                                {"const": "is_underwater"},
+                                {"const": "in_water"},
+                                {"const": "in_water_or_rain"},
+                                {"const": "is_humid"},
+                                {"const": "in_lava"},
+                                {"const": "in_clouds"},
+                                {"const": "in_caravan"},
+                                {"const": "is_underground"},
+                                {"const": "is_in_village"},
+                                {"const": "on_ground"},
+                                {"const": "on_ladder"},
+                                {"const": "is_climbing"},
+                                {"const": "is_sneaking"},
+                                {"const": "is_moving"},
+                                {"const": "is_riding"},
+                                {"const": "is_owner"},
+                                {"const": "is_target"},
+                                {"const": "is_leashed_to"},
+                                {"const": "is_leashed"},
+                                {"const": "is_immobile"},
+                                {"const": "is_avoiding_mobs"},
+                                {"const": "is_visible"},
+                                {"const": "is_snow_covered"},
+                                {"const": "has_trade_supply"},
+                                {"const": "trusts"},
+                                {"const": "has_container_open"},
+                                {"const": "has_target"},
+                                {"const": "is_daytime"},
+                                {"const": "is_sleeping"}
                             ]
                         },
                         "decimal": {
                             "anyOf": [
-                                { "const": "clock_time" },
-                                { "const": "distance_to_nearest_player" },
-                                { "const": "is_brightness" },
-                                { "const": "is_temperature_value" },
-                                { "const": "moon_intensity" }
+                                {"const": "clock_time"},
+                                {"const": "distance_to_nearest_player"},
+                                {"const": "is_brightness"},
+                                {"const": "is_temperature_value"},
+                                {"const": "moon_intensity"}
                             ]
                         },
                         "integer": {
                             "anyOf": [
-                                { "const": "hourly_clock_time" },
-                                { "const": "moon_intensity" },
-                                { "const": "is_mark_variant" },
-                                { "const": "is_variant" },
-                                { "const": "is_skin_id" },
-                                { "const": "is_altitude" },
-                                { "const": "rider_count" },
-                                { "const": "moon_phase" }
+                                {"const": "hourly_clock_time"},
+                                {"const": "moon_intensity"},
+                                {"const": "is_mark_variant"},
+                                {"const": "is_variant"},
+                                {"const": "is_skin_id"},
+                                {"const": "is_altitude"},
+                                {"const": "rider_count"},
+                                {"const": "moon_phase"}
                             ]
                         },
                         "string": {
                             "anyOf": [
-                                { "const": "is_family" },
-                                { "const": "has_mob_effect" },
-                                { "const": "has_tag" },
-                                { "const": "has_ability" },
-                                { "const": "has_biome_tag" },
-                                { "const": "is_block" }
+                                {"const": "is_family"},
+                                {"const": "has_mob_effect"},
+                                {"const": "has_tag"},
+                                {"const": "has_ability"},
+                                {"const": "has_biome_tag"},
+                                {"const": "is_block"}
                             ]
                         }
                     },
@@ -2232,28 +2310,32 @@ export const fullSchema = {
                         "minecraft:behavior.hide": {
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "poi_type": { "$ref": "#/definitions/library/components/values/poi_type" },
-                                "duration": { "$ref": "#/definitions/library/components/values/duration" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "timeout_cooldown": { "$ref": "#/definitions/library/components/values/timeout_cooldown" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "poi_type": {"$ref": "#/definitions/library/components/values/poi_type"},
+                                "duration": {"$ref": "#/definitions/library/components/values/duration"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "timeout_cooldown": {"$ref": "#/definitions/library/components/values/timeout_cooldown"}
                             },
                             "description": "Allows a mob with the hide component to attempt to move to - and hide at - an owned or nearby POI."
                         },
                         "minecraft:behavior.move_to_poi": {
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "poi_type": { "$ref": "#/definitions/library/components/values/poi_type" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "poi_type": {"$ref": "#/definitions/library/components/values/poi_type"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             },
                             "description": "Allows the mob to move to a POI if able to"
                         },
                         "minecraft:behavior.scared": {
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "sound_interval": { "type": "integer", "default": 0, "description": "The interval in which a sound will play when active in a 1/delay chance to kick off" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "sound_interval": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The interval in which a sound will play when active in a 1/delay chance to kick off"
+                                }
                             },
                             "description": "Allows the a mob to become scared when the weather outside is thundering"
                         },
@@ -2261,227 +2343,401 @@ export const fullSchema = {
                             "type": "object",
                             "description": "allows the NPC to use their jobsite POI",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "active_time": { "type": "integer", "default": 0, "description": "The amount of ticks the NPC will stay in their the work location" },
-                                "can_work_in_rain": { "type": "boolean", "default": false, "description": "If true, this entity can work when their jobsite POI is being rained on." },
-                                "goal_cooldown": { "type": "integer", "default": 0, "description": "The amount of ticks the goal will be on cooldown before it can be used again" },
-                                "on_arrival": { "type": "object", "$ref": "#/definitions/library/components/values/trigger", "description": "Event to run when the mob reaches their jobsite and finishes working." },
-                                "sound_delay_max": { "type": "integer", "default": 0, "description": "The max interval in which a sound will play" },
-                                "sound_delay_min": { "type": "integer", "default": 0, "description": "The min interval in which a sound will play" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "work_in_rain_tolerance": { "type": "integer", "default": -1, "description": "If \"can_work_in_rain\" is false, this is the maximum number of ticks left in the goal where rain will not interrupt the goal" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "active_time": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The amount of ticks the NPC will stay in their the work location"
+                                },
+                                "can_work_in_rain": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, this entity can work when their jobsite POI is being rained on."
+                                },
+                                "goal_cooldown": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The amount of ticks the goal will be on cooldown before it can be used again"
+                                },
+                                "on_arrival": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to run when the mob reaches their jobsite and finishes working."
+                                },
+                                "sound_delay_max": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The max interval in which a sound will play"
+                                },
+                                "sound_delay_min": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The min interval in which a sound will play"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "work_in_rain_tolerance": {
+                                    "type": "integer",
+                                    "default": -1,
+                                    "description": "If \"can_work_in_rain\" is false, this is the maximum number of ticks left in the goal where rain will not interrupt the goal"
+                                }
                             }
                         },
                         "minecraft:behavior.avoid_mob_type": {
                             "type": "object",
                             "description": "Allows the mob to target another mob that hurts an entity it trusts.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types" },
-                                "ignore_visibility": { "type": "boolean", "default": false, "description": "If true, visbility between this entity and the mob type will not be checked" },
-                                "max_dist": { "type": "number", "default": 0.0, "description": "Maximum distance to look for an entity" },
-                                "max_flee": { "type": "number", "default": 0.5, "description": "Distance in blocks within the mob considers it should stop fleeing" },
-                                "probability_per_strength": { "type": "number", "description": "Determines how likely it is that this entity will stop avoiding another entity based on that entity's strength" },
-                                "sprint_speed_multiplier": { "type": "number", "default": 1.0, "description": "Multiplier for running speed. 1.0 means keep the regular speed, while higher numbers make the running speed faster" },
-                                "walk_speed_multiplier": { "type": "number", "default": 1.0, "description": "Multiplier for walking speed. 1.0 means keep the regular speed, while higher numbers make the walking speed faster" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "entity_types": {"$ref": "#/definitions/library/components/values/entity_types"},
+                                "ignore_visibility": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, visbility between this entity and the mob type will not be checked"
+                                },
+                                "max_dist": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Maximum distance to look for an entity"
+                                },
+                                "max_flee": {
+                                    "type": "number",
+                                    "default": 0.5,
+                                    "description": "Distance in blocks within the mob considers it should stop fleeing"
+                                },
+                                "probability_per_strength": {
+                                    "type": "number",
+                                    "description": "Determines how likely it is that this entity will stop avoiding another entity based on that entity's strength"
+                                },
+                                "sprint_speed_multiplier": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "Multiplier for running speed. 1.0 means keep the regular speed, while higher numbers make the running speed faster"
+                                },
+                                "walk_speed_multiplier": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "Multiplier for walking speed. 1.0 means keep the regular speed, while higher numbers make the walking speed faster"
+                                }
                             }
                         },
                         "minecraft:behavior.beg": {
                             "type": "object",
                             "description": "Allows this mob to look at and follow the player that holds food they like.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "items": { "$ref": "#/definitions/library/components/values/items", "description": "List of items that this mob likes" },
-                                "look_distance": { "$ref": "#/definitions/library/components/values/look_distance" },
-                                "look_time": { "$ref": "#/definitions/library/components/values/look_time" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "items": {
+                                    "$ref": "#/definitions/library/components/values/items",
+                                    "description": "List of items that this mob likes"
+                                },
+                                "look_distance": {"$ref": "#/definitions/library/components/values/look_distance"},
+                                "look_time": {"$ref": "#/definitions/library/components/values/look_time"}
                             }
                         },
                         "minecraft:behavior.break_door": {
                             "type": "object",
                             "description": "Allows this mob to break doors.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.breed": {
                             "type": "object",
                             "description": "Allows this mob to breed with other mobs.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.celebrate": {
                             "type": "object",
                             "description": "This allows the mob celebrate by jumping up and playing a sound periodically.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "celebration_sound": { "type": "string", "description": "The sound to occasionally play." },
-                                "duration": { "type": "number", "default": 1, "description": "The sound to occasionally play." },
-                                "jump_interval": { "type": "array", "description": "The range of time in seconds to randomly wait before jumping again." },
-                                "on_celebration_end_event": { "type": "object", "$ref": "#/definitions/library/components/values/trigger", "description": "The event to trigger when the goal's duration expires." },
-                                "sound_interval": { "type": "array", "description": "The range of time in seconds to randomly wait before playing the sound again." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "celebration_sound": {"type": "string", "description": "The sound to occasionally play."},
+                                "duration": {
+                                    "type": "number",
+                                    "default": 1,
+                                    "description": "The sound to occasionally play."
+                                },
+                                "jump_interval": {
+                                    "type": "array",
+                                    "description": "The range of time in seconds to randomly wait before jumping again."
+                                },
+                                "on_celebration_end_event": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "The event to trigger when the goal's duration expires."
+                                },
+                                "sound_interval": {
+                                    "type": "array",
+                                    "description": "The range of time in seconds to randomly wait before playing the sound again."
+                                }
                             }
                         },
                         "minecraft:behavior.charge_attack": {
                             "type": "object",
                             "description": "Allows the mob to attack its target by running at it.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.charge_held_item": {
                             "type": "object",
                             "description": "Allows this mob to charge and use their held item.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "items": { "$ref": "#/definitions/library/components/values/items", "description": "The list of items that can be used to charge the held item." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "items": {
+                                    "$ref": "#/definitions/library/components/values/items",
+                                    "description": "The list of items that can be used to charge the held item."
+                                }
                             }
                         },
                         "minecraft:behavior.circle_around_anchor": {
                             "type": "object",
                             "description": "Allows the mob to move in a circle around a point or a target.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "height_above_target_range": { "type": "array", "default": [ 0.0, 0.0 ], "description": "When the mob finds a target, the range of height in blocks above the target to start the anchor point." },
-                                "height_offset_range": { "type": "array", "default": [ 0.0, 0.0 ], "description": "The range of height in blocks offset the mob can have from it's anchor point." },
-                                "radius_range": { "type": "array", "default": [ 5.0, 15.0 ], "description": "Range of radius in blocks of the circle to move around." },
-                                "height_change_chance": { "type": "number", "default": 350, "description": "A random value to determine when to change the height of the mob from the anchor point. This has a 1/value chance every tick to do so." },
-                                "radius_change_chance": { "type": "number", "default": 250, "description": "A random value to determine when to increase the size of the radius up to the maximum. This has a 1/value chance every tick to do so." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "height_above_target_range": {
+                                    "type": "array",
+                                    "default": [0.0, 0.0],
+                                    "description": "When the mob finds a target, the range of height in blocks above the target to start the anchor point."
+                                },
+                                "height_offset_range": {
+                                    "type": "array",
+                                    "default": [0.0, 0.0],
+                                    "description": "The range of height in blocks offset the mob can have from it's anchor point."
+                                },
+                                "radius_range": {
+                                    "type": "array",
+                                    "default": [5.0, 15.0],
+                                    "description": "Range of radius in blocks of the circle to move around."
+                                },
+                                "height_change_chance": {
+                                    "type": "number",
+                                    "default": 350,
+                                    "description": "A random value to determine when to change the height of the mob from the anchor point. This has a 1/value chance every tick to do so."
+                                },
+                                "radius_change_chance": {
+                                    "type": "number",
+                                    "default": 250,
+                                    "description": "A random value to determine when to increase the size of the radius up to the maximum. This has a 1/value chance every tick to do so."
+                                }
                             }
                         },
                         "minecraft:behavior.controlled_by_player": {
                             "type": "object",
                             "description": "Allows the mob to be controlled by the player.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.defend_trusted_target": {
                             "type": "object",
                             "description": "Allows the mob to target another mob that hurts an entity it trusts.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "aggro_sound": { "type": "string", "description": "Sound to occasionally play while defending" },
-                                "attack_interval": { "type": "integer", "default": 0, "description": "Time in seconds between attacks" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types this mob avoids." },
-                                "must_see": { "type": "integer", "default": 0, "description": "The amount of ticks the goal will be on cooldown before it can be used again" },
-                                "must_see_forget_duration": { "type": "object", "$ref": "#/definitions/library/components/values/trigger", "description": "Event to run when the mob reaches their jobsite and finishes working." },
-                                "within_radius": { "type": "integer", "default": 0, "description": "The max interval in which a sound will play" },
-                                "sound_delay_min": { "type": "integer", "default": 0, "description": "The min interval in which a sound will play" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "aggro_sound": {
+                                    "type": "string",
+                                    "description": "Sound to occasionally play while defending"
+                                },
+                                "attack_interval": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "Time in seconds between attacks"
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types this mob avoids."
+                                },
+                                "must_see": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The amount of ticks the goal will be on cooldown before it can be used again"
+                                },
+                                "must_see_forget_duration": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to run when the mob reaches their jobsite and finishes working."
+                                },
+                                "within_radius": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The max interval in which a sound will play"
+                                },
+                                "sound_delay_min": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The min interval in which a sound will play"
+                                }
                             }
                         },
                         "minecraft:behavior.defend_village_target": {
                             "type": "object",
                             "description": "Allows the mob to stay in the village and fight mobs hostile to the villagers.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types this mob considers a threat to the village" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types this mob considers a threat to the village"
+                                }
                             }
                         },
                         "minecraft:behavior.delayed_attack": {
                             "type": "object",
                             "description": "Allows the mob to an attack where the hit is delayed.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "attack_duration": { "type": "number", "default": 0.75, "description": "The entity's attack animation will play out over this duration (in seconds). Also controls attack cooldown." },
-                                "attack_once": { "$ref": "#/definitions/library/components/values/attack_once" },
-                                "attack_types": { "$ref": "#/definitions/library/components/values/attack_types" },
-                                "cooldown_time": { "$ref": "#/definitions/library/components/values/cooldown_time", "description": "Cooldown time (in seconds) between attacks." },
-                                "hit_delay_pct": { "type": "number", "default": 0.5, "description": "The percentage into the attack animation to apply the damage of the attack (1.0 = 100%)." },
-                                "inner_boundary_time_increase": { "$ref": "#/definitions/library/components/values/inner_boundary_time_increase" },
-                                "max_path_time": { "$ref": "#/definitions/library/components/values/max_path_time" },
-                                "melee_fov": { "$ref": "#/definitions/library/components/values/melee_fov" },
-                                "min_path_time": { "$ref": "#/definitions/library/components/values/min_path_time" },
-                                "on_attack": { "$ref": "#/definitions/library/components/values/on_attack" },
-                                "outer_boundary_time_increase": { "$ref": "#/definitions/library/components/values/outer_boundary_time_increase" },
-                                "path_fail_time_increase": { "$ref": "#/definitions/library/components/values/path_fail_time_increase" },
-                                "path_inner_boundary": { "$ref": "#/definitions/library/components/values/path_inner_boundary" },
-                                "path_outer_boundary": { "$ref": "#/definitions/library/components/values/path_outer_boundary" },
-                                "random_stop_interval": { "$ref": "#/definitions/library/components/values/random_stop_interval" },
-                                "reach_multiplier": { "$ref": "#/definitions/library/components/values/reach_multiplier" },
-                                "require_complete_path": { "$ref": "#/definitions/library/components/values/require_complete_path" },
-                                "track_target": { "$ref": "#/definitions/library/components/values/track_target" },
-                                "x_max_rotation": { "$ref": "#/definitions/library/components/values/x_max_rotation" },
-                                "y_max_head_rotation": { "$ref": "#/definitions/library/components/values/y_max_head_rotation" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "attack_duration": {
+                                    "type": "number",
+                                    "default": 0.75,
+                                    "description": "The entity's attack animation will play out over this duration (in seconds). Also controls attack cooldown."
+                                },
+                                "attack_once": {"$ref": "#/definitions/library/components/values/attack_once"},
+                                "attack_types": {"$ref": "#/definitions/library/components/values/attack_types"},
+                                "cooldown_time": {
+                                    "$ref": "#/definitions/library/components/values/cooldown_time",
+                                    "description": "Cooldown time (in seconds) between attacks."
+                                },
+                                "hit_delay_pct": {
+                                    "type": "number",
+                                    "default": 0.5,
+                                    "description": "The percentage into the attack animation to apply the damage of the attack (1.0 = 100%)."
+                                },
+                                "inner_boundary_time_increase": {"$ref": "#/definitions/library/components/values/inner_boundary_time_increase"},
+                                "max_path_time": {"$ref": "#/definitions/library/components/values/max_path_time"},
+                                "melee_fov": {"$ref": "#/definitions/library/components/values/melee_fov"},
+                                "min_path_time": {"$ref": "#/definitions/library/components/values/min_path_time"},
+                                "on_attack": {"$ref": "#/definitions/library/components/values/on_attack"},
+                                "outer_boundary_time_increase": {"$ref": "#/definitions/library/components/values/outer_boundary_time_increase"},
+                                "path_fail_time_increase": {"$ref": "#/definitions/library/components/values/path_fail_time_increase"},
+                                "path_inner_boundary": {"$ref": "#/definitions/library/components/values/path_inner_boundary"},
+                                "path_outer_boundary": {"$ref": "#/definitions/library/components/values/path_outer_boundary"},
+                                "random_stop_interval": {"$ref": "#/definitions/library/components/values/random_stop_interval"},
+                                "reach_multiplier": {"$ref": "#/definitions/library/components/values/reach_multiplier"},
+                                "require_complete_path": {"$ref": "#/definitions/library/components/values/require_complete_path"},
+                                "track_target": {"$ref": "#/definitions/library/components/values/track_target"},
+                                "x_max_rotation": {"$ref": "#/definitions/library/components/values/x_max_rotation"},
+                                "y_max_head_rotation": {"$ref": "#/definitions/library/components/values/y_max_head_rotation"}
                             }
                         },
                         "minecraft:behavior.door_interact": {
                             "type": "object",
                             "description": "Allows the mob to open and close doors.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.dragondeath": {
                             "type": "object",
                             "description": "Allows the dragon to go out with glory. This controls the Ender Dragon's death animation and can't be used by other mobs.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.dragonholdingpattern": {
                             "type": "object",
                             "description": "Allows the Dragon to fly around in a circle around the center podium. Can only be used by the Ender Dragon.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.dragonlanding": {
                             "type": "object",
                             "description": "Allows the Dragon to stop flying and transition into perching mode. Can only be used by the Ender Dragon.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.dragonscanning": {
                             "type": "object",
                             "description": "Allows the dragon to look around for a player to attack while in perch mode. Can only be used by the Ender Dragon.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.dragontakeoff": {
                             "type": "object",
                             "description": "Allows the dragon to leave perch mode and go back to flying around. Can only be used by the Ender Dragon.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.drink_potion": {
                             "type": "object",
                             "description": "Allows the mob to drink potions based on specified environment conditions.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_modifier": { "type": "number", "default": 0.0 },
-                                "potions": { "type": "array", "items": { "type": "object", "description": "A list of potions that this entity can drink.", "properties": {
-                                            "chance": { "type": "number", "default": 1.0, "description": "The percent chance (from 0.0 to 1.0) of this potion being selected when searching for a potion to use." },
-                                            "filter": { "$ref": "#/definitions/filters", "description": "The filters to use when determining if this potion can be selected." },
-                                            "id": { "type": "integer", "default": -1, "description": "The registry ID of the potion to use" }
-                                        } } }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_modifier": {"type": "number", "default": 0.0},
+                                "potions": {
+                                    "type": "array", "items": {
+                                        "type": "object",
+                                        "description": "A list of potions that this entity can drink.",
+                                        "properties": {
+                                            "chance": {
+                                                "type": "number",
+                                                "default": 1.0,
+                                                "description": "The percent chance (from 0.0 to 1.0) of this potion being selected when searching for a potion to use."
+                                            },
+                                            "filter": {
+                                                "$ref": "#/definitions/filters",
+                                                "description": "The filters to use when determining if this potion can be selected."
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "default": -1,
+                                                "description": "The registry ID of the potion to use"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         },
                         "minecraft:behavior.drop_item_for": {
                             "type": "object",
                             "description": "Allows the mob to move near a target and drop an item.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "drop_item_chance": { "type": "number", "default": 1.0, "description": "The probability that the mob will drop an item." },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types this mob will drop items for." },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "loot_table": { "$ref": "#/definitions/library/components/values/loot_table", "description": "Loot table to select items from." },
-                                "max_dist": { "$ref": "#/definitions/library/components/values/max_dist", "description": "Maximum distance in blocks this mob will look for entities to drop an item for." },
-                                "offering_distance": { "type": "number", "default": 1.0, "description": "The distance in blocks the mob will try to be away from the entity when it drops the item." },
-                                "on_drop_attempt": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to run when this mob attempts to drop an item." },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "Height in blocks from the target the mob can be." },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks from the target the mob can be." },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "drop_item_chance": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "The probability that the mob will drop an item."
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types this mob will drop items for."
+                                },
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "loot_table": {
+                                    "$ref": "#/definitions/library/components/values/loot_table",
+                                    "description": "Loot table to select items from."
+                                },
+                                "max_dist": {
+                                    "$ref": "#/definitions/library/components/values/max_dist",
+                                    "description": "Maximum distance in blocks this mob will look for entities to drop an item for."
+                                },
+                                "offering_distance": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "The distance in blocks the mob will try to be away from the entity when it drops the item."
+                                },
+                                "on_drop_attempt": {
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to run when this mob attempts to drop an item."
+                                },
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "Height in blocks from the target the mob can be."
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks from the target the mob can be."
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
                                 "time_of_day_range": {
                                     "type": "array",
-                                    "items": { "type": "number" },
+                                    "items": {"type": "number"},
                                     "minItems": 2,
                                     "maxItems": 2,
                                     "default": [0, 1],
@@ -2493,152 +2749,217 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Allows the mob to eat a block (for example, sheep eating grass).",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "on_eat": { "$ref": "#/definitions/library/components/values/trigger", "description": "Trigger to fire when the mob eats a block of grass" },
-                                "delay_before_eating": { "$type": "number", "description": "Time in seconds the mob should wait before eating the item." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "on_eat": {
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Trigger to fire when the mob eats a block of grass"
+                                },
+                                "delay_before_eating": {
+                                    "$type": "number",
+                                    "description": "Time in seconds the mob should wait before eating the item."
+                                }
                             }
                         },
                         "minecraft:behavior.eat_carried_item": {
                             "type": "object",
                             "description": "If the mob is carrying a food item, the mob will eat it and the effects will be applied to the mob.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.enderman_leave_block": {
                             "type": "object",
                             "description": "Allows the enderman to drop a block they are carrying. Can only be used by Endermen.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.enderman_take_block": {
                             "type": "object",
                             "description": "Allows the enderman to take a block and carry it around. Can only be used by Endermen.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.explore_outskirts": {
                             "type": "object",
                             "description": "Allows a mob to explore the outskirts of a village",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "explore_dist": { "type": "number", "default": 5, "description": "The distance in which the mob will proceed past the village bounds" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "wait_time": { "type": "integer", "default": 0, "description": "The time the mob will stand around 'searching' for POIs" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "explore_dist": {
+                                    "type": "number",
+                                    "default": 5,
+                                    "description": "The distance in which the mob will proceed past the village bounds"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "wait_time": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "The time the mob will stand around 'searching' for POIs"
+                                }
                             }
                         },
                         "minecraft:behavior.find_cover": {
                             "type": "object",
                             "description": "Allows the mob to seek shade.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "cooldown_time": { "$ref": "#/definitions/library/components/values/cooldown_time" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "cooldown_time": {"$ref": "#/definitions/library/components/values/cooldown_time"}
                             }
                         },
                         "minecraft:behavior.find_mount": {
                             "type": "object",
                             "description": "Allows the mob to look around for another mob to ride atop it.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "avoid_water": { "$ref": "#/definitions/library/components/values/avoid_water", "description": "f true, the mob will not go into water blocks when going towards a mount" },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "avoid_water": {
+                                    "$ref": "#/definitions/library/components/values/avoid_water",
+                                    "description": "f true, the mob will not go into water blocks when going towards a mount"
+                                },
                                 "mount_distance": {
                                     "type": "number",
                                     "default": -1.0,
                                     "description": "This is the distance the mob needs to be, in blocks, from the desired mount to mount it. If the value is below 0, the mob will use its default attack distance"
                                 },
-                                "start_delay": { "type": "integer", "default": 0, "description": "Time the mob will wait before starting to move towards the mount" },
-                                "target_needed": { "type": "boolean", "default": false, "description": "If true, the mob will only look for a mount if it has a target" },
-                                "within_radius": { "$ref": "#/definitions/library/components/values/within_radius", "description": "Distance in blocks within which the mob will look for a mount" }
+                                "start_delay": {
+                                    "type": "integer",
+                                    "default": 0,
+                                    "description": "Time the mob will wait before starting to move towards the mount"
+                                },
+                                "target_needed": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, the mob will only look for a mount if it has a target"
+                                },
+                                "within_radius": {
+                                    "$ref": "#/definitions/library/components/values/within_radius",
+                                    "description": "Distance in blocks within which the mob will look for a mount"
+                                }
                             }
                         },
                         "minecraft:behavior.find_underwater_treasure": {
                             "type": "object",
                             "description": "Allows the mob to move towards the nearest underwater ruin or shipwreck.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
                                 "search_range": {
                                     "$ref": "#/definitions/library/components/values/search_range",
                                     "description": "The range that the mob will search for a treasure chest within a ruin or shipwreck to move towards."
                                 },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "stop_distance": { "$ref": "#/definitions/library/components/values/stop_distance", "description": "The distance the mob will move before stopping." }
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "stop_distance": {
+                                    "$ref": "#/definitions/library/components/values/stop_distance",
+                                    "description": "The distance the mob will move before stopping."
+                                }
                             }
                         },
                         "minecraft:behavior.flee_sun": {
                             "type": "object",
                             "description": "Allows the mob to run away from direct sunlight and seek shade.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.float": {
                             "type": "object",
                             "description": "Allows the mob to stay afloat while swimming.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.float_wander": {
                             "type": "object",
                             "description": "Allows the mob to float around like the Ghast.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "float_duration": { "type": "array", "default": [0, 0], "description": "Range of time in seconds the mob will float around before landing and choosing to do something else" },
-                                "must_reach": { "$ref": "#/definitions/library/components/values/must_reach", "description": "Allows the entity to track the attack target, even if the entity has no sensing." },
-                                "random_reselect": { "type": "boolean", "default": false, "description": "If true, the mob will randomly pick a new point while moving to the previously selected one" },
-                                "xz_dist": { "$ref": "#/definitions/library/components/values/xz_dist" },
-                                "y_dist": { "$ref": "#/definitions/library/components/values/y_dist" },
-                                "y_offset": { "$ref": "#/definitions/library/components/values/y_offset" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "float_duration": {
+                                    "type": "array",
+                                    "default": [0, 0],
+                                    "description": "Range of time in seconds the mob will float around before landing and choosing to do something else"
+                                },
+                                "must_reach": {
+                                    "$ref": "#/definitions/library/components/values/must_reach",
+                                    "description": "Allows the entity to track the attack target, even if the entity has no sensing."
+                                },
+                                "random_reselect": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, the mob will randomly pick a new point while moving to the previously selected one"
+                                },
+                                "xz_dist": {"$ref": "#/definitions/library/components/values/xz_dist"},
+                                "y_dist": {"$ref": "#/definitions/library/components/values/y_dist"},
+                                "y_offset": {"$ref": "#/definitions/library/components/values/y_offset"}
                             }
                         },
                         "minecraft:behavior.follow_caravan": {
                             "type": "object",
                             "description": "Allows the mob to follow mobs that are in a caravan.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "entity_count": { "type": "integer", "default": 1, "description": "Number of entities that can be in the caravan" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types that this mob can follow in a caravan" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "entity_count": {
+                                    "type": "integer",
+                                    "default": 1,
+                                    "description": "Number of entities that can be in the caravan"
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types that this mob can follow in a caravan"
+                                }
                             }
                         },
                         "minecraft:behavior.follow_mob": {
                             "type": "object",
                             "description": "Allows the mob to follow other mobs.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "stop_distance": { "$ref": "#/definitions/library/components/values/stop_distance", "description": "The distance in blocks this mob stops from the mob it is following" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks it will look for a mob to follow." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "stop_distance": {
+                                    "$ref": "#/definitions/library/components/values/stop_distance",
+                                    "description": "The distance in blocks this mob stops from the mob it is following"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks it will look for a mob to follow."
+                                }
                             }
                         },
                         "minecraft:behavior.follow_owner": {
                             "type": "object",
                             "description": "Allows the mob to follow the player that owns them.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "start_distance": { "$ref": "#/definitions/library/components/values/start_distance", "description": "The distance in blocks that the owner can be away from this mob before it starts following it" },
-                                "stop_distance": { "$ref": "#/definitions/library/components/values/stop_distance", "description": "The distance in blocks this mob will stop from its owner while following it" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "start_distance": {
+                                    "$ref": "#/definitions/library/components/values/start_distance",
+                                    "description": "The distance in blocks that the owner can be away from this mob before it starts following it"
+                                },
+                                "stop_distance": {
+                                    "$ref": "#/definitions/library/components/values/stop_distance",
+                                    "description": "The distance in blocks this mob will stop from its owner while following it"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.follow_parent": {
                             "type": "object",
                             "description": "Allows the mob to follow their parent around.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.follow_target_captain": {
                             "type": "object",
                             "description": "Allows mob to move towards its current target captain.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "follow_distance": { "type": "number", "default": 0.0, "description": "Defines the distance in blocks the mob will stay from its target while following." },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "follow_distance": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Defines the distance in blocks the mob will stay from its target while following."
+                                },
                                 "within_radius": {
                                     "$ref": "#/definitions/library/components/values/within_radius",
                                     "description": "Defines the maximum distance in blocks a mob can get from its target captain before giving up trying to follow it."
@@ -2649,11 +2970,14 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Allows the mob to move back to the position they were spawned.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "interval": { "$ref": "#/definitions/library/components/values/interval" },
-                                "on_home": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to run when this mob gets home." },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "interval": {"$ref": "#/definitions/library/components/values/interval"},
+                                "on_home": {
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to run when this mob gets home."
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.guardian_attack": {
@@ -2663,311 +2987,478 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Allows the villager to harvest nearby farms. Can only be used by Villagers.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.hold_ground": {
                             "type": "object",
                             "description": "The mob freezes and looks at the mob they are targeting.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "broadcast": { "$ref": "#/definitions/library/components/values/broadcast", "description": "Whether to broadcast out the mob's target to other mobs of the same type." },
-                                "broadcast_range": { "type": "number", "default": 0.0, "description": "Range in blocks for how far to broadcast." },
-                                "min_radius": { "type": "number", "default": 10.0, "description": "Minimum distance the target must be for the mob to run this goal." },
-                                "within_radius_event": { "type": "string", "description": "Event to run when target is within the radius. This event is broadcasted if broadcast is true." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "broadcast": {
+                                    "$ref": "#/definitions/library/components/values/broadcast",
+                                    "description": "Whether to broadcast out the mob's target to other mobs of the same type."
+                                },
+                                "broadcast_range": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Range in blocks for how far to broadcast."
+                                },
+                                "min_radius": {
+                                    "type": "number",
+                                    "default": 10.0,
+                                    "description": "Minimum distance the target must be for the mob to run this goal."
+                                },
+                                "within_radius_event": {
+                                    "type": "string",
+                                    "description": "Event to run when target is within the radius. This event is broadcasted if broadcast is true."
+                                }
                             }
                         },
                         "minecraft:behavior.hurt_by_target": {
                             "type": "object",
                             "description": "Allows the mob to target another mob that hurts them.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "alert_same_type": { "type": "boolean", "default": false, "description": "If true, nearby mobs of the same type will be alerted about the damage" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types that this mob can target when hurt by them" },
-                                "hurt_owner": { "type": "boolean", "default": false, "description": "If true, the mob will hurt its owner and other mobs with the same owner as itself" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "alert_same_type": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, nearby mobs of the same type will be alerted about the damage"
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types that this mob can target when hurt by them"
+                                },
+                                "hurt_owner": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, the mob will hurt its owner and other mobs with the same owner as itself"
+                                }
                             }
                         },
                         "minecraft:behavior.inspect_bookshelf": {
                             "type": "object",
                             "description": "Allows the mob to inspect bookshelves.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "search_count": { "$ref": "#/definitions/library/components/values/search_count" },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "The height that the mob will search for bookshelves" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "Distance in blocks the mob will look for books to inspect"  },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "search_count": {"$ref": "#/definitions/library/components/values/search_count"},
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "The height that the mob will search for bookshelves"
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "Distance in blocks the mob will look for books to inspect"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.knockback_roar": {
                             "type": "object",
                             "description": "Allows the mob to perform a damaging knockback that affects all nearby entities.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "on_roar_end": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to trigger when the knockback roar is complete." },
-                                "attack_time": { "type": "number", "default": 0.5, "description": "The delay after which the knockback occurs (in seconds)." },
-                                "cooldown_time": { "$ref": "#/definitions/library/components/values/cooldown_time" },
-                                "duration": { "$ref": "#/definitions/library/components/values/duration", "description": "The duration of the roar (in seconds)." },
-                                "knockback_damage": { "type": "integer", "default": 6, "description": "The damage dealt by the knockback roar." },
-                                "knockback_range": { "type": "integer", "default": 6, "description": "The radius (in blocks) of the knockback effect." },
-                                "knockback_strength": { "type": "integer", "default": 6, "description": "The strength of the knockback." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "on_roar_end": {
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to trigger when the knockback roar is complete."
+                                },
+                                "attack_time": {
+                                    "type": "number",
+                                    "default": 0.5,
+                                    "description": "The delay after which the knockback occurs (in seconds)."
+                                },
+                                "cooldown_time": {"$ref": "#/definitions/library/components/values/cooldown_time"},
+                                "duration": {
+                                    "$ref": "#/definitions/library/components/values/duration",
+                                    "description": "The duration of the roar (in seconds)."
+                                },
+                                "knockback_damage": {
+                                    "type": "integer",
+                                    "default": 6,
+                                    "description": "The damage dealt by the knockback roar."
+                                },
+                                "knockback_range": {
+                                    "type": "integer",
+                                    "default": 6,
+                                    "description": "The radius (in blocks) of the knockback effect."
+                                },
+                                "knockback_strength": {
+                                    "type": "integer",
+                                    "default": 6,
+                                    "description": "The strength of the knockback."
+                                }
                             }
                         },
                         "minecraft:behavior.lay_down": {
                             "type": "object",
                             "description": "Allows mobs to lay down at times",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "interval": { "type": "number", "default": 120, "description": "A random value to determine at what intervals something can occur. This has a 1/interval chance to choose this goal" },
-                                "random_stop_interval": { "type": "number", "default": 120, "description": "A random value in which the goal can use to pull out of the behavior. This is a 1/interval chance to play the sound" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "interval": {
+                                    "type": "number",
+                                    "default": 120,
+                                    "description": "A random value to determine at what intervals something can occur. This has a 1/interval chance to choose this goal"
+                                },
+                                "random_stop_interval": {
+                                    "type": "number",
+                                    "default": 120,
+                                    "description": "A random value in which the goal can use to pull out of the behavior. This is a 1/interval chance to play the sound"
+                                }
                             }
                         },
                         "minecraft:behavior.lay_egg": {
                             "type": "object",
                             "description": "Allows the mob to lay an egg block on a sand block if the mob is pregnant.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "on_lay": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to run when this mob lays the egg." },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "Height in blocks the mob will look for sand block to move towards" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks it will look for a sand block to move towards" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "on_lay": {
+                                    "$ref": "#/definitions/library/components/values/trigger",
+                                    "description": "Event to run when this mob lays the egg."
+                                },
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "Height in blocks the mob will look for sand block to move towards"
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks it will look for a sand block to move towards"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.leap_at_target": {
                             "type": "object",
                             "description": "Allows monsters to jump at and attack their target. Can only be used by hostile mobs.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "must_be_on_ground": { "type": "boolean", "default": true, "description": "If true, the mob will only jump at its target if its on the ground. Setting it to false will allow it to jump even if its already in the air" },
-                                "set_persistent": { "$ref": "#/definitions/library/components/values/set_persistent" },
-                                "yd": { "type": "decimal", "default": 0.0, "description": "The height in blocks the mob jumps when leaping at its target" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "must_be_on_ground": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true, the mob will only jump at its target if its on the ground. Setting it to false will allow it to jump even if its already in the air"
+                                },
+                                "set_persistent": {"$ref": "#/definitions/library/components/values/set_persistent"},
+                                "yd": {
+                                    "type": "decimal",
+                                    "default": 0.0,
+                                    "description": "The height in blocks the mob jumps when leaping at its target"
+                                }
                             }
                         },
                         "minecraft:behavior.look_at_entity": {
                             "type": "object",
                             "description": "Allows the mob to look at nearby entities.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "angle_of_view_horizontal": { "$ref": "#/definitions/library/components/values/angle_of_view_horizontal" },
-                                "angle_of_view_vertical": { "$ref": "#/definitions/library/components/values/angle_of_view_vertical" },
-                                "filters": { "$ref": "#/definitions/filters", "description": "Filter to determine the conditions for this mob to look at the entity" },
-                                "look_distance": { "$ref": "#/definitions/library/components/values/look_distance" },
-                                "look_time": { "$ref": "#/definitions/library/components/values/look_time" },
-                                "probability": { "$ref": "#/definitions/library/components/values/probability" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "angle_of_view_horizontal": {"$ref": "#/definitions/library/components/values/angle_of_view_horizontal"},
+                                "angle_of_view_vertical": {"$ref": "#/definitions/library/components/values/angle_of_view_vertical"},
+                                "filters": {
+                                    "$ref": "#/definitions/filters",
+                                    "description": "Filter to determine the conditions for this mob to look at the entity"
+                                },
+                                "look_distance": {"$ref": "#/definitions/library/components/values/look_distance"},
+                                "look_time": {"$ref": "#/definitions/library/components/values/look_time"},
+                                "probability": {"$ref": "#/definitions/library/components/values/probability"}
                             }
                         },
                         "minecraft:behavior.look_at_player": {
                             "type": "object",
                             "description": "Allows the mob to look at the player when the player is nearby.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "angle_of_view_horizontal": { "$ref": "#/definitions/library/components/values/angle_of_view_horizontal" },
-                                "angle_of_view_vertical": { "$ref": "#/definitions/library/components/values/angle_of_view_vertical" },
-                                "look_distance": { "$ref": "#/definitions/library/components/values/look_distance" },
-                                "look_time": { "$ref": "#/definitions/library/components/values/look_time" },
-                                "probability": { "$ref": "#/definitions/library/components/values/probability" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "angle_of_view_horizontal": {"$ref": "#/definitions/library/components/values/angle_of_view_horizontal"},
+                                "angle_of_view_vertical": {"$ref": "#/definitions/library/components/values/angle_of_view_vertical"},
+                                "look_distance": {"$ref": "#/definitions/library/components/values/look_distance"},
+                                "look_time": {"$ref": "#/definitions/library/components/values/look_time"},
+                                "probability": {"$ref": "#/definitions/library/components/values/probability"}
                             }
                         },
                         "minecraft:behavior.look_at_target": {
                             "type": "object",
                             "description": "Allows the mob to look at the entity they are targetting.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "angle_of_view_horizontal": { "$ref": "#/definitions/library/components/values/angle_of_view_horizontal" },
-                                "angle_of_view_vertical": { "$ref": "#/definitions/library/components/values/angle_of_view_vertical" },
-                                "look_distance": { "$ref": "#/definitions/library/components/values/look_distance" },
-                                "look_time": { "$ref": "#/definitions/library/components/values/look_time" },
-                                "probability": { "$ref": "#/definitions/library/components/values/probability" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "angle_of_view_horizontal": {"$ref": "#/definitions/library/components/values/angle_of_view_horizontal"},
+                                "angle_of_view_vertical": {"$ref": "#/definitions/library/components/values/angle_of_view_vertical"},
+                                "look_distance": {"$ref": "#/definitions/library/components/values/look_distance"},
+                                "look_time": {"$ref": "#/definitions/library/components/values/look_time"},
+                                "probability": {"$ref": "#/definitions/library/components/values/probability"}
                             }
                         },
                         "minecraft:behavior.look_at_trading_player": {
                             "type": "object",
                             "description": "Allows the mob to look at the player they are trading with.",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "angle_of_view_horizontal": { "$ref": "#/definitions/library/components/values/angle_of_view_horizontal" },
-                                "angle_of_view_vertical": { "$ref": "#/definitions/library/components/values/angle_of_view_vertical" },
-                                "look_distance": { "$ref": "#/definitions/library/components/values/look_distance" },
-                                "look_time": { "$ref": "#/definitions/library/components/values/look_time" },
-                                "probability": { "$ref": "#/definitions/library/components/values/probability" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "angle_of_view_horizontal": {"$ref": "#/definitions/library/components/values/angle_of_view_horizontal"},
+                                "angle_of_view_vertical": {"$ref": "#/definitions/library/components/values/angle_of_view_vertical"},
+                                "look_distance": {"$ref": "#/definitions/library/components/values/look_distance"},
+                                "look_time": {"$ref": "#/definitions/library/components/values/look_time"},
+                                "probability": {"$ref": "#/definitions/library/components/values/probability"}
                             }
                         },
                         "minecraft:behavior.make_love": {
                             "description": "Allows the villager to look for a mate to spawn other villagers with. Can only be used by Villagers.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"}
                             }
                         },
                         "minecraft:behavior.melee_attack": {
                             "description": "Allows an entity to go to the village bell and mingle with other entities",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "attack_once": { "$ref": "#/definitions/library/components/values/attack_once" },
-                                "attack_types": { "$ref": "#/definitions/library/components/values/attack_types" },
-                                "cooldown_time": { "$ref": "#/definitions/library/components/values/cooldown_time", "description": "Cooldown time (in seconds) between attacks." },
-                                "inner_boundary_time_increase": { "$ref": "#/definitions/library/components/values/inner_boundary_time_increase" },
-                                "max_path_time": { "$ref": "#/definitions/library/components/values/max_path_time" },
-                                "melee_fov": { "$ref": "#/definitions/library/components/values/melee_fov" },
-                                "min_path_time": { "$ref": "#/definitions/library/components/values/min_path_time" },
-                                "on_attack": { "$ref": "#/definitions/library/components/values/on_attack" },
-                                "outer_boundary_time_increase": { "$ref": "#/definitions/library/components/values/outer_boundary_time_increase" },
-                                "path_fail_time_increase": { "$ref": "#/definitions/library/components/values/path_fail_time_increase" },
-                                "path_inner_boundary": { "$ref": "#/definitions/library/components/values/path_inner_boundary" },
-                                "path_outer_boundary": { "$ref": "#/definitions/library/components/values/path_outer_boundary" },
-                                "random_stop_interval": { "$ref": "#/definitions/library/components/values/random_stop_interval" },
-                                "reach_multiplier": { "$ref": "#/definitions/library/components/values/reach_multiplier" },
-                                "require_complete_path": { "$ref": "#/definitions/library/components/values/require_complete_path" },
-                                "track_target": { "$ref": "#/definitions/library/components/values/track_target" },
-                                "x_max_rotation": { "$ref": "#/definitions/library/components/values/x_max_rotation" },
-                                "y_max_head_rotation": { "$ref": "#/definitions/library/components/values/y_max_head_rotation" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "attack_once": {"$ref": "#/definitions/library/components/values/attack_once"},
+                                "attack_types": {"$ref": "#/definitions/library/components/values/attack_types"},
+                                "cooldown_time": {
+                                    "$ref": "#/definitions/library/components/values/cooldown_time",
+                                    "description": "Cooldown time (in seconds) between attacks."
+                                },
+                                "inner_boundary_time_increase": {"$ref": "#/definitions/library/components/values/inner_boundary_time_increase"},
+                                "max_path_time": {"$ref": "#/definitions/library/components/values/max_path_time"},
+                                "melee_fov": {"$ref": "#/definitions/library/components/values/melee_fov"},
+                                "min_path_time": {"$ref": "#/definitions/library/components/values/min_path_time"},
+                                "on_attack": {"$ref": "#/definitions/library/components/values/on_attack"},
+                                "outer_boundary_time_increase": {"$ref": "#/definitions/library/components/values/outer_boundary_time_increase"},
+                                "path_fail_time_increase": {"$ref": "#/definitions/library/components/values/path_fail_time_increase"},
+                                "path_inner_boundary": {"$ref": "#/definitions/library/components/values/path_inner_boundary"},
+                                "path_outer_boundary": {"$ref": "#/definitions/library/components/values/path_outer_boundary"},
+                                "random_stop_interval": {"$ref": "#/definitions/library/components/values/random_stop_interval"},
+                                "reach_multiplier": {"$ref": "#/definitions/library/components/values/reach_multiplier"},
+                                "require_complete_path": {"$ref": "#/definitions/library/components/values/require_complete_path"},
+                                "track_target": {"$ref": "#/definitions/library/components/values/track_target"},
+                                "x_max_rotation": {"$ref": "#/definitions/library/components/values/x_max_rotation"},
+                                "y_max_head_rotation": {"$ref": "#/definitions/library/components/values/y_max_head_rotation"}
                             }
                         },
                         "minecraft:behavior.mingle": {
                             "description": "Allows an entity to go to the village bell and mingle with other entities",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "duration": { "$ref": "#/definitions/library/components/values/duration", "description": "Amount of time in seconds that the entity will chat with another entity" },
-                                "mingle_distance": { "type": "number", "default": 2.0, "description": "The distance from its partner that this entity will mingle. If the entity type is not the same as the entity, this value needs to be identical on both entities." },
-                                "mingle_partner_type": { "type": "list", "description": "The entity type that this entity is allowed to mingle with" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "duration": {
+                                    "$ref": "#/definitions/library/components/values/duration",
+                                    "description": "Amount of time in seconds that the entity will chat with another entity"
+                                },
+                                "mingle_distance": {
+                                    "type": "number",
+                                    "default": 2.0,
+                                    "description": "The distance from its partner that this entity will mingle. If the entity type is not the same as the entity, this value needs to be identical on both entities."
+                                },
+                                "mingle_partner_type": {
+                                    "type": "list",
+                                    "description": "The entity type that this entity is allowed to mingle with"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.mount_pathing": {
                             "description": "llows the mob to move around on its own while mounted seeking a target to attack.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "target_dist": { "$ref": "#/definitions/library/components/values/target_dist", "description": "The distance at which this mob wants to be away from its target" },
-                                "track_target": { "$ref": "#/definitions/library/components/values/track_target" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "target_dist": {
+                                    "$ref": "#/definitions/library/components/values/target_dist",
+                                    "description": "The distance at which this mob wants to be away from its target"
+                                },
+                                "track_target": {"$ref": "#/definitions/library/components/values/track_target"}
                             }
                         },
                         "minecraft:behavior.move_indoors": {
                             "description": "Can only be used by Villagers. Allows them to seek shelter indoors.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" },
-                                "timeout_cooldown": { "$ref": "#/definitions/library/components/values/timeout_cooldown" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"},
+                                "timeout_cooldown": {"$ref": "#/definitions/library/components/values/timeout_cooldown"}
                             }
                         },
                         "minecraft:behavior.move_through_village": {
                             "description": "Can only be used by Villagers. Allows the villagers to create paths around the village.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "only_at_night": { "type": "boolean", "default": false, "description": "The height in blocks the mob jumps when leaping at its target" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "only_at_night": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "The height in blocks the mob jumps when leaping at its target"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_to_land": {
                             "description": "Allows the mob to move back onto land when in water.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "search_count": { "$ref": "#/definitions/library/components/values/search_count" },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "Height in blocks the mob will look for land to move towards" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks it will look for land to move towards" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "search_count": {"$ref": "#/definitions/library/components/values/search_count"},
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "Height in blocks the mob will look for land to move towards"
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks it will look for land to move towards"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_to_lava": {
                             "description": "Allows the mob to move back into lava when on land.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "search_count": { "$ref": "#/definitions/library/components/values/search_count" },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "Height in blocks the mob will look for land to move towards" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks it will look for land to move towards" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "search_count": {"$ref": "#/definitions/library/components/values/search_count"},
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "Height in blocks the mob will look for land to move towards"
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks it will look for land to move towards"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_to_random_block": {
                             "description": "Allows mob to move towards a random block.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "block_distance": { "$ref": "#/definitions/library/components/values/block_distance", "description": "Defines the distance from the mob, in blocks, that the block to move to will be chosen." },
-                                "within_radius": { "$ref": "#/definitions/library/components/values/within_radius", "description": "Defines the distance in blocks the mob has to be from the block for the movement to be finished." }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "block_distance": {
+                                    "$ref": "#/definitions/library/components/values/block_distance",
+                                    "description": "Defines the distance from the mob, in blocks, that the block to move to will be chosen."
+                                },
+                                "within_radius": {
+                                    "$ref": "#/definitions/library/components/values/within_radius",
+                                    "description": "Defines the distance in blocks the mob has to be from the block for the movement to be finished."
+                                }
                             }
                         },
                         "minecraft:behavior.move_to_village": {
                             "description": "Allows mob to move towards a random block.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "cooldown_time": { "$ref": "#/definitions/library/components/values/cooldown_time" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks to search for villages. If <= 0, find the closest village regardless of distance." },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "cooldown_time": {"$ref": "#/definitions/library/components/values/cooldown_time"},
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks to search for villages. If <= 0, find the closest village regardless of distance."
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_to_water": {
                             "description": "Allows the mob to move into a random location within a village.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "goal_radius": { "$ref": "#/definitions/library/components/values/goal_radius" },
-                                "search_count": { "$ref": "#/definitions/library/components/values/search_count" },
-                                "search_height": { "$ref": "#/definitions/library/components/values/search_height", "description": "Height in blocks the mob will look for land to move towards" },
-                                "search_range": { "$ref": "#/definitions/library/components/values/search_range", "description": "The distance in blocks it will look for land to move towards" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "goal_radius": {"$ref": "#/definitions/library/components/values/goal_radius"},
+                                "search_count": {"$ref": "#/definitions/library/components/values/search_count"},
+                                "search_height": {
+                                    "$ref": "#/definitions/library/components/values/search_height",
+                                    "description": "Height in blocks the mob will look for land to move towards"
+                                },
+                                "search_range": {
+                                    "$ref": "#/definitions/library/components/values/search_range",
+                                    "description": "The distance in blocks it will look for land to move towards"
+                                },
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_towards_restriction": {
                             "description": "Allows the mob to move back into water when on land.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         },
                         "minecraft:behavior.move_towards_target": {
                             "description": "Allows Guardians, Iron Golems and Villagers to move within their pre-defined area that the mob should be restricted to. Other mobs don't have a restriction defined.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "within_radius": { "$ref": "#/definitions/library/components/values/within_radius", "description": "Defines the radius in blocks that the mob tries to be from the target. A value of 0 means it tries to occupy the same block as the target" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "within_radius": {
+                                    "$ref": "#/definitions/library/components/values/within_radius",
+                                    "description": "Defines the radius in blocks that the mob tries to be from the target. A value of 0 means it tries to occupy the same block as the target"
+                                }
                             }
                         },
                         "minecraft:behavior.nap": {
                             "description": "Allows mob to move towards its current target.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "coooldown_max": { "type": "number", "default": 0.0, "description": "Maximum time in seconds the mob has to wait before using the goal again" },
-                                "cooldown_min": { "type": "number", "default": 0.0, "description": "Minimum time in seconds the mob has to wait before using the goal again" },
-                                "mob_detect_dist": { "type": "number", "default": 6.0, "description": "The block distance in x and z that will be checked for mobs that this mob detects" },
-                                "mob_detect_height": { "type": "number", "default": 6.0, "description": "The block distance in y that will be checked for mobs that this mob detects" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "coooldown_max": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Maximum time in seconds the mob has to wait before using the goal again"
+                                },
+                                "cooldown_min": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Minimum time in seconds the mob has to wait before using the goal again"
+                                },
+                                "mob_detect_dist": {
+                                    "type": "number",
+                                    "default": 6.0,
+                                    "description": "The block distance in x and z that will be checked for mobs that this mob detects"
+                                },
+                                "mob_detect_height": {
+                                    "type": "number",
+                                    "default": 6.0,
+                                    "description": "The block distance in y that will be checked for mobs that this mob detects"
+                                }
                             }
                         },
                         "minecraft:behavior.nearest_attackable_target": {
                             "description": "Allows mobs to occassionally stop and take a nap under certain conditions.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
                                 "attack_interval": {
                                     "$ref": "#/definitions/library/components/values/attack_interval",
                                     "description": "Time range (in seconds) between searching for an attack target, range is in (0, \"attack_interval\"]. Only used if \"attack_interval\" is greater than 0, otherwise \"scan_interval\" is used."
                                 },
-                                "attack_interval_min": { "type": "integer", "default": 0.0, "description": "Alias for \"attack_interval\"; provides the same functionality as \"attack_interval\"." },
-                                "attack_owner": { "type": "boolean", "default": false, "description": "If true, this entity can attack its owner." },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "Filters which types of targets are valid for this entity." },
-                                "must_reach": { "$ref": "#/definitions/library/components/values/must_reach", "description": "If true, this entity requires a path to the target." },
-                                "must_see": { "$ref": "#/definitions/library/components/values/must_see", "description": "Determines if target-validity requires this entity to be in range only, or both in range and in sight." },
+                                "attack_interval_min": {
+                                    "type": "integer",
+                                    "default": 0.0,
+                                    "description": "Alias for \"attack_interval\"; provides the same functionality as \"attack_interval\"."
+                                },
+                                "attack_owner": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, this entity can attack its owner."
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "Filters which types of targets are valid for this entity."
+                                },
+                                "must_reach": {
+                                    "$ref": "#/definitions/library/components/values/must_reach",
+                                    "description": "If true, this entity requires a path to the target."
+                                },
+                                "must_see": {
+                                    "$ref": "#/definitions/library/components/values/must_see",
+                                    "description": "Determines if target-validity requires this entity to be in range only, or both in range and in sight."
+                                },
                                 "must_see_forget_duration": {
                                     "$ref": "#/definitions/library/components/values/must_see_forget_duration",
                                     "description": "Time (in seconds) the target must not be seen by this entity to become invalid. Used only if \"must_see\" is true."
                                 },
-                                "persist_time": { "$ref": "#/definitions/library/components/values/persist_time", "description": "Time (in seconds) this entity can continue attacking the target after the target is no longer valid." },
+                                "persist_time": {
+                                    "$ref": "#/definitions/library/components/values/persist_time",
+                                    "description": "Time (in seconds) this entity can continue attacking the target after the target is no longer valid."
+                                },
                                 "reselect_targets": {
                                     "$ref": "#/definitions/library/components/values/reselect_targets",
                                     "description": "Allows the attacking entity to update the nearest target, otherwise a target is only reselected after each \"scan_interval\" or \"attack_interval\"."
@@ -2976,13 +3467,21 @@ export const fullSchema = {
                                     "$ref": "#/definitions/library/components/values/scan_interval",
                                     "description": "If \"attack_interval\" is 0 or isn't declared, then between attacks: scanning for a new target occurs every amount of ticks equal to \"scan_interval\", minimum value is 10.."
                                 },
-                                "set_persistent": { "$ref": "#/definitions/library/components/values/set_persistent" },
-                                "target_invisible_multiplier": { "type": "number", "default": 0.7, "description": "Multiplied with the target's armor coverage percentage to modify \"max_dist\" when detecting an invisible target." },
+                                "set_persistent": {"$ref": "#/definitions/library/components/values/set_persistent"},
+                                "target_invisible_multiplier": {
+                                    "type": "number",
+                                    "default": 0.7,
+                                    "description": "Multiplied with the target's armor coverage percentage to modify \"max_dist\" when detecting an invisible target."
+                                },
                                 "target_search_height": {
                                     "$ref": "#/definitions/library/components/values/target_search_height",
                                     "description": "Maximum vertical target-search distance, if it's greater than the target type's \"max_dist\". A negative value defaults to \"entity_types\" greatest \"max_dist\"."
                                 },
-                                "target_sneak_visibility_multiplier": { "type": "number", "default": 0.8, "description": "Multiplied with the target type's \"max_dist\" when trying to detect a sneaking target." },
+                                "target_sneak_visibility_multiplier": {
+                                    "type": "number",
+                                    "default": 0.8,
+                                    "description": "Multiplied with the target type's \"max_dist\" when trying to detect a sneaking target."
+                                },
                                 "within_radius": {
                                     "$ref": "#/definitions/library/components/values/within_radius",
                                     "description": "Maximum distance this entity can be from the target when following it, otherwise the target becomes invalid. This value is only used if the entity doesn't declare \"minecraft:follow_range\"."
@@ -2993,29 +3492,56 @@ export const fullSchema = {
                             "description": "Allows an entity to attack the closest target within a given subset of specific target types.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "attack_interval": { "$ref": "#/definitions/library/components/values/attack_interval", "description": "Time in seconds between attacks" },
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types that this mob considers valid targets" },
-                                "must_reach": { "$ref": "#/definitions/library/components/values/must_reach", "description": "If true, only entities that this mob can path to can be selected as targets" },
-                                "must_see": { "$ref": "#/definitions/library/components/values/must_see", "description": "If true, only entities in this mob's viewing range can be selected as targets" },
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "attack_interval": {
+                                    "$ref": "#/definitions/library/components/values/attack_interval",
+                                    "description": "Time in seconds between attacks"
+                                },
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types that this mob considers valid targets"
+                                },
+                                "must_reach": {
+                                    "$ref": "#/definitions/library/components/values/must_reach",
+                                    "description": "If true, only entities that this mob can path to can be selected as targets"
+                                },
+                                "must_see": {
+                                    "$ref": "#/definitions/library/components/values/must_see",
+                                    "description": "If true, only entities in this mob's viewing range can be selected as targets"
+                                },
                                 "must_see_forget_duration": {
                                     "$ref": "#/definitions/library/components/values/must_see_forget_duration",
                                     "description": "Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more"
                                 },
-                                "persist_time": { "$ref": "#/definitions/library/components/values/persist_time", "description": "Time (in seconds) this entity can continue attacking the target after the target is no longer valid." },
-                                "reselect_targets": { "$ref": "#/definitions/library/components/values/reselect_targets", "description": "f true, the target will change to the current closest entity whenever a different entity is closer" },
-                                "scan_interval": { "$ref": "#/definitions/library/components/values/scan_interval", "description": "How many ticks to wait between scanning for a target." },
-                                "set_persistent": { "$ref": "#/definitions/library/components/values/set_persistent" },
-                                "target_search_height": { "$ref": "#/definitions/library/components/values/target_search_height", "description": "Height in blocks to search for a target mob. -1.0 means the height does not matter." },
-                                "within_radius": { "$ref": "#/definitions/library/components/values/within_radius", "description": "Distance in blocks that the target can be within to launch an attack" }
+                                "persist_time": {
+                                    "$ref": "#/definitions/library/components/values/persist_time",
+                                    "description": "Time (in seconds) this entity can continue attacking the target after the target is no longer valid."
+                                },
+                                "reselect_targets": {
+                                    "$ref": "#/definitions/library/components/values/reselect_targets",
+                                    "description": "f true, the target will change to the current closest entity whenever a different entity is closer"
+                                },
+                                "scan_interval": {
+                                    "$ref": "#/definitions/library/components/values/scan_interval",
+                                    "description": "How many ticks to wait between scanning for a target."
+                                },
+                                "set_persistent": {"$ref": "#/definitions/library/components/values/set_persistent"},
+                                "target_search_height": {
+                                    "$ref": "#/definitions/library/components/values/target_search_height",
+                                    "description": "Height in blocks to search for a target mob. -1.0 means the height does not matter."
+                                },
+                                "within_radius": {
+                                    "$ref": "#/definitions/library/components/values/within_radius",
+                                    "description": "Distance in blocks that the target can be within to launch an attack"
+                                }
                             }
                         },
                         "minecraft:behavior.ocelot_sit_on_block": {
                             "description": "Allows the mob to check for and pursue the nearest valid target.",
                             "type": "object",
                             "properties": {
-                                "priority": { "$ref": "#/definitions/library/components/values/priority" },
-                                "speed_multiplier": { "$ref": "#/definitions/library/components/values/speed_multiplier" }
+                                "priority": {"$ref": "#/definitions/library/components/values/priority"},
+                                "speed_multiplier": {"$ref": "#/definitions/library/components/values/speed_multiplier"}
                             }
                         }, //release update announcement here; 69th component
                         "minecraft:behavior.ocelotattack": {
@@ -3027,19 +3553,29 @@ export const fullSchema = {
                         "minecraft:behavior.open_door": {
                             "type": "object",
                             "properties": {
-                                "close_door_after": { "type": "boolean", "default": true, "description": "If true, the mob will close the door after opening it and going through it" }
+                                "close_door_after": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true, the mob will close the door after opening it and going through it"
+                                }
                             }
                         },
                         "minecraft:behavior.owner_hurt_by_target": {
                             "type": "object",
                             "properties": {
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types that this mob can target if they hurt their owner" }
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types that this mob can target if they hurt their owner"
+                                }
                             }
                         },
                         "minecraft:behavior.owner_hurt_target": {
                             "type": "object",
                             "properties": {
-                                "entity_types": { "$ref": "#/definitions/library/components/values/entity_types", "description": "List of entity types that this entity can target if the potential target is hurt by this mob's owner" }
+                                "entity_types": {
+                                    "$ref": "#/definitions/library/components/values/entity_types",
+                                    "description": "List of entity types that this entity can target if the potential target is hurt by this mob's owner"
+                                }
                             }
                         },
                         "minecraft:behavior.panic": {
@@ -3180,9 +3716,21 @@ export const fullSchema = {
                                     "default": 0,
                                     "description": "Minimum bound for reload-time range (in seconds), when not using a charged shot. Reload-time range scales with target-distance."
                                 },
-                                "attack_radius": {"type": "number", "default": 0, "description": "Minimum distance to target before this entity will attempt to shoot."},
-                                "burst_interval": {"type": "number", "default": 0, "description": "Time (in seconds) between each individual shot when firing a burst of shots from a charged up attack."},
-                                "burst_shots": {"type": "integer", "default": 1, "description": "Number of shots fired every time the attacking entity uses a charged up attack."},
+                                "attack_radius": {
+                                    "type": "number",
+                                    "default": 0,
+                                    "description": "Minimum distance to target before this entity will attempt to shoot."
+                                },
+                                "burst_interval": {
+                                    "type": "number",
+                                    "default": 0,
+                                    "description": "Time (in seconds) between each individual shot when firing a burst of shots from a charged up attack."
+                                },
+                                "burst_shots": {
+                                    "type": "integer",
+                                    "default": 1,
+                                    "description": "Number of shots fired every time the attacking entity uses a charged up attack."
+                                },
                                 "charge_charged_trigger": {
                                     "type": "number",
                                     "default": 0,
@@ -3193,11 +3741,31 @@ export const fullSchema = {
                                     "default": 0,
                                     "description": "Amount of time (in seconds, then doubled) a charged shot must be charging before reloading burst shots. Charge-time decays while target is not in sight."
                                 },
-                                "ranged_fov": {"type": "number", "default": 90, "description": "Field of view (in degrees) when using sensing to detect a target for attack."},
-                                "speed_multiplier": {"type": "number", "default": 1, "description": "During attack behavior, this multiplier modifies the entity's speed when moving toward the target."},
-                                "target_in_sight_time": {"type": "number", "default": 1, "description": "Minimum amount of time (in seconds) the attacking entity needs to see the target before moving toward it."},
-                                "x_max_rotation": {"type": "number", "default": 30, "description": "Maximum rotation (in degrees), on the X-axis, this entity can rotate while trying to look at the target."},
-                                "y_max_head_rotation": {"type": "number", "default": 30, "description": "Maximum rotation (in degrees), on the Y-axis, this entity can rotate its head while trying to look at the target."}
+                                "ranged_fov": {
+                                    "type": "number",
+                                    "default": 90,
+                                    "description": "Field of view (in degrees) when using sensing to detect a target for attack."
+                                },
+                                "speed_multiplier": {
+                                    "type": "number",
+                                    "default": 1,
+                                    "description": "During attack behavior, this multiplier modifies the entity's speed when moving toward the target."
+                                },
+                                "target_in_sight_time": {
+                                    "type": "number",
+                                    "default": 1,
+                                    "description": "Minimum amount of time (in seconds) the attacking entity needs to see the target before moving toward it."
+                                },
+                                "x_max_rotation": {
+                                    "type": "number",
+                                    "default": 30,
+                                    "description": "Maximum rotation (in degrees), on the X-axis, this entity can rotate while trying to look at the target."
+                                },
+                                "y_max_head_rotation": {
+                                    "type": "number",
+                                    "default": 30,
+                                    "description": "Maximum rotation (in degrees), on the Y-axis, this entity can rotate its head while trying to look at the target."
+                                }
                             }
                         },
                         "minecraft:behavior.receive_love": {
@@ -3379,9 +3947,20 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines an entity's melee attack and any additional effects on it.",
                             "properties": {
-                                "damage": { "type": ["number", "array"], "description": "Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it" },
-                                "effect_name": { "type": "string", "$ref": "#/definitions/library/effects", "description": "Identifier of the status ailment to apply to an entity attacked by this entity's melee attack" },
-                                "effect_duration": { "type": "number", "default": 0.0, "description": "Duration in seconds of the status ailment applied to the damaged entity" }
+                                "damage": {
+                                    "type": ["number", "array"],
+                                    "description": "Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it"
+                                },
+                                "effect_name": {
+                                    "type": "string",
+                                    "$ref": "#/definitions/library/effects",
+                                    "description": "Identifier of the status ailment to apply to an entity attacked by this entity's melee attack"
+                                },
+                                "effect_duration": {
+                                    "type": "number",
+                                    "default": 0.0,
+                                    "description": "Duration in seconds of the status ailment applied to the damaged entity"
+                                }
                             }
                         },
                         "minecraft:attack_cooldown": {
@@ -3393,7 +3972,7 @@ export const fullSchema = {
                         "minecraft:balloonable": {
                             "type": "object",
                             "properties": {
-                                "mass": { "type": "number" }
+                                "mass": {"type": "number"}
                             }
                         },
                         "minecraft:barter": {
@@ -3432,9 +4011,19 @@ export const fullSchema = {
                             "type": "object",
                             "description": "The current state of the boss for updating the boss HUD.",
                             "properties": {
-                                "should_darken_sky": { "type": "boolean", "default": false, "description": "Whether the sky should darken in the presence of the boss." },
-                                "name": { "type": "string", "description": "The name that will be displayed above the boss's health bar." },
-                                "hud_range": { "type": "integer", "default": 55, "description": "The max distance from the boss at which the boss's health bar is present on the players screen."
+                                "should_darken_sky": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "Whether the sky should darken in the presence of the boss."
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "The name that will be displayed above the boss's health bar."
+                                },
+                                "hud_range": {
+                                    "type": "integer",
+                                    "default": 55,
+                                    "description": "The max distance from the boss at which the boss's health bar is present on the players screen."
                                 }
                             }
                         },
@@ -3542,14 +4131,22 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines the entity's color. Only works on vanilla entities that have predefined color values (sheep, llama, shulker).",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value", "description": "The second Palette Color value of the entity", "default": 0 }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value",
+                                    "description": "The second Palette Color value of the entity",
+                                    "default": 0
+                                }
                             }
                         },
                         "minecraft:color2": {
                             "type": "object",
                             "description": "Defines the entity's second texture color. Only works on vanilla entities that have a second predefined color values (tropical fish).",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value", "description": "The Palette Color value of the entity", "default": 0 }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value",
+                                    "description": "The Palette Color value of the entity",
+                                    "default": 0
+                                }
                             }
                         },
                         "minecraft:custom_hit_test": {
@@ -3578,28 +4175,58 @@ export const fullSchema = {
                                 "triggers": {
                                     "type": ["array", "object"],
                                     "properties": {
-                                        "cause": { "type": "string", "$ref": "#/definitions/library/filters/domains/has_damage", "default": "none", "description": "Type of damage that triggers the events." },
+                                        "cause": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/filters/domains/has_damage",
+                                            "default": "none",
+                                            "description": "Type of damage that triggers the events."
+                                        },
                                         "damage_multiplier": {
                                             "type": "number",
                                             "default": 1.0,
                                             "description": "A multiplier that modifies the base damage from the damage cause. If deals_damage is true the multiplier can only reduce the damage the entity will take to a minimum of 1."
                                         },
-                                        "deals_damage": { "type": "boolean", "default": true, "description": "If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage." },
-                                        "on_damage": { "$ref": "#/definitions/library/components/values/trigger", "filters": "Specifies filters for entity definitions and events." },
-                                        "on_damage_sound_event": { "type": "string", "description": "Defines what sound to play, if any, when the on_damage filters are met." }
+                                        "deals_damage": {
+                                            "type": "boolean",
+                                            "default": true,
+                                            "description": "If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage."
+                                        },
+                                        "on_damage": {
+                                            "$ref": "#/definitions/library/components/values/trigger",
+                                            "filters": "Specifies filters for entity definitions and events."
+                                        },
+                                        "on_damage_sound_event": {
+                                            "type": "string",
+                                            "description": "Defines what sound to play, if any, when the on_damage filters are met."
+                                        }
                                     },
                                     "items": [
                                         {
                                             "properties": {
-                                                "cause": { "type": "string", "$ref": "#/definitions/library/filters/domains/has_damage", "default": "none", "description": "Type of damage that triggers the events." },
+                                                "cause": {
+                                                    "type": "string",
+                                                    "$ref": "#/definitions/library/filters/domains/has_damage",
+                                                    "default": "none",
+                                                    "description": "Type of damage that triggers the events."
+                                                },
                                                 "damage_multiplier": {
                                                     "type": "number",
                                                     "default": 1.0,
                                                     "description": "A multiplier that modifies the base damage from the damage cause. If deals_damage is true the multiplier can only reduce the damage the entity will take to a minimum of 1."
                                                 },
-                                                "deals_damage": { "type": "boolean", "default": true, "description": "If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage." },
-                                                "on_damage": { "$ref": "#/definitions/library/components/values/trigger", "filters": "Specifies filters for entity definitions and events." },
-                                                "on_damage_sound_event": { "type": "string", "description": "Defines what sound to play, if any, when the on_damage filters are met." }
+                                                "deals_damage": {
+                                                    "type": "boolean",
+                                                    "default": true,
+                                                    "description": "If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage."
+                                                },
+                                                "on_damage": {
+                                                    "$ref": "#/definitions/library/components/values/trigger",
+                                                    "filters": "Specifies filters for entity definitions and events."
+                                                },
+                                                "on_damage_sound_event": {
+                                                    "type": "string",
+                                                    "description": "Defines what sound to play, if any, when the on_damage filters are met."
+                                                }
                                             }
                                         }
                                     ]
@@ -3610,7 +4237,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Sets this entity's default head rotation angle.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 0.0, "description": "Angle in degrees" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 0.0,
+                                    "description": "Angle in degrees"
+                                }
                             }
                         },
                         "minecraft:despawn": {
@@ -3620,17 +4251,51 @@ export const fullSchema = {
                                 "despawn_from_distance": {
                                     "type": "object",
                                     "properties": {
-                                        "min_distance": { "type": "number", "description": "Maximum distance for standard despawn rules to instantly despawn the mob.", "default": 32 },
-                                        "max_distance": { "type": "number", "description": "Minimum distance for standard despawn rules to try to despawn the mob.", "default": 128 }
+                                        "min_distance": {
+                                            "type": "number",
+                                            "description": "Maximum distance for standard despawn rules to instantly despawn the mob.",
+                                            "default": 32
+                                        },
+                                        "max_distance": {
+                                            "type": "number",
+                                            "description": "Minimum distance for standard despawn rules to try to despawn the mob.",
+                                            "default": 128
+                                        }
                                     }
                                 },
-                                "filters": { "description": "The list of conditions that must be satisfied before the Actor is despawned. If a filter is defined then standard despawn rules are ignored.", "$ref": "#/definitions/filters" },
-                                "despawn_from_chance": { "type": "boolean", "default": true, "description": "Determines if \"min_range_random_chance\" is used in the standard despawn rules" },
-                                "despawn_from_inactivity": { "type": "boolean", "default": true, "description": "Determines if the \"min_range_inactivity_timer\" is used in the standard despawn rules." },
-                                "despawn_from_simulation_edge": { "type": "boolean", "default": true, "description": "Determines if the mob is instantly despawned at the edge of simulation distance in the standard despawn rules." },
-                                "min_range_inactivity_timer": { "type": "number", "default": 30, "description": "The amount of time in seconds that the mob must be inactive." },
-                                "min_range_random_chance": { "type": "number", "default": 800, "description": "A random chance between 1 and the given value." },
-                                "remove_child_entities": { "$ref": "#/definitions/library/components/values/remove_child_entities", "default": false }
+                                "filters": {
+                                    "description": "The list of conditions that must be satisfied before the Actor is despawned. If a filter is defined then standard despawn rules are ignored.",
+                                    "$ref": "#/definitions/filters"
+                                },
+                                "despawn_from_chance": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Determines if \"min_range_random_chance\" is used in the standard despawn rules"
+                                },
+                                "despawn_from_inactivity": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Determines if the \"min_range_inactivity_timer\" is used in the standard despawn rules."
+                                },
+                                "despawn_from_simulation_edge": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Determines if the mob is instantly despawned at the edge of simulation distance in the standard despawn rules."
+                                },
+                                "min_range_inactivity_timer": {
+                                    "type": "number",
+                                    "default": 30,
+                                    "description": "The amount of time in seconds that the mob must be inactive."
+                                },
+                                "min_range_random_chance": {
+                                    "type": "number",
+                                    "default": 800,
+                                    "description": "A random chance between 1 and the given value."
+                                },
+                                "remove_child_entities": {
+                                    "$ref": "#/definitions/library/components/values/remove_child_entities",
+                                    "default": false
+                                }
                             }
                         },
                         "minecraft:dweller": {
@@ -3645,8 +4310,7 @@ export const fullSchema = {
                             "properties": {
                                 "triggers": {
                                     "type": ["array", "object"],
-                                    "items": [ { "$ref": "#/definitions/library/components/values/trigger" } ],
-                                    "$ref": "#/definitions/library/components/values/trigger"
+                                    "items": [{"$ref": "#/definitions/library/components/values/trigger"}]
                                 }
                             }
                         },
@@ -3654,13 +4318,33 @@ export const fullSchema = {
                             "type": "object",
                             "description": "A component that fires an event when a set of conditions are met by other entities within the defined range.",
                             "properties": {
-                                "sensor_range": { "type": "number", "default": 10, "description": "The maximum distance another entity can be from this and have the filters checked against it." },
-                                "relative_range": { "type": "boolean", "default": true, "description": "If true the sensor range is additive on top of the entity's size." },
-                                "require_all": { "type": "boolean", "default": false, "description": "If true requires all nearby entities to pass the filter conditions for the event to send." },
-                                "minimum_count": { "type": "integer", "default": 1, "description": "The minimum number of entities that must pass the filter conditions for the event to send." },
-                                "maximum_count": { "type": "integer", "default": -1, "description": "The maximum number of entities that must pass the filter conditions for the event to send." },
-                                "event_filters": { "$ref": "#/definitions/filters" },
-                                "event": { "type": "string" }
+                                "sensor_range": {
+                                    "type": "number",
+                                    "default": 10,
+                                    "description": "The maximum distance another entity can be from this and have the filters checked against it."
+                                },
+                                "relative_range": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true the sensor range is additive on top of the entity's size."
+                                },
+                                "require_all": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true requires all nearby entities to pass the filter conditions for the event to send."
+                                },
+                                "minimum_count": {
+                                    "type": "integer",
+                                    "default": 1,
+                                    "description": "The minimum number of entities that must pass the filter conditions for the event to send."
+                                },
+                                "maximum_count": {
+                                    "type": "integer",
+                                    "default": -1,
+                                    "description": "The maximum number of entities that must pass the filter conditions for the event to send."
+                                },
+                                "event_filters": {"$ref": "#/definitions/filters"},
+                                "event": {"type": "string"}
                             }
                         },
                         "minecraft:equipment": {
@@ -3771,27 +4455,39 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Speed in Blocks that this entity flies at.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 0.002, "description": "Flying speed in blocks per tick" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 0.002,
+                                    "description": "Flying speed in blocks per tick"
+                                }
                             }
                         },
                         "minecraft:follow_range": {
                             "type": "object",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal" }
+                                "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
                             }
                         },
                         "minecraft:foot_size": {
                             "type": "object",
                             "description": "Sets the number of blocks the entity can step without jumping.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 0.5, "description": "The value of the size of the entity's step" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 0.5,
+                                    "description": "The value of the size of the entity's step"
+                                }
                             }
                         },
                         "minecraft:friction_modifier": {
                             "type": "object",
                             "description": "Defines how much does friction affect this entity.",
                             "properties": {
-                                "value": {"$ref": "#/definitions/library/components/values/value_decimal", "default": 1.0, "description": "The higher the number, the more the friction affects this entity. A value of 1.0 means regular friction, while 2.0 means twice as much" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 1.0,
+                                    "description": "The higher the number, the more the friction affects this entity. A value of 1.0 means regular friction, while 2.0 means twice as much"
+                                }
                             }
                         },
                         "minecraft:genetics": {
@@ -3804,7 +4500,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Sets the offset from the ground that the entity is actually at.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 0.0, "description": "The value of the entity's offset from the terrain, in blocks" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 0.0,
+                                    "description": "The value of the entity's offset from the terrain, in blocks"
+                                }
                             }
                         },
                         "minecraft:group_size": {
@@ -3817,7 +4517,7 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines the interactions with this entity for healing it.",
                             "properties": {
-                                "filters": { "$ref": "#/definitions/filters" },
+                                "filters": {"$ref": "#/definitions/filters"},
                                 "force_use": {
                                     "type": "boolean",
                                     "default": false,
@@ -3828,8 +4528,15 @@ export const fullSchema = {
                                     "items": {
                                         "type": "object",
                                         "properties": {
-                                            "heal_amount": { "type": "integer", "default": 1, "description": "The amount of health this entity gains when fed this item." },
-                                            "item": { "type": "string", "description": "Item identifier that can be used to heal this entity." }
+                                            "heal_amount": {
+                                                "type": "integer",
+                                                "default": 1,
+                                                "description": "The amount of health this entity gains when fed this item."
+                                            },
+                                            "item": {
+                                                "type": "string",
+                                                "description": "Item identifier that can be used to heal this entity."
+                                            }
                                         }
                                     }
                                 }
@@ -3863,30 +4570,66 @@ export const fullSchema = {
                             "anyOf": [
                                 {
                                     "properties": {
-                                        "add_items": { "type": "object", "properties": { "table": { "$ref": "#/definitions/library/components/values/loot_table" } }, "description": "Loot table with items to add to the player's inventory upon successful interaction." },
-                                        "cooldown": { "$ref": "#/definitions/library/components/values/cooldown", "description": "Time in seconds before this entity can be interacted with again." },
-                                        "hurt_item": { "type": "integer", "default": 0, "description": "The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability." },
-                                        "interact_text": { "type": "string", "description": "Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls." },
-                                        "on_interact": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to fire when the interaction occurs." },
+                                        "add_items": {
+                                            "type": "object",
+                                            "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
+                                            "description": "Loot table with items to add to the player's inventory upon successful interaction."
+                                        },
+                                        "cooldown": {
+                                            "$ref": "#/definitions/library/components/values/cooldown",
+                                            "description": "Time in seconds before this entity can be interacted with again."
+                                        },
+                                        "hurt_item": {
+                                            "type": "integer",
+                                            "default": 0,
+                                            "description": "The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability."
+                                        },
+                                        "interact_text": {
+                                            "type": "string",
+                                            "description": "Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls."
+                                        },
+                                        "on_interact": {
+                                            "$ref": "#/definitions/library/components/values/trigger",
+                                            "description": "Event to fire when the interaction occurs."
+                                        },
                                         "particle_on_start": {
                                             "type": "object",
                                             "description": "Particle effect that will be triggered at the start of the interaction.",
                                             "properties": {
-                                                "particle_offset_towards_interactor": { "description": "Whether or not the particle will appear closer to who performed the interaction." },
-                                                "particle_type": { "description": "The type of particle that will be spawned." },
-                                                "particle_y_offset": { "description": "Will offset the particle this amount in the y direction." }
+                                                "particle_offset_towards_interactor": {"description": "Whether or not the particle will appear closer to who performed the interaction."},
+                                                "particle_type": {"description": "The type of particle that will be spawned."},
+                                                "particle_y_offset": {"description": "Will offset the particle this amount in the y direction."}
                                             }
                                         },
-                                        "play_sounds": { "type": "string", "description": "List of sounds to play when the interaction occurs." },
-                                        "spawn_entities": { "type": "string", "$ref": "#/definitions/library/entities", "description": "List of entities to spawn when the interaction occurs." },
-                                        "spawn_items": { "type": "object", "properties": { "table": { "$ref": "#/definitions/library/components/values/loot_table" } }, "description": "Loot table with items to drop on the ground upon successful interaction." },
-                                        "swing": { "type": "boolean", "default": false, "description": "If true, the player will do the 'swing' animation when interacting with this entity." },
+                                        "play_sounds": {
+                                            "type": "string",
+                                            "description": "List of sounds to play when the interaction occurs."
+                                        },
+                                        "spawn_entities": {
+                                            "type": "string",
+                                            "$ref": "#/definitions/library/entities",
+                                            "description": "List of entities to spawn when the interaction occurs."
+                                        },
+                                        "spawn_items": {
+                                            "type": "object",
+                                            "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
+                                            "description": "Loot table with items to drop on the ground upon successful interaction."
+                                        },
+                                        "swing": {
+                                            "type": "boolean",
+                                            "default": false,
+                                            "description": "If true, the player will do the 'swing' animation when interacting with this entity."
+                                        },
                                         "transform_to_item": {
                                             "type": "string",
                                             "description": "The item used will transform to this item upon successful interaction. Format: itemName:auxValue",
-                                            "allOf": [ { "$ref": "#/definitions/library/items" }, { "$ref": "#/definitions/library/blocks" } ]
+                                            "allOf": [{"$ref": "#/definitions/library/items"}, {"$ref": "#/definitions/library/blocks"}]
                                         },
-                                        "use_item": { "type": "boolean", "default": false, "description": "If true, the interaction will use an item." }
+                                        "use_item": {
+                                            "type": "boolean",
+                                            "default": false,
+                                            "description": "If true, the interaction will use an item."
+                                        }
                                     },
                                     "additionalProperties": false
                                 },
@@ -3898,30 +4641,66 @@ export const fullSchema = {
                                                 {
                                                     "type": "object",
                                                     "properties": {
-                                                        "add_items": { "type": "object", "properties": { "table": { "$ref": "#/definitions/library/components/values/loot_table" } }, "description": "Loot table with items to add to the player's inventory upon successful interaction." },
-                                                        "cooldown": { "$ref": "#/definitions/library/components/values/cooldown", "description": "Time in seconds before this entity can be interacted with again." },
-                                                        "hurt_item": { "type": "integer", "default": 0, "description": "The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability." },
-                                                        "interact_text": { "type": "string", "description": "Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls." },
-                                                        "on_interact": { "$ref": "#/definitions/library/components/values/trigger", "description": "Event to fire when the interaction occurs." },
+                                                        "add_items": {
+                                                            "type": "object",
+                                                            "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
+                                                            "description": "Loot table with items to add to the player's inventory upon successful interaction."
+                                                        },
+                                                        "cooldown": {
+                                                            "$ref": "#/definitions/library/components/values/cooldown",
+                                                            "description": "Time in seconds before this entity can be interacted with again."
+                                                        },
+                                                        "hurt_item": {
+                                                            "type": "integer",
+                                                            "default": 0,
+                                                            "description": "The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability."
+                                                        },
+                                                        "interact_text": {
+                                                            "type": "string",
+                                                            "description": "Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls."
+                                                        },
+                                                        "on_interact": {
+                                                            "$ref": "#/definitions/library/components/values/trigger",
+                                                            "description": "Event to fire when the interaction occurs."
+                                                        },
                                                         "particle_on_start": {
                                                             "type": "object",
                                                             "description": "Particle effect that will be triggered at the start of the interaction.",
                                                             "properties": {
-                                                                "particle_offset_towards_interactor": { "description": "Whether or not the particle will appear closer to who performed the interaction." },
-                                                                "particle_type": { "description": "The type of particle that will be spawned." },
-                                                                "particle_y_offset": { "description": "Will offset the particle this amount in the y direction." }
+                                                                "particle_offset_towards_interactor": {"description": "Whether or not the particle will appear closer to who performed the interaction."},
+                                                                "particle_type": {"description": "The type of particle that will be spawned."},
+                                                                "particle_y_offset": {"description": "Will offset the particle this amount in the y direction."}
                                                             }
                                                         },
-                                                        "play_sounds": { "type": "string", "description": "List of sounds to play when the interaction occurs." },
-                                                        "spawn_entities": { "type": "string", "$ref": "#/definitions/library/entities", "description": "List of entities to spawn when the interaction occurs." },
-                                                        "spawn_items": { "type": "object", "properties": { "table": { "$ref": "#/definitions/library/components/values/loot_table" } }, "description": "Loot table with items to drop on the ground upon successful interaction." },
-                                                        "swing": { "type": "boolean", "default": false, "description": "If true, the player will do the 'swing' animation when interacting with this entity." },
+                                                        "play_sounds": {
+                                                            "type": "string",
+                                                            "description": "List of sounds to play when the interaction occurs."
+                                                        },
+                                                        "spawn_entities": {
+                                                            "type": "string",
+                                                            "$ref": "#/definitions/library/entities",
+                                                            "description": "List of entities to spawn when the interaction occurs."
+                                                        },
+                                                        "spawn_items": {
+                                                            "type": "object",
+                                                            "properties": {"table": {"$ref": "#/definitions/library/components/values/loot_table"}},
+                                                            "description": "Loot table with items to drop on the ground upon successful interaction."
+                                                        },
+                                                        "swing": {
+                                                            "type": "boolean",
+                                                            "default": false,
+                                                            "description": "If true, the player will do the 'swing' animation when interacting with this entity."
+                                                        },
                                                         "transform_to_item": {
                                                             "type": "string",
                                                             "description": "The item used will transform to this item upon successful interaction. Format: itemName:auxValue",
-                                                            "allOf": [ { "$ref": "#/definitions/library/items" }, { "$ref": "#/definitions/library/blocks" } ]
+                                                            "allOf": [{"$ref": "#/definitions/library/items"}, {"$ref": "#/definitions/library/blocks"}]
                                                         },
-                                                        "use_item": { "type": "boolean", "default": false, "description": "If true, the interaction will use an item." }
+                                                        "use_item": {
+                                                            "type": "boolean",
+                                                            "default": false,
+                                                            "description": "If true, the interaction will use an item."
+                                                        }
                                                     }
                                                 }
                                             ]
@@ -4007,7 +4786,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Additional variant value. Can be used to further differentiate variants.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value", "description": "The ID of the variant. By convention, 0 is the ID of the base entity", "default": 0 }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value",
+                                    "description": "The ID of the variant. By convention, 0 is the ID of the base entity",
+                                    "default": 0
+                                }
                             }
                         },
                         "minecraft:mob_effect": {
@@ -4016,7 +4799,7 @@ export const fullSchema = {
                         "minecraft:movement": {
                             "type": "object",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal" }
+                                "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
                             }
                         },
                         "minecraft:movement.amphibious": {
@@ -4044,7 +4827,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Skin ID value. Can be used to differentiate skins, such as base skins for villagers.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value", "default": 0, "description": "The ID of the skin. By convention, 0 is the ID of the base skin" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value",
+                                    "default": 0,
+                                    "description": "The ID of the skin. By convention, 0 is the ID of the base skin"
+                                }
                             }
                         },
                         "minecraft:movement.skip": {
@@ -4137,7 +4924,7 @@ export const fullSchema = {
                         },
                         "minecraft:player.saturation": {
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal" }
+                                "value": {"$ref": "#/definitions/library/components/values/value_decimal"}
                             }
                         },
                         "minecraft:player.exhaustion": {
@@ -4169,7 +4956,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Sets the distance through which the entity can push through.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 0.002, "description": "The value of the entity's push-through, in blocks" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 0.002,
+                                    "description": "The value of the entity's push-through, in blocks"
+                                }
                             }
                         },
                         "minecraft:preferred_path": {
@@ -4226,7 +5017,11 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Sets the entity's base volume for sound effects.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 1.0, "description": "The value of the volume the entity uses for sound effects" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 1.0,
+                                    "description": "The value of the volume the entity uses for sound effects"
+                                }
                             }
                         },
                         "minecraft:spawn_entity": {
@@ -4248,8 +5043,16 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines the entity's strength to carry items.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value", "description": "The initial value of the strength", "default": 1 },
-                                "max": { "type": "integer", "description": "The maximum strength of this entity", "default": 5 }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value",
+                                    "description": "The initial value of the strength",
+                                    "default": 1
+                                },
+                                "max": {
+                                    "type": "integer",
+                                    "description": "The maximum strength of this entity",
+                                    "default": 5
+                                }
                             }
                         },
                         "minecraft:tameable": {
@@ -4265,14 +5068,46 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines an entity's teleporting behavior.",
                             "properties": {
-                                "dark_teleport_chance": {"type": "number", "default": 0.01, "description": "Modifies the chance that the entity will teleport if the entity is in darkness"},
-                                "light_teleport_chance": {"type": "number", "default": 0.01, "description": "Modifies the chance that the entity will teleport if the entity is in daylight"},
-                                "max_random_teleport_time": {"type": "number", "default": 20, "description": "Maximum amount of time in seconds between random teleports"},
-                                "min_random_teleport_time": {"type": "number", "default": 0, "description": "Minimum amount of time in seconds between random teleports"},
-                                "random_teleport_cube": {"type": "array", "default": [32, 16, 32], "description": "Entity will teleport to a random position within the area defined by this cube"},
-                                "random_teleports": {"type": "boolean", "default": true, "description": "If true, the entity will teleport randomly"},
-                                "target_distance": {"type": "number", "default": 16, "description": "Maximum distance the entity will teleport when chasing a target"},
-                                "target_teleport_chance": {"type": "number", "default": 1, "description": "The chance that the entity will teleport between 0.0 and 1.0. 1.0 means 100%"}
+                                "dark_teleport_chance": {
+                                    "type": "number",
+                                    "default": 0.01,
+                                    "description": "Modifies the chance that the entity will teleport if the entity is in darkness"
+                                },
+                                "light_teleport_chance": {
+                                    "type": "number",
+                                    "default": 0.01,
+                                    "description": "Modifies the chance that the entity will teleport if the entity is in daylight"
+                                },
+                                "max_random_teleport_time": {
+                                    "type": "number",
+                                    "default": 20,
+                                    "description": "Maximum amount of time in seconds between random teleports"
+                                },
+                                "min_random_teleport_time": {
+                                    "type": "number",
+                                    "default": 0,
+                                    "description": "Minimum amount of time in seconds between random teleports"
+                                },
+                                "random_teleport_cube": {
+                                    "type": "array",
+                                    "default": [32, 16, 32],
+                                    "description": "Entity will teleport to a random position within the area defined by this cube"
+                                },
+                                "random_teleports": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true, the entity will teleport randomly"
+                                },
+                                "target_distance": {
+                                    "type": "number",
+                                    "default": 16,
+                                    "description": "Maximum distance the entity will teleport when chasing a target"
+                                },
+                                "target_teleport_chance": {
+                                    "type": "number",
+                                    "default": 1,
+                                    "description": "The chance that the entity will teleport between 0.0 and 1.0. 1.0 means 100%"
+                                }
                             }
                         },
                         "minecraft:tick_world": {
@@ -4282,15 +5117,34 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Adds a timer after which an event will fire.",
                             "properties": {
-                                "looping": { "type": "boolean", "default": true, "description": "If true, the timer will restart every time after it fires." },
-                                "time": { "type": ["array", "number"], "default": 0, "description": "Amount of time in seconds for the timer. Can be specified as a number or a pair of numbers (min and max). Incompatible with random_time_choices.", "items": { "type": "number" } },
-                                "randomInterval": { "type": "boolean", "default": true, "description": "If true, the amount of time on the timer will be random between the min and max values specified in time." },
-                                "time_down_event": { "description": "Event to fire when the time on the timer runs out.", "$ref": "#/definitions/library/components/values/trigger" },
+                                "looping": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true, the timer will restart every time after it fires."
+                                },
+                                "time": {
+                                    "type": ["array", "number"],
+                                    "default": 0,
+                                    "description": "Amount of time in seconds for the timer. Can be specified as a number or a pair of numbers (min and max). Incompatible with random_time_choices.",
+                                    "items": {"type": "number"}
+                                },
+                                "randomInterval": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "If true, the amount of time on the timer will be random between the min and max values specified in time."
+                                },
+                                "time_down_event": {
+                                    "description": "Event to fire when the time on the timer runs out.",
+                                    "$ref": "#/definitions/library/components/values/trigger"
+                                },
                                 "random_time_choices": {
                                     "type": "array",
                                     "default": [],
                                     "description": "This is a list of objects, representing one value in seconds that can be picked before firing the event and an optional weight. Incompatible with time.",
-                                    "items": { "type": "object", "properties": { "weight": { "type": "number" }, "value": { "type": "number" } } }
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {"weight": {"type": "number"}, "value": {"type": "number"}}
+                                    }
                                 }
                             }
                         },
@@ -4316,22 +5170,33 @@ export const fullSchema = {
                             "type": "object",
                             "description": "Defines the families this entity belongs to.",
                             "properties": {
-                                "family": { "type": ["array", "string"], "description": "List of family names", "items": { "type": "string" } }
+                                "family": {
+                                    "type": ["array", "string"],
+                                    "description": "List of family names",
+                                    "items": {"type": "string"}
+                                }
                             }
                         },
-                        "minecraft:underwater_movement": { "type": "object" },
+                        "minecraft:underwater_movement": {"type": "object"},
                         "minecraft:variant": {
                             "type": "object",
                             "description": "Used to differentiate the component group of a variant of an entity from others (e.g. ocelot, villager)",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "description": "The ID of the variant. By convention, 0 is the ID of the base entity" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "description": "The ID of the variant. By convention, 0 is the ID of the base entity"
+                                }
                             }
                         },
                         "minecraft:walk_animation_speed": {
                             "type": "object",
                             "description": "Sets the speed multiplier for this entity's walk animation speed.",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value_decimal", "default": 1.0, "description": "The higher the number, the faster the animation for walking plays. A value of 1.0 means normal speed, while 2.0 means twice as fast" }
+                                "value": {
+                                    "$ref": "#/definitions/library/components/values/value_decimal",
+                                    "default": 1.0,
+                                    "description": "The higher the number, the faster the animation for walking plays. A value of 1.0 means normal speed, while 2.0 means twice as fast"
+                                }
                             }
                         },
                         "minecraft:wants_jockey": {
@@ -4342,90 +5207,285 @@ export const fullSchema = {
                         }
                     },
                     "values": {
-                        "priority": { "type": "integer", "default": 0, "description": "Determines which behavior the entity will prioritize when two of the same type run. 0 is the highest priority." },
-                        "poi_type": { "type": "string", "examples": [ "bed" ], "description": "Defines what POI type to hide at." },
-                        "duration": { "type": "number", "default": 1.0, "description": "Amount of time in seconds that the mob reacts." },
-                        "speed_multiplier": { "type": "number", "default": 1.0, "description": "Movement speed multiplier of the mob when using this AI Goal" },
-                        "timeout_cooldown": { "type": "number", "default": "8.0", "description": "Movement speed multiplier of the mob when using this AI Goal" },
-                        "items": { "items": [ { "type": "string", "$ref": "#/definitions/library/items" }, { "type": "string", "$ref": "#/definitions/library/blocks" } ] },
-                        "look_distance":{ "type": "number", "default": 8.0, "description": "The distance in blocks from which the entity will look at" },
-                        "look_time": { "type": "array", "default": [ 2, 4 ], "description": "Time range to look at the entity" },
-                        "attack_once": { "type": "boolean", "default": false, "description": "Allows the entity to use this attack behavior, only once EVER." },
-                        "attack_types": { "type": "String", "description": "Defines the entity types this entity will attack." },
-                        "goal_radius": { "type": "number", "default": 0.5, "description": "Distance in blocks within the mob considers it has reached the goal. This is the \"wiggle room\" to stop the AI from bouncing back and forth trying to reach a specific spot" },
-                        "inner_boundary_time_increase": { "type": "number", "default": 0.25, "description": "Time (in seconds) to add to attack path recalculation when the target is beyond the \"path_inner_boundary\"." },
-                        "max_path_time": { "type": "number", "default": 0.55, "description": "Maximum base time (in seconds) to recalculate new attack path to target (before increases applied)." },
-                        "melee_fov": { "type": "number", "default": 90.0, "description": "Field of view (in degrees) when using the sensing component to detect an attack target." },
-                        "min_path_time": { "type": "number", "default": 0.2, "description": "Minimum base time (in seconds) to recalculate new attack path to target (before increases applied)." },
-                        "on_attack": { "$ref": "#/definitions/library/components/values/trigger", "description": "Defines the event to trigger when this entity successfully attacks." },
-                        "outer_boundary_time_increase": { "type": "number", "default": 0.5, "description": "Time (in seconds) to add to attack path recalculation when the target is beyond the \"path_outer_boundary\"." },
-                        "path_fail_time_increase": { "type": "number", "default": 0.75, "description": "Time (in seconds) to add to attack path recalculation when this entity cannot move along the current path." },
-                        "path_inner_boundary": { "type": "number", "default": 16.0, "description": "Distance at which to increase attack path recalculation by \"inner_boundary_tick_increase\"." },
-                        "path_outer_boundary": { "type": "number", "default": 32.0, "description": "Distance at which to increase attack path recalculation by \"outer_boundary_tick_increase\"." },
-                        "random_stop_interval": { "type": "integer", "default": 0, "description": "This entity will have a 1 in N chance to stop it's current attack, where N = \"random_stop_interval\"." },
-                        "reach_multiplier": { "type": "number", "default": 0.55, "description": "Used with the base size of the entity to determine minimum target-distance before trying to deal attack damage." },
-                        "require_complete_path": { "type": "boolean", "default": 0.55, "description": "Toggles (on/off) the need to have a full path from the entity to the target when using this melee attack behavior." },
-                        "track_target": { "type": "boolean", "default": false, "description": "If true, this mob will chase after the target as long as it's a valid target" },
-                        "must_reach": { "type": "boolean", "default": false },
-                        "set_persistent": { "type": "boolean", "default": false, "description": "Allows the actor to be set to persist upon targeting a player" },
-                        "x_max_rotation": { "type": "number", "default": 30.0, "description": "Maximum rotation (in degrees), on the X-axis, this entity can rotate while trying to look at the target." },
-                        "y_max_head_rotation": { "type": "number", "default": 30.0, "description": "Maximum rotation (in degrees), on the Y-axis, this entity can rotate its head while trying to look at the target." },
-                        "target_dist": { "type": "number", "default": 0.0, "description": "The distance at which this mob wants to be away from its target" },
-                        "loot_table": { "type": "string", "pattern": "^.*\\.json$", "description": "File path, relative to the Behavior Pack's path, to the loot table file." },
-                        "block_distance": { "type": "number", "default": 16.0 },
-                        "max_dist": { "type": "number", "default": 0.0 },
-                        "value": { "type": "integer" },
-                        "value_decimal": { "type": "number" },
+                        "priority": {
+                            "type": "integer",
+                            "default": 0,
+                            "description": "Determines which behavior the entity will prioritize when two of the same type run. 0 is the highest priority."
+                        },
+                        "poi_type": {
+                            "type": "string",
+                            "examples": ["bed"],
+                            "description": "Defines what POI type to hide at."
+                        },
+                        "duration": {
+                            "type": "number",
+                            "default": 1.0,
+                            "description": "Amount of time in seconds that the mob reacts."
+                        },
+                        "speed_multiplier": {
+                            "type": "number",
+                            "default": 1.0,
+                            "description": "Movement speed multiplier of the mob when using this AI Goal"
+                        },
+                        "timeout_cooldown": {
+                            "type": "number",
+                            "default": "8.0",
+                            "description": "Movement speed multiplier of the mob when using this AI Goal"
+                        },
+                        "items": {
+                            "items": [{"type": "string", "$ref": "#/definitions/library/items"}, {
+                                "type": "string",
+                                "$ref": "#/definitions/library/blocks"
+                            }]
+                        },
+                        "look_distance": {
+                            "type": "number",
+                            "default": 8.0,
+                            "description": "The distance in blocks from which the entity will look at"
+                        },
+                        "look_time": {
+                            "type": "array",
+                            "default": [2, 4],
+                            "description": "Time range to look at the entity"
+                        },
+                        "attack_once": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Allows the entity to use this attack behavior, only once EVER."
+                        },
+                        "attack_types": {
+                            "type": "String",
+                            "description": "Defines the entity types this entity will attack."
+                        },
+                        "goal_radius": {
+                            "type": "number",
+                            "default": 0.5,
+                            "description": "Distance in blocks within the mob considers it has reached the goal. This is the \"wiggle room\" to stop the AI from bouncing back and forth trying to reach a specific spot"
+                        },
+                        "inner_boundary_time_increase": {
+                            "type": "number",
+                            "default": 0.25,
+                            "description": "Time (in seconds) to add to attack path recalculation when the target is beyond the \"path_inner_boundary\"."
+                        },
+                        "max_path_time": {
+                            "type": "number",
+                            "default": 0.55,
+                            "description": "Maximum base time (in seconds) to recalculate new attack path to target (before increases applied)."
+                        },
+                        "melee_fov": {
+                            "type": "number",
+                            "default": 90.0,
+                            "description": "Field of view (in degrees) when using the sensing component to detect an attack target."
+                        },
+                        "min_path_time": {
+                            "type": "number",
+                            "default": 0.2,
+                            "description": "Minimum base time (in seconds) to recalculate new attack path to target (before increases applied)."
+                        },
+                        "on_attack": {
+                            "$ref": "#/definitions/library/components/values/trigger",
+                            "description": "Defines the event to trigger when this entity successfully attacks."
+                        },
+                        "outer_boundary_time_increase": {
+                            "type": "number",
+                            "default": 0.5,
+                            "description": "Time (in seconds) to add to attack path recalculation when the target is beyond the \"path_outer_boundary\"."
+                        },
+                        "path_fail_time_increase": {
+                            "type": "number",
+                            "default": 0.75,
+                            "description": "Time (in seconds) to add to attack path recalculation when this entity cannot move along the current path."
+                        },
+                        "path_inner_boundary": {
+                            "type": "number",
+                            "default": 16.0,
+                            "description": "Distance at which to increase attack path recalculation by \"inner_boundary_tick_increase\"."
+                        },
+                        "path_outer_boundary": {
+                            "type": "number",
+                            "default": 32.0,
+                            "description": "Distance at which to increase attack path recalculation by \"outer_boundary_tick_increase\"."
+                        },
+                        "random_stop_interval": {
+                            "type": "integer",
+                            "default": 0,
+                            "description": "This entity will have a 1 in N chance to stop it's current attack, where N = \"random_stop_interval\"."
+                        },
+                        "reach_multiplier": {
+                            "type": "number",
+                            "default": 0.55,
+                            "description": "Used with the base size of the entity to determine minimum target-distance before trying to deal attack damage."
+                        },
+                        "require_complete_path": {
+                            "type": "boolean",
+                            "default": 0.55,
+                            "description": "Toggles (on/off) the need to have a full path from the entity to the target when using this melee attack behavior."
+                        },
+                        "track_target": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "If true, this mob will chase after the target as long as it's a valid target"
+                        },
+                        "must_reach": {"type": "boolean", "default": false},
+                        "set_persistent": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Allows the actor to be set to persist upon targeting a player"
+                        },
+                        "x_max_rotation": {
+                            "type": "number",
+                            "default": 30.0,
+                            "description": "Maximum rotation (in degrees), on the X-axis, this entity can rotate while trying to look at the target."
+                        },
+                        "y_max_head_rotation": {
+                            "type": "number",
+                            "default": 30.0,
+                            "description": "Maximum rotation (in degrees), on the Y-axis, this entity can rotate its head while trying to look at the target."
+                        },
+                        "target_dist": {
+                            "type": "number",
+                            "default": 0.0,
+                            "description": "The distance at which this mob wants to be away from its target"
+                        },
+                        "loot_table": {
+                            "type": "string",
+                            "pattern": "^.*\\.json$",
+                            "description": "File path, relative to the Behavior Pack's path, to the loot table file."
+                        },
+                        "block_distance": {"type": "number", "default": 16.0},
+                        "max_dist": {"type": "number", "default": 0.0},
+                        "value": {"type": "integer"},
+                        "value_decimal": {"type": "number"},
                         "value_with_max": {
                             "type": "object",
                             "properties": {
-                                "value": { "$ref": "#/definitions/library/components/values/value" },
-                                "max": { "type": "integer" }
+                                "value": {"$ref": "#/definitions/library/components/values/value"},
+                                "max": {"type": "integer"}
                             }
                         },
-                        "search_height": { "type": "integer", "default": 1 },
-                        "search_range": { "type": "integer", "default": 0 },
-                        "search_count": { "type": "integer", "default": 10, "description": "The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick" },
-                        "xz_dist": { "type": "integer", "default": 10, "minimum": 1, "description": "Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1" },
-                        "y_dist": { "type": "integer", "default": 7, "minimum": 1, "description": "Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1" },
-                        "stop_distance": { "type": "number", "default": 2.0 },
-                        "cooldown_time": { "type": "number", "default": 0.0, "description": "Time in seconds the mob has to wait before using the goal again" },
-                        "cooldown": { "type": "number", "default": 0.0 },
-                        "within_radius": { "type": "number", "default": 0.0 },
-                        "y_offset": { "type": "number", "default": 0.0, "description": "Height in blocks to add to the selected target position" },
-                        "avoid_water": { "type": "boolean", "default": false, "description": "Tells the pathfinder to avoid water when creating a path" },
-                        "broadcast": { "type": "boolean", "default": false },
-                        "interval": { "type": "integer",  "default": 120, "description": "A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal" },
-                        "angle_of_view_horizontal": { "type": "integer",  "default": 360, "description": "The angle in degrees that the mob can see in the Y-axis (up-down)" },
-                        "angle_of_view_vertical": { "type": "integer",  "default": 360, "description": "The angle in degrees that the mob can see in the X-axis (left-right)" },
-                        "probability": { "type": "number",  "default": 0.02, "description": "The probability of looking at the target. A value of 1.00 is 100%" },
-                        "start_distance": { "type": "number",  "default": 10.0, "description": "This mob starts swelling when a target is at least this many blocks away" },
-                        "must_see" : { "type": "boolean", "default": false },
-                        "reselect_targets" : { "type": "boolean", "default": false },
-                        "must_see_forget_duration" : { "type": "number", "default": 3.0 },
-                        "target_search_height" : { "type": "number", "default": -1.0 },
-                        "scan_interval" : { "type": "integer", "default": 10.0 },
-                        "persist_time" : { "type": "number", "default": 3.0 },
-                        "attack_interval" : { "type": "integer", "default": 0 },
-                        "remove_child_entities" : { "type": "boolean", "description": "If true, all entities linked to this entity in a child relationship (eg. leashed) will also be despawned.", "default": false },
+                        "search_height": {"type": "integer", "default": 1},
+                        "search_range": {"type": "integer", "default": 0},
+                        "search_count": {
+                            "type": "integer",
+                            "default": 10,
+                            "description": "The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick"
+                        },
+                        "xz_dist": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 1,
+                            "description": "Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1"
+                        },
+                        "y_dist": {
+                            "type": "integer",
+                            "default": 7,
+                            "minimum": 1,
+                            "description": "Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1"
+                        },
+                        "stop_distance": {"type": "number", "default": 2.0},
+                        "cooldown_time": {
+                            "type": "number",
+                            "default": 0.0,
+                            "description": "Time in seconds the mob has to wait before using the goal again"
+                        },
+                        "cooldown": {"type": "number", "default": 0.0},
+                        "within_radius": {"type": "number", "default": 0.0},
+                        "y_offset": {
+                            "type": "number",
+                            "default": 0.0,
+                            "description": "Height in blocks to add to the selected target position"
+                        },
+                        "avoid_water": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Tells the pathfinder to avoid water when creating a path"
+                        },
+                        "broadcast": {"type": "boolean", "default": false},
+                        "interval": {
+                            "type": "integer",
+                            "default": 120,
+                            "description": "A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal"
+                        },
+                        "angle_of_view_horizontal": {
+                            "type": "integer",
+                            "default": 360,
+                            "description": "The angle in degrees that the mob can see in the Y-axis (up-down)"
+                        },
+                        "angle_of_view_vertical": {
+                            "type": "integer",
+                            "default": 360,
+                            "description": "The angle in degrees that the mob can see in the X-axis (left-right)"
+                        },
+                        "probability": {
+                            "type": "number",
+                            "default": 0.02,
+                            "description": "The probability of looking at the target. A value of 1.00 is 100%"
+                        },
+                        "start_distance": {
+                            "type": "number",
+                            "default": 10.0,
+                            "description": "This mob starts swelling when a target is at least this many blocks away"
+                        },
+                        "must_see": {"type": "boolean", "default": false},
+                        "reselect_targets": {"type": "boolean", "default": false},
+                        "must_see_forget_duration": {"type": "number", "default": 3.0},
+                        "target_search_height": {"type": "number", "default": -1.0},
+                        "scan_interval": {"type": "integer", "default": 10.0},
+                        "persist_time": {"type": "number", "default": 3.0},
+                        "attack_interval": {"type": "integer", "default": 0},
+                        "remove_child_entities": {
+                            "type": "boolean",
+                            "description": "If true, all entities linked to this entity in a child relationship (eg. leashed) will also be despawned.",
+                            "default": false
+                        },
                         "trigger": {
                             "type": "object",
                             "properties": {
-                                "filters": { "$ref": "#/definitions/filters", "description": "The list of conditions for this trigger" },
-                                "event" : { "type": "string", "description": "The event to run when the conditions for this trigger are met" }, "target": { "type": "string","examples": [ "other", "player", "self", "target", "baby", "block"], "description": "The target of the event" }
+                                "filters": {
+                                    "$ref": "#/definitions/filters",
+                                    "description": "The list of conditions for this trigger"
+                                },
+                                "event": {
+                                    "type": "string",
+                                    "description": "The event to run when the conditions for this trigger are met"
+                                },
+                                "target": {
+                                    "type": "string",
+                                    "examples": ["other", "player", "self", "target", "baby", "block"],
+                                    "description": "The target of the event"
+                                }
                             }
                         },
                         "entity_types": {
                             "properties": {
-                                "filters": { "$ref": "#/definitions/filters", "description": "Conditions that make this entry in the list valid" },
-                                "max_dist" : { "type": "number", "default": 16, "description": "Maximum distance this mob can be away to be a valid choice" },
-                                "must_see" : { "type": "boolean", "default": false, "description": "If true, the mob has to be visible to be a valid choice" },
-                                "must_see_forget_duration" : {
+                                "filters": {
+                                    "$ref": "#/definitions/filters",
+                                    "description": "Conditions that make this entry in the list valid"
+                                },
+                                "max_dist": {
+                                    "type": "number",
+                                    "default": 16,
+                                    "description": "Maximum distance this mob can be away to be a valid choice"
+                                },
+                                "must_see": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, the mob has to be visible to be a valid choice"
+                                },
+                                "must_see_forget_duration": {
                                     "type": "number", "default": 3.0,
                                     "description": "Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more"
                                 },
-                                "sprint_speed_multiplier" : { "type": "number", "default": 1.0, "description": "Multiplier for the running speed. A value of 1.0 means the speed is unchanged" },
-                                "walk_speed_multiplier" : { "type": "number", "default": 1.0, "description": "Multiplier for the walking speed. A value of 1.0 means the speed is unchanged" }
+                                "sprint_speed_multiplier": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "Multiplier for the running speed. A value of 1.0 means the speed is unchanged"
+                                },
+                                "walk_speed_multiplier": {
+                                    "type": "number",
+                                    "default": 1.0,
+                                    "description": "Multiplier for the walking speed. A value of 1.0 means the speed is unchanged"
+                                }
                             }
                         },
                         "spawn_entity": {
@@ -4434,52 +5494,52 @@ export const fullSchema = {
                                 "filters": {
                                     "$ref": "#/definitions/filters"
                                 },
-                                "max_wait_time":{
-                                    "type":  "integer",
+                                "max_wait_time": {
+                                    "type": "integer",
                                     "description": "Maximum amount of time to randomly wait in seconds before another entity is spawned.",
                                     "default": 600
                                 },
                                 "min_wait_time": {
-                                    "type":  "integer",
+                                    "type": "integer",
                                     "description": "Minimum amount of time to randomly wait in seconds before another entity is spawned.",
                                     "default": 300
                                 },
-                                "num_to_spawn":{
-                                    "type":  "number",
+                                "num_to_spawn": {
+                                    "type": "number",
                                     "description": "The number of entities of this type to spawn each time that this triggers.",
                                     "default": 1
                                 },
                                 "should_leash": {
-                                    "type":  "boolean",
+                                    "type": "boolean",
                                     "description": "If true, this the spawned entity will be leashed to the parent.",
                                     "default": false
                                 },
-                                "single_use":{
-                                    "type":  "boolean",
+                                "single_use": {
+                                    "type": "boolean",
                                     "description": "If true, this component will only ever spawn the specified entity once.",
                                     "default": false
                                 },
                                 "spawn_entity": {
-                                    "type":  "string",
+                                    "type": "string",
                                     "description": "Identifier of the entity to spawn, leave empty to spawn the item defined above instead."
                                 },
-                                "spawn_event":{
-                                    "type":  "string",
+                                "spawn_event": {
+                                    "type": "string",
                                     "description": "Event to call when the entity is spawned.",
                                     "default": "minecraft:entity_born"
                                 },
                                 "spawn_item": {
-                                    "type":  "string",
+                                    "type": "string",
                                     "description": "Item identifier of the item to spawn.",
                                     "default": "egg"
                                 },
-                                "spawn_method":{
-                                    "type":  "string",
+                                "spawn_method": {
+                                    "type": "string",
                                     "description": "Method to use to spawn the entity.",
                                     "default": "born"
                                 },
                                 "spawn_sound": {
-                                    "type":  "string",
+                                    "type": "string",
                                     "description": "Identifier of the sound effect to play when the entity is spawned.",
                                     "default": "plop"
                                 }
