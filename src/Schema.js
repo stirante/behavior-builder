@@ -1,4 +1,4 @@
-import {EntityComponent} from "EntityComponent";
+import {EntityComponent} from "./EntityComponent";
 
 export const fullSchema = {
         "$id": "https://aexer0e.github.io/bedrock-schema/",
