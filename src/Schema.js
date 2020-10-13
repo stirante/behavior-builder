@@ -4173,33 +4173,7 @@ export const fullSchema = {
                             "description": "Defines what events to call when this entity is damaged by specific entities or items.",
                             "properties": {
                                 "triggers": {
-                                    "type": ["array", "object"],
-                                    "properties": {
-                                        "cause": {
-                                            "type": "string",
-                                            "$ref": "#/definitions/library/filters/domains/has_damage",
-                                            "default": "none",
-                                            "description": "Type of damage that triggers the events."
-                                        },
-                                        "damage_multiplier": {
-                                            "type": "number",
-                                            "default": 1.0,
-                                            "description": "A multiplier that modifies the base damage from the damage cause. If deals_damage is true the multiplier can only reduce the damage the entity will take to a minimum of 1."
-                                        },
-                                        "deals_damage": {
-                                            "type": "boolean",
-                                            "default": true,
-                                            "description": "If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage."
-                                        },
-                                        "on_damage": {
-                                            "$ref": "#/definitions/library/components/values/trigger",
-                                            "filters": "Specifies filters for entity definitions and events."
-                                        },
-                                        "on_damage_sound_event": {
-                                            "type": "string",
-                                            "description": "Defines what sound to play, if any, when the on_damage filters are met."
-                                        }
-                                    },
+                                    "type": "array",
                                     "items": [
                                         {
                                             "properties": {

@@ -57,7 +57,7 @@
     <v-btn v-if="index !== undefined" @click="$emit('remove-item', index)" icon>
       <v-icon>mdi-close</v-icon>
     </v-btn>
-    <v-checkbox :false-value="false" :true-value="true" indeterminate v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
+    <v-checkbox :false-value="false" :true-value="true" :indeterminate="data === void 0" v-model="data" :label="name" :hint="inlinedSchema.description" persistent-hint></v-checkbox>
   </div>
   <div style="display: flex;" v-else-if="isConst">
   </div>
@@ -100,7 +100,7 @@ export default {
   name: 'DataEditor',
   components: {ConditionalEditor},
   beforeMount() {
-    if (this.loaded)
+    if (this.loaded !== void 0)
       this.data = this.loaded;
 
     if (this.isArray) {
@@ -251,24 +251,24 @@ export default {
       return result;
     },
     isObject() {
-      return this.inlinedSchema.type === "object" || this.inlinedSchema.type[0] === "object" || this.inlinedSchema.properties;
+      return this.inlinedSchema.type === "object" || (this.inlinedSchema.type instanceof Array && this.inlinedSchema.type[0] === "object") || this.inlinedSchema.properties;
     },
     isArray() {
       return this.inlinedSchema.type === "array" || this.inlinedSchema.type === "list" ||
-          this.inlinedSchema.type[0] === "array" || this.inlinedSchema.type[0] === "list";
+          (this.inlinedSchema.type instanceof Array && (this.inlinedSchema.type[0] === "array" || this.inlinedSchema.type[0] === "list"));
     },
     isString() {
-      return this.inlinedSchema.type === "string" || this.inlinedSchema.type[0] === "object";
+      return this.inlinedSchema.type === "string" || (this.inlinedSchema.type instanceof Array && this.inlinedSchema.type[0] === "object");
     },
     isEnum() {
       return this.inlinedSchema.enum;
     },
     isBoolean() {
-      return this.inlinedSchema.type === "boolean" || this.inlinedSchema.type[0] === "boolean";
+      return this.inlinedSchema.type === "boolean" || (this.inlinedSchema.type instanceof Array && this.inlinedSchema.type[0] === "boolean");
     },
     isNumber() {
       return this.inlinedSchema.type === "integer" || this.inlinedSchema.type === "number" || this.inlinedSchema.type === "decimal" ||
-          this.inlinedSchema.type[0] === "integer" || this.inlinedSchema.type[0] === "number" || this.inlinedSchema.type[0] === "decimal";
+          (this.inlinedSchema.type instanceof Array && (this.inlinedSchema.type[0] === "integer" || this.inlinedSchema.type[0] === "number" || this.inlinedSchema.type[0] === "decimal"));
     },
     isConst() {
       return this.inlinedSchema.const || (this.inlinedSchema.enum && this.inlinedSchema.enum.length === 1);
