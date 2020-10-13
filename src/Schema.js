@@ -1,4 +1,4 @@
-import {EntityComponent} from "@/EntityComponent";
+import {EntityComponent} from "EntityComponent";
 
 export const fullSchema = {
         "$id": "https://aexer0e.github.io/bedrock-schema/",
@@ -265,6 +265,10 @@ export const fullSchema = {
                         "then": {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/difficulties"}}}
                     },
                     {
+                        "if": {"properties": {"test": {"anyOf": [{"const": "has_mob_effect"}]}}},
+                        "then": {"properties": {"value": {"type": "string", "$ref": "#/definitions/library/effects"}}}
+                    },
+                    {
                         "if": {"properties": {"test": {"anyOf": [{"const": "has_equipment"}]}}},
                         "then": {
                             "allOf": [
@@ -303,6 +307,17 @@ export const fullSchema = {
                                 "domain": {
                                     "type": "string",
                                     "$ref": "#/definitions/library/filters/domains/is_game_rule"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "if": {"properties": {"test": {"anyOf": [{"const": "has_ability"}]}}},
+                        "then": {
+                            "properties": {
+                                "domain": {
+                                    "type": "string",
+                                    "$ref": "#/definitions/library/filters/domains/has_ability"
                                 }
                             }
                         }
@@ -472,7 +487,6 @@ export const fullSchema = {
                         "string": {
                             "anyOf": [
                                 {"const": "is_family"},
-                                {"const": "has_mob_effect"},
                                 {"const": "has_tag"},
                                 {"const": "has_ability"},
                                 {"const": "has_biome_tag"},
@@ -843,6 +857,20 @@ export const fullSchema = {
                                 "showcoordinates",
                                 "showdeathmessages",
                                 "tntexplodes"
+                            ]
+                        },
+                        "has_ability": {
+                            "enum": [
+                                "flySpeed",
+                                "flying",
+                                "instabuild",
+                                "invulnerable",
+                                "lightning",
+                                "mayfly",
+                                "mute",
+                                "noclip",
+                                "walkSpeed",
+                                "worldbuilder"
                             ]
                         },
                         "has_equipment": {
@@ -4530,7 +4558,29 @@ export const fullSchema = {
                             "type": "object"
                         },
                         "minecraft:hurt_on_condition": {
-                            "type": "object"
+                            "type": "object",
+                            "description": "Defines a set of conditions under which an entity should take damage.",
+                            "properties": {
+                                "damage_conditions": {
+                                    "type": "array",
+                                    "items": [
+                                        {
+                                            "properties": {
+                                                "cause": {
+                                                    "type": "string",
+                                                    "$ref": "#/definitions/library/filters/domains/has_damage",
+                                                    "default": "none"
+                                                },
+                                                "damage_per_tick": {
+                                                    "type": "number",
+                                                    "description": "The amount of damage done each tick when the conditions are met."
+                                                },
+                                                "filters": {"$ref": "#/definitions/filters"}
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         "minecraft:input_ground_controlled": {
                             "type": "object"
